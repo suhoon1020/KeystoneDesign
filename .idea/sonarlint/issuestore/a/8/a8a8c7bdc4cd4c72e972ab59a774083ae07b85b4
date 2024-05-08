@@ -1,0 +1,17 @@
+
+Œ	java:S1175"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªŸ ÌJ$0fbb2bd1-1983-45f5-8c63-14f4d0d1587c
+Œ	java:S117C"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ù­§J$0fabc1d3-00fe-4ba1-8dcc-1a0c192bcea7
+Œ	java:S117G"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“Ë«ÔJ$a9c91fcc-c5aa-439a-a4a1-8cb051711821
+Œ	java:S117Q"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿áÙñJ$13046ff5-8c59-4028-9a43-ce76bac1ebf1
+Œ	java:S117["QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŸíÒJ$7aa8004d-2d69-477c-9136-f4c4f4f88d10
+i
+java:S1604"(Make this anonymous inner class a lambda(¤©ÒâüÿÿÿÿJ$8486ba55-6428-4494-84b6-ad33ca60363d
+i
+java:S1604H"(Make this anonymous inner class a lambda(™ÔÍšùÿÿÿÿJ$5d666a07-88be-4459-b2df-692b71363203
+d
+java:S1604R"(Make this anonymous inner class a lambda(œºòÚJ$87ae0070-1471-46ba-95ff-bf69276aa8ac
+c
+java:S1604\"(Make this anonymous inner class a lambda(ü³äNJ$526da8aa-688f-4e9b-86bb-298a6bc35073
+•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ş×ÿòJ$eb87f51f-afb2-4ad0-b776-f2478b392709
+Š
+java:S3252)"IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(Õû»öşÿÿÿÿJ$cbcd468f-eaf3-4c00-84c7-ccf32b786292
