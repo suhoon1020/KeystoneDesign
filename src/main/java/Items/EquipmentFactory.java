@@ -1,4 +1,4 @@
-package deu.cse.Items;
+package Items;
 
 public class EquipmentFactory extends ItemFactory {
 

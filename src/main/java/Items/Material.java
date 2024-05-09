@@ -1,4 +1,4 @@
-package deu.cse.Items;
+package Items;
 
 public class Material extends Item{
     int damage;
