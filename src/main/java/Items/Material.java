@@ -1,6 +1,17 @@
 package Items;
 
-public class Material extends Item{
-    int damage;
+import org.json.simple.JSONObject;
+
+public class Material implements Item{
+    String type;
+
+    @Override
+    public JSONObject ToJsonObj() {
+        JSONObject obj = new JSONObject();
+
+        obj.put("type", type);
+
+        return obj;
+    }
     
 }

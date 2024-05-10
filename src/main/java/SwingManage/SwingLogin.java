@@ -170,7 +170,7 @@ public class SwingLogin extends JFrame {
 		Btt_tryRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// Todo 회원가입 검증 후 팝업창 띄우기
+				// TODO : 회원가입 검증 후 팝업창 띄우기
 
 				cardLayout.show(getContentPane(), "LoginPage");
 			}
@@ -213,7 +213,7 @@ public class SwingLogin extends JFrame {
 		Btt_tryFindID.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// Todo 아이디 찾기 팝업창 띄우기
+				// TODO : 아이디 찾기 팝업창 띄우기
 
 				cardLayout.show(getContentPane(), "LoginPage");
 			}
@@ -256,7 +256,7 @@ public class SwingLogin extends JFrame {
 		Btt_tryFindPassword.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// Todo 비밀번호 찾기 팝업창 띄우기
+				// TODO : 비밀번호 찾기 팝업창 띄우기
 
 				cardLayout.show(getContentPane(), "LoginPage");
 			}
