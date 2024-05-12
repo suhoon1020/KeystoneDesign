@@ -3,8 +3,6 @@ package DataManager;
 import UserOption.User;
 import com.google.gson.JsonArray;
 
-import java.util.List;
-
 public class FileFacade {
     private InventoryManager inventoryManager;
     private ItemManager itemManager;
@@ -20,9 +18,10 @@ public class FileFacade {
         userManager.saveInfosToFile(user);
     }
 
-    public JsonArray loadUser(){
+    public JsonArray loadUsers(){
         return userManager.loadInfosFromFile();
     }
+
 
 
 }
