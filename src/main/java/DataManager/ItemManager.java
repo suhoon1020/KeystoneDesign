@@ -1,10 +1,9 @@
 package DataManager;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,15 +11,21 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class ItemManager {
-    public static final String USER_FILE = "items.json";
+    public static final String ITEM_FILE = "items.json";
 
     private static JSONArray Items;
 
     public void SaveInfosToFile() {
-        List<String> ItemsString = new ArrayList<String>();
+        FileWriter fw;
 
-        for(int i = 0; i < Items.size(); ++i){
-            ItemsString.add(((JSONObject)Items.get(i)).toString());
+        try{
+            fw = new FileWriter(ITEM_FILE);
+
+            fw.write(Items.toJSONString());
+
+            fw.close();
+        } catch(IOException err){
+            System.err.println(err);
         }
     }
 
@@ -30,7 +35,7 @@ public class ItemManager {
         JSONParser parser = new JSONParser();
 
         try{
-            reader = new FileReader(USER_FILE);
+            reader = new FileReader(ITEM_FILE);
             Items = (JSONArray)parser.parse(reader); 
 
         } catch(IOException err){
@@ -44,7 +49,4 @@ public class ItemManager {
     public void PutData(JSONObject o) {
         Items.add(o);
     }
-
-
-
 }

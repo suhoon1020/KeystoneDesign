@@ -5,6 +5,8 @@ import com.google.gson.JsonArray;
 
 import java.util.List;
 
+import Items.Item;
+
 public class FileFacade {
     private InventoryManager inventoryManager;
     private ItemManager itemManager;
@@ -22,6 +24,10 @@ public class FileFacade {
 
     public JsonArray loadUser(){
         return userManager.loadInfosFromFile();
+    }
+
+    public void saveItem(Item item){
+        itemManager.PutData(item.getJsonObject());
     }
 
 

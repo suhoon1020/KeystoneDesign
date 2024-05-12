@@ -1,17 +1,30 @@
 package Items;
 
+import java.util.HashMap;
+
 import org.json.simple.JSONObject;
 
 public class Material implements Item{
-    String type;
+    JSONObject itemDetails;
 
     @Override
-    public JSONObject ToJsonObj() {
-        JSONObject obj = new JSONObject();
+    public Item CreateItem() {
+        HashMap<String,Object> materialDetails = new HashMap<String,Object>();
 
-        obj.put("type", type);
+        materialDetails.put("ID", 0);
+        materialDetails.put("type", "Equipment");
+        materialDetails.put("desc", "");
+        materialDetails.put("price", 0);
+        materialDetails.put("count", 0);
+        materialDetails.put("defence", 0);
 
-        return obj;
+        itemDetails = new JSONObject(materialDetails);
+
+        return this;
     }
-    
+
+    @Override
+    public JSONObject getJsonObject() {
+        return itemDetails;
+    }
 }

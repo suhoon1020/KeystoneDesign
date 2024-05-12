@@ -1,3 +1,5 @@
+import Items.Item;
+import Items.ItemFactory;
 import UserOption.User;
 
 
@@ -12,6 +14,10 @@ public class TestBuilder {
                 .phone("010151124312")
                 .build();
         System.out.println(user.toString());
+
+        // 아이템 테스트
+        Item weapon1 = new ItemFactory().CreateItem("Weapon");
+        System.out.println(weapon1.getJsonObject());
     }
 
 
