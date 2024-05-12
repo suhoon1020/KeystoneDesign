@@ -1,6 +1,7 @@
 package DataManager;
 
 import UserOption.User;
+import com.google.gson.JsonArray;
 
 import java.util.List;
 
@@ -16,11 +17,11 @@ public class FileFacade {
     }
 
     public void saveUser(User user){
-        userManager.SaveInfosToFile(user);
+        userManager.saveInfosToFile(user);
     }
 
-    public List<User> loadUser(){
-        return userManager.LoadInfosFromFile();
+    public JsonArray loadUser(){
+        return userManager.loadInfosFromFile();
     }
 
 
