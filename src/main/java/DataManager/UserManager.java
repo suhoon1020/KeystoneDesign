@@ -3,99 +3,52 @@ package DataManager;
 
 import UserOption.User;
 import com.google.gson.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+
+
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+
+
 
 
 public class UserManager {
+
     public static final String USER_FILE = "users.json";
 
-    /*
-        public void SaveInfosToFile(User user) {
-            // TODO 파일 저장 시스템
 
-            //List<User> users = LoadInfosFromFile();
-            Gson gson = new Gson();
+    public void saveInfosToFile(User user) {
+        Gson gson = new Gson();
+        JsonArray jsonArray = loadInfosFromFile();
 
-            JsonArray jsonArray = LoadInfosFromFile();
+        // 사용자 정보를 JsonArray에 추가
+        JsonElement userJsonElement = gson.toJsonTree(user);
+        jsonArray.add(userJsonElement);
+        String jsonString = gson.toJson(jsonArray);
 
-            users.add(user);
+        // 파일에 쓰기
+        try (FileWriter fileWriter = new FileWriter(USER_FILE)) {
+            fileWriter.write(jsonString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            try (FileWriter fw = new FileWriter(USER_FILE, false)) {
-                gson.toJson(users, fw);
+
+    public JsonArray loadInfosFromFile() {
+        JsonArray jsonArray=new JsonArray();
+        if (Files.exists(Paths.get(USER_FILE))) {
+            try (FileReader fileReader = new FileReader(USER_FILE)) {
+                JsonElement jsonElement = JsonParser.parseReader(fileReader);
+                jsonArray = jsonElement.getAsJsonArray();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
-    */
-    public void saveInfosToFile(User user) {
-        JsonArray jsonArray = loadInfosFromFile();
-
-        Gson gson = new Gson();
-
-        JsonElement userJsonElement = gson.toJsonTree(user);
-        jsonArray.add(userJsonElement);
-        String jsonString = gson.toJson(jsonArray);
-
-        try (FileWriter fw = new FileWriter(USER_FILE)) {
-            fw.write(jsonString);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public JsonArray loadInfosFromFile() {
-
-        JsonArray jsonArray = new JsonArray();
-
-        try (FileReader reader = new FileReader(USER_FILE)) {
-
-            JsonElement jsonElement = JsonParser.parseReader(reader);
-            jsonArray.add(jsonElement.getAsJsonArray());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         return jsonArray;
     }
-
-
-    /*
-    public List<User> LoadInfosFromFile() {
-        // TODO : 유저 파일 불러오기
-        Gson gson = new Gson();
-        List<User> userList = new ArrayList<>();
-        try (FileReader reader = new FileReader(USER_FILE)) {
-            JsonElement jsonElement = JsonParser.parseReader(reader);
-
-            if(jsonElement.isJsonArray()) {
-                JsonArray jsonArray = jsonElement.getAsJsonArray();
-                for (JsonElement element : jsonArray) {
-                    User user = gson.fromJson(element, User.class);
-                    userList.add(user);
-                }
-            }
-            else if(jsonElement.isJsonObject()) {
-                JsonObject jsonObject = jsonElement.getAsJsonObject();
-                User user = gson.fromJson(jsonObject, User.class);
-                userList.add(user);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return userList;
-    }
-*/
 
 
     public void deleteUsersInfo(User user) {

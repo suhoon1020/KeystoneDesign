@@ -22,13 +22,14 @@ public class FileFacade {
         userManager.saveInfosToFile(user);
     }
 
-    public JsonArray loadUser(){
+    public JsonArray loadUsers(){
         return userManager.loadInfosFromFile();
     }
 
     public void saveItem(Item item){
         itemManager.PutData(item.getJsonObject());
     }
+
 
 
 }

@@ -2,18 +2,18 @@ package SwingManage;
 
 import DataManager.FileFacade;
 import UserOption.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -88,6 +88,27 @@ public class SwingLogin extends JFrame {
         loginPage.add(In_password);
 
         JButton Btt_login = new JButton("로그인");
+        Btt_login.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                FileFacade fileFacade = new FileFacade();
+                JsonArray jsonArray = fileFacade.loadUsers();
+                boolean loginSuccess = false;
+                for (JsonElement jsonElement : jsonArray) {
+                    if (jsonElement.getAsJsonObject().get("userID").getAsString().equals(In_userID.getText())
+                            && jsonElement.getAsJsonObject().get("userPW").getAsString().equals(In_password.getText())) {
+                        JOptionPane.showMessageDialog(null,"로그인 되었습니다");
+                        loginSuccess = true;
+                        break;
+                    }
+                }
+
+                if (!loginSuccess) {
+                    JOptionPane.showMessageDialog(null,"로그인 정보가 올바르지 않습니다");
+                }
+            }
+        });
+
         Btt_login.setFont(new Font("굴림", Font.PLAIN, 20));
         Btt_login.setBounds(371, 151, 107, 92);
         loginPage.add(Btt_login);
@@ -167,22 +188,38 @@ public class SwingLogin extends JFrame {
         textPhoneNum.setBounds(223, 368, 247, 41);
         registerPage.add(textPhoneNum);
 
-        JButton Btt_tryRegister = new JButton("들어오다");
+        JButton Btt_tryRegister = new JButton("회원가입");
         Btt_tryRegister.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // TODO : 회원가입 검증 후 팝업창 띄우기
                 FileFacade fileFacade = new FileFacade();
-                User user = new User.UserBuilder()
-                        .ID(textID.getText())
-                        .PW(textPW.getText())
-                        .name(textName.getText())
-                        .phone(textPhoneNum.getText())
-                        .build();
-                fileFacade.saveUser(user);
-                cardLayout.show(getContentPane(), "LoginPage");
+                if (textID.getText().isEmpty() || textPW.getText().isEmpty() || textName.getText().isEmpty() || textPhoneNum.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "모두 입력하여 주십시오");
+                } else {
+
+                    JsonArray jsonArray = fileFacade.loadUsers();
+                    for (JsonElement jsonElement : jsonArray) {
+                        if (jsonElement.getAsJsonObject().get("userID").getAsString().equals(textID.getText())) {
+                            JOptionPane.showMessageDialog(null, "이미 존재하는 ID입니다");
+                            return;
+                        }
+                    }
+
+                    User user = new User.UserBuilder()
+                            .ID(textID.getText())
+                            .PW(textPW.getText())
+                            .name(textName.getText())
+                            .phone(textPhoneNum.getText())
+                            .build();
+                    fileFacade.saveUser(user);
+                    JOptionPane.showMessageDialog(null, "회원가입이 완료 되었습니다");
+                    cardLayout.show(getContentPane(), "LoginPage");
+                }
 
             }
+
+
         });
         Btt_tryRegister.setFont(new Font("굴림", Font.PLAIN, 35));
         Btt_tryRegister.setBounds(150, 550, 250, 70);
@@ -273,5 +310,9 @@ public class SwingLogin extends JFrame {
         Btt_tryFindPassword.setFont(new Font("굴림", Font.PLAIN, 32));
         Btt_tryFindPassword.setBounds(150, 550, 250, 70);
         FindPasswordPage.add(Btt_tryFindPassword);
+
     }
 }
+
+
+
