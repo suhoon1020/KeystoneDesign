@@ -3,8 +3,6 @@ package DataManager;
 
 import UserOption.User;
 import com.google.gson.*;
-import netscape.javascript.JSObject;
-import org.json.simple.JSONObject;
 
 
 import java.io.*;
