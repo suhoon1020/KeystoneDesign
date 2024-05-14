@@ -8,7 +8,7 @@ public class Weapon implements Item {
     JSONObject itemDetails;
 
     @Override
-    public Item CreateItem() {
+    public Item createItemInfos() {
         HashMap<String, Object> weaponDetails = new HashMap<String, Object>();
 
         weaponDetails.put("ID", 0);

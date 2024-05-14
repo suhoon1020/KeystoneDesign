@@ -16,7 +16,7 @@ public class TestBuilder {
         System.out.println(user.toString());
 
         // 아이템 테스트
-        Item weapon1 = new ItemFactory().CreateItem("Weapon");
+        Item weapon1 = new ItemFactory().createItem("Weapon");
         System.out.println(weapon1.getJsonObject());
     }
 

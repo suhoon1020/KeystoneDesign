@@ -15,7 +15,7 @@ public class ItemFileSystem {
 
     private static JSONArray Items;
 
-    public void SaveInfosToFile() {
+    public void saveInfosToFile() {
         FileWriter fw;
 
         try{
@@ -29,7 +29,7 @@ public class ItemFileSystem {
         }
     }
 
-    public void LoadInfosFromFile() {
+    public void loadInfosFromFile() {
         Items = new JSONArray();
         Reader reader;
         JSONParser parser = new JSONParser();
@@ -46,7 +46,30 @@ public class ItemFileSystem {
         
     }
 
-    public void PutData(JSONObject o) {
+    public int putItem(JSONObject o) {
+
+        String ID = (String)o.get("ID");
+
+        for (Object obj : Items) {
+            JSONObject jsonObject = (JSONObject) obj;
+
+            // 아이디가 같은 값이 있다면 중단
+            if (ID.equals(jsonObject.get("ID"))) return -1;
+        }
+        
         Items.add(o);
+        return 1;
+    }
+
+    public JSONObject getItem(String ID) {
+        for (Object obj : Items) {
+            JSONObject jsonObject = (JSONObject) obj;
+
+            // 오브젝트를 찾았다면
+            if (ID.equals(jsonObject.get("ID"))) return jsonObject;
+        }
+
+        // 찾는값이 없다면
+        return null;
     }
 }

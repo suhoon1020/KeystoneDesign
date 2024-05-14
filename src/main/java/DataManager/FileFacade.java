@@ -30,7 +30,7 @@ public class FileFacade {
     }
 
     public void saveItem(Item item){
-        itemManager.PutData(item.getJsonObject());
+        itemManager.putItem(item.getJsonObject());
     }
 
 

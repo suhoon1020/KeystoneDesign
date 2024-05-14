@@ -8,7 +8,7 @@ public class Potion implements Item {
     JSONObject itemDetails;
 
     @Override
-    public Item CreateItem() {
+    public Item createItemInfos() {
         HashMap<String, Object> potionDetails = new HashMap<String, Object>();
 
         potionDetails.put("ID", 0);

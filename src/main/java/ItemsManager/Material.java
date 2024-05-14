@@ -8,7 +8,7 @@ public class Material implements Item{
     JSONObject itemDetails;
 
     @Override
-    public Item CreateItem() {
+    public Item createItemInfos() {
         HashMap<String,Object> materialDetails = new HashMap<String,Object>();
 
         materialDetails.put("ID", 0);
