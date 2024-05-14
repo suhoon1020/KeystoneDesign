@@ -1,9 +1,11 @@
-package Items;
+package ItemsManager;
 
 public class ItemFactory {
-    public Item CreateItem(String type){
+
+    public Item CreateItem(String type) {
+
         Item item = null;
-        
+
         switch (type) {
             case "Equipment":
                 item = new Equipment().CreateItem();

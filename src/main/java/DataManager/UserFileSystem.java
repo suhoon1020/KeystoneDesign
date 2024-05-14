@@ -5,15 +5,12 @@ import UserOption.User;
 import com.google.gson.*;
 
 
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 
-
-
-public class UserManager {
+public class UserFileSystem {
 
     public static final String USER_FILE = "users.json";
 
@@ -23,9 +20,9 @@ public class UserManager {
         JsonArray jsonArray = loadInfosFromFile();
 
         // 사용자 정보를 JsonArray에 추가
-        JsonElement userJsonElement = gson.toJsonTree(user);
+        JsonElement userJsonElement = gson.toJsonTree(user); //toJsonTree = Java 객체를 jsonElement 객체로 변환시켜준다
         jsonArray.add(userJsonElement);
-        String jsonString = gson.toJson(jsonArray);
+        String jsonString = gson.toJson(jsonArray); // 그냥 쓰면 트리형식으로 나오지 않음 , String으로 변환시켜야 나옴
 
         // 파일에 쓰기
         try (FileWriter fileWriter = new FileWriter(USER_FILE)) {
@@ -37,7 +34,7 @@ public class UserManager {
 
 
     public JsonArray loadInfosFromFile() {
-        JsonArray jsonArray=new JsonArray();
+        JsonArray jsonArray = new JsonArray();
         if (Files.exists(Paths.get(USER_FILE))) {
             try (FileReader fileReader = new FileReader(USER_FILE)) {
                 JsonElement jsonElement = JsonParser.parseReader(fileReader);
@@ -52,7 +49,7 @@ public class UserManager {
 
 
     public void deleteUsersInfo(User user) {
-        //TODO: 유저 삭제
+        //TODO : 유저 삭제
     }
 
     public void updateUsersInfo(User user) {

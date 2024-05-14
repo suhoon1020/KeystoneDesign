@@ -1,5 +1,5 @@
-import Items.Item;
-import Items.ItemFactory;
+import ItemsManager.Item;
+import ItemsManager.ItemFactory;
 import UserOption.User;
 
 

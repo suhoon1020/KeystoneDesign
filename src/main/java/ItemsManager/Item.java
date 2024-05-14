@@ -1,4 +1,4 @@
-package Items;
+package ItemsManager;
 
 import org.json.simple.JSONObject;
 

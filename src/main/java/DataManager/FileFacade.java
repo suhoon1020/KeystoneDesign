@@ -3,31 +3,29 @@ package DataManager;
 import UserOption.User;
 import com.google.gson.JsonArray;
 
-import java.util.List;
-
-import Items.Item;
+import ItemsManager.Item;
 
 public class FileFacade {
-    private InventoryManager inventoryManager;
-    private ItemManager itemManager;
-    private UserManager userManager;
+    private InventoryFileSystem inventoryFileSystem;
+    private ItemFileSystem itemFileSystem;
+    private UserFileSystem userFileSystem;
 
     public FileFacade(){
-        this.inventoryManager=new InventoryManager();
-        this.itemManager=new ItemManager();
-        this.userManager=new UserManager();
+        this.inventoryFileSystem =new InventoryFileSystem();
+        this.itemFileSystem =new ItemFileSystem();
+        this.userFileSystem =new UserFileSystem();
     }
 
     public void saveUser(User user){
-        userManager.saveInfosToFile(user);
+        userFileSystem.saveInfosToFile(user);
     }
 
     public JsonArray loadUsers(){
-        return userManager.loadInfosFromFile();
+        return userFileSystem.loadInfosFromFile();
     }
 
     public void saveItem(Item item){
-        itemManager.PutData(item.getJsonObject());
+        itemFileSystem.PutData(item.getJsonObject());
     }
 
 

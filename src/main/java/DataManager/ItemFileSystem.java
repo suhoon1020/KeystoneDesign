@@ -10,7 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class ItemManager {
+public class ItemFileSystem {
     public static final String ITEM_FILE = "items.json";
 
     private static JSONArray Items;

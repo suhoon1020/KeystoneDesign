@@ -27,6 +27,7 @@ public class User {
     public String toString() {
         return userID + userPW + userName + userPhoneNum;
     }
+
     //Product
     private User(UserBuilder builder) {
         this.userID = builder.userID;
@@ -67,8 +68,4 @@ public class User {
             return new User(this);
         }
     }
-
-
-
-
 }

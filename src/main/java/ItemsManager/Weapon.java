@@ -1,15 +1,15 @@
-package Items;
+package ItemsManager;
 
 import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 
-public class Weapon implements Item{
+public class Weapon implements Item {
     JSONObject itemDetails;
 
     @Override
     public Item CreateItem() {
-        HashMap<String,Object> weaponDetails = new HashMap<String,Object>();
+        HashMap<String, Object> weaponDetails = new HashMap<String, Object>();
 
         weaponDetails.put("ID", 0);
         weaponDetails.put("type", "Equipment");

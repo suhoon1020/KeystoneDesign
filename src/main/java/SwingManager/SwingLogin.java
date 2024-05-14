@@ -1,8 +1,7 @@
-package SwingManage;
+package SwingManager;
 
 import DataManager.FileFacade;
 import UserOption.User;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
@@ -13,7 +12,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
