@@ -4,24 +4,29 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+
+import ItemsManager.Item;
+import UserOption.User;
 
 public class ItemFileSystem {
     public static final String ITEM_FILE = "items.json";
 
-    private static JSONArray Items;
+    private static List<Item> items;
 
     public void saveInfosToFile() {
+        Gson gson = new Gson();
         FileWriter fw;
 
         try{
             fw = new FileWriter(ITEM_FILE);
 
-            fw.write(Items.toJSONString());
+            fw.write(gson.toJson(items));
 
             fw.close();
         } catch(IOException err){
@@ -30,48 +35,59 @@ public class ItemFileSystem {
     }
 
     public void loadInfosFromFile() {
-        Items = new JSONArray();
-        Reader reader;
-        JSONParser parser = new JSONParser();
+        Gson gson = new Gson();
 
-        try{
-            reader = new FileReader(ITEM_FILE);
-            Items = (JSONArray)parser.parse(reader); 
+        try {
+            Reader reader = new FileReader(ITEM_FILE);
+            JsonElement jsonElement = JsonParser.parseReader(reader);
+
+            items = gson.fromJson(jsonElement, new TypeToken<List<User>>() {}.getType());
 
         } catch(IOException err){
-            System.err.println(err);
-        } catch(ParseException err){
             System.err.println(err);
         }
         
     }
 
-    public Boolean putItem(JSONObject o) {
-
-        String ID = (String)o.get("ID");
-
-        for (Object obj : Items) {
-            JSONObject jsonObject = (JSONObject) obj;
-
-            // 아이디가 같은 값이 있다면 중단
-            if (ID.equals(jsonObject.get("ID"))) return false;
+    public Boolean putItem(Item newItem) {
+        for (Item I : items) {
+            if(I.getID() == newItem.getID())
+            return false;
         }
 
-        Items.add(o);
+        items.add(newItem);
+
         return true;
     }
 
-    public JSONObject getItem(String ID) {
-        for (Object obj : Items) {
-            JSONObject jsonObject = (JSONObject) obj;
-
-            // 오브젝트를 찾았다면
-            if (ID.equals(jsonObject.get("ID"))) return jsonObject;
+    public Item getItem(int ID) {
+        for (Item i : items) {
+            if(i.getID() == ID) return i;
         }
 
-        // 찾는값이 없다면
         return null;
     }
 
+    public boolean updateItem(int ID, Item newItem){
+        for(int i = 0; i < items.size(); ++i){
+            if(items.get(i).getID() == ID) {
+                items.set(i, newItem);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean deleteItem(int ID){
+        for(int i = 0; i < items.size(); ++i){
+            if(items.get(i).getID() == ID) {
+                items.remove(i);
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }

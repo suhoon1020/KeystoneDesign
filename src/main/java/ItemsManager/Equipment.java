@@ -1,29 +1,28 @@
 package ItemsManager;
 
-import java.util.HashMap;
-import org.json.simple.JSONObject;
-
 public class Equipment implements Item{
-    JSONObject itemDetails;
+    private int ID;
+    private String type;
+    private String desc;
+    private int price;
+    private int count;
+    private int defence;
+
 
     @Override
     public Item createItemInfos() {
-        HashMap<String,Object> equipmentDetails = new HashMap<String,Object>();
-
-        equipmentDetails.put("ID", 0);
-        equipmentDetails.put("type", "Equipment");
-        equipmentDetails.put("desc", "");
-        equipmentDetails.put("price", 0);
-        equipmentDetails.put("count", 0);
-        equipmentDetails.put("defence", 0);
-
-        itemDetails = new JSONObject(equipmentDetails);
+        ID = 0;
+        type = "Equipment";
+        desc = "";
+        price = 0;
+        count = 0;
+        defence = 0;
         
         return this;
     }
-
+    
     @Override
-    public JSONObject getJsonObject() {
-        return itemDetails;
+    public int getID() {
+        return ID;
     }
 }

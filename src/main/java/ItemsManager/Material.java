@@ -1,31 +1,26 @@
 package ItemsManager;
 
-import java.util.HashMap;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import org.json.simple.JSONObject;
-
 public class Material implements Item{
-    JSONObject itemDetails;
+    private int ID;
+    private String type;
+    private String desc;
+    private int price;
+    private int count;
 
     @Override
     public Item createItemInfos() {
-        HashMap<String,Object> materialDetails = new HashMap<String,Object>();
+        ID = 0;
+        type = "Material";
+        desc = "";
+        price = 0;
+        count = 0;
 
-        materialDetails.put("ID", 0);
-        materialDetails.put("type", "Equipment");
-        materialDetails.put("desc", "");
-        materialDetails.put("price", 0);
-        materialDetails.put("count", 0);
-        materialDetails.put("defence", 0);
-
-        itemDetails = new JSONObject(materialDetails);
         return this;
     }
 
     @Override
-    public JSONObject getJsonObject() {
-        return itemDetails;
+    public int getID() {
+        return ID;
     }
+
 }

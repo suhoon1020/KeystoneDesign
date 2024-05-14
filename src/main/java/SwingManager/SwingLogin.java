@@ -93,9 +93,7 @@ public class SwingLogin extends JFrame {
         Btt_login.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                FileFacade fileFacade = new FileFacade();
 
-                for()
 
 
             }
