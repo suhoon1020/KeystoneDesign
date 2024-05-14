@@ -203,7 +203,6 @@ public class SwingLogin extends JFrame {
                             return;
                         }
                     }
-
                     User user = new User.UserBuilder()
                             .ID(textID.getText())
                             .PW(textPW.getText())

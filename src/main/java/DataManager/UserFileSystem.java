@@ -3,6 +3,8 @@ package DataManager;
 
 import UserOption.User;
 import com.google.gson.*;
+import netscape.javascript.JSObject;
+import org.json.simple.JSONObject;
 
 
 import java.io.*;
@@ -13,6 +15,8 @@ import java.nio.file.Paths;
 public class UserFileSystem {
 
     public static final String USER_FILE = "users.json";
+
+
 
 
     public void saveInfosToFile(User user) {
@@ -47,6 +51,17 @@ public class UserFileSystem {
         return jsonArray;
     }
 
+    public JsonObject getUser(String id){
+        JsonArray jsonArray = loadInfosFromFile();
+        JsonObject jsonObject = new JsonObject();
+        for(JsonElement jsonElement : jsonArray) {
+            if (jsonArray.getAsJsonObject().get("userID").getAsString().equals(id)){
+                jsonObject = jsonElement.getAsJsonObject();
+            }
+        }
+
+        return jsonObject;
+    }
 
     public void deleteUsersInfo(User user) {
         //TODO : 유저 삭제
