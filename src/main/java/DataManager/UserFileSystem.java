@@ -3,6 +3,7 @@ package DataManager;
 
 import UserOption.User;
 import com.google.gson.*;
+import com.google.gson.internal.bind.JsonTreeReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,18 +18,20 @@ import java.nio.file.Paths;
 public class UserFileSystem {
 
     public static final String USER_FILE = "users.json";
-    private JSONArray Users;
+    private JsonArray Users;
 
     public void saveInfosToFile() {
         FileWriter fw;
-
-        try{
+        Gson gson = new Gson();
+        try {
             fw = new FileWriter(USER_FILE);
 
-            fw.write(Users.toJSONString());
+            String usersString = gson.toJson(Users);
+
+            fw.write(usersString);
 
             fw.close();
-        } catch(IOException err){
+        } catch (IOException err) {
             System.err.println(err);
         }
     }
@@ -36,17 +39,17 @@ public class UserFileSystem {
 
     public void loadInfosFromFile() {
 
-        Users = new JSONArray();
+        Users = new JsonArray();
         Reader reader;
-        JSONParser parser = new JSONParser();
 
-        try{
+
+        try {
             reader = new FileReader(USER_FILE);
-            Users = (JSONArray)parser.parse(reader);
-
-        } catch(IOException err){
+            JsonElement jsonElement = JsonParser.parseReader(reader);
+            Users = jsonElement.getAsJsonArray();
+        } catch (IOException err) {
             System.err.println(err);
-        } catch(ParseException err){
+        } catch (ParseException err) {
             System.err.println(err);
         }
 
@@ -64,18 +67,20 @@ public class UserFileSystem {
         return null;
     }
 
-    public Boolean putUser(JSONObject o) {
+    public Boolean putUser(User user) {
 
-        String ID = (String)o.get("ID");
+        String ID = user.getUserID();
+        Gson gson = new Gson();
+        JSONObject jsonObject;
 
         for (Object obj : Users) {
-            JSONObject jsonObject = (JSONObject) obj;
+            jsonObject = (JSONObject) obj;
 
             // 아이디가 같은 값이 있다면 중단
             if (ID.equals(jsonObject.get("ID"))) return false;
         }
 
-        Users.add(o);
+        Users.add(jsonObject);
         return true;
     }
 

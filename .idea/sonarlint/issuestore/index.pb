@@ -40,5 +40,5 @@ K
 src/test/java/JSONTest.java,a\a\aad63f5a916a36856c04c066e8e2361a32b3ea90
 V
 &src/main/java/ItemsManager/Weapon.java,7\9\7969404f96df32663727194f59fdbe6d932f630e
-Z
-*src/main/java/DataManager/UserManager.java,f\2\f2955e11598a040c3f1d9aea0454698a1dd814fe
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
