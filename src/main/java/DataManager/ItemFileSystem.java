@@ -46,7 +46,7 @@ public class ItemFileSystem {
         
     }
 
-    public int putItem(JSONObject o) {
+    public Boolean putItem(JSONObject o) {
 
         String ID = (String)o.get("ID");
 
@@ -54,11 +54,11 @@ public class ItemFileSystem {
             JSONObject jsonObject = (JSONObject) obj;
 
             // 아이디가 같은 값이 있다면 중단
-            if (ID.equals(jsonObject.get("ID"))) return -1;
+            if (ID.equals(jsonObject.get("ID"))) return false;
         }
-        
+
         Items.add(o);
-        return 1;
+        return true;
     }
 
     public JSONObject getItem(String ID) {
@@ -72,4 +72,6 @@ public class ItemFileSystem {
         // 찾는값이 없다면
         return null;
     }
+
+
 }

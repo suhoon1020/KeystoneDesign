@@ -2,8 +2,12 @@ package SwingManager;
 
 import DataManager.FileFacade;
 import UserOption.User;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.awt.EventQueue;
 
@@ -14,6 +18,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class SwingLogin extends JFrame {
 
@@ -89,20 +94,10 @@ public class SwingLogin extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 FileFacade fileFacade = new FileFacade();
-                JsonArray jsonArray = fileFacade.loadUsers();
-                boolean loginSuccess = false;
-                for (JsonElement jsonElement : jsonArray) {
-                    if (jsonElement.getAsJsonObject().get("userID").getAsString().equals(In_ID.getText())
-                            && jsonElement.getAsJsonObject().get("userPW").getAsString().equals(In_password.getText())) {
-                        JOptionPane.showMessageDialog(null,"로그인 되었습니다");
-                        loginSuccess = true;
-                        break;
-                    }
-                }
 
-                if (!loginSuccess) {
-                    JOptionPane.showMessageDialog(null,"로그인 정보가 올바르지 않습니다");
-                }
+                for()
+
+
             }
         });
 
@@ -191,24 +186,23 @@ public class SwingLogin extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 // TODO : 회원가입 검증 후 팝업창 띄우기
                 FileFacade fileFacade = new FileFacade();
+                JSONParser jsonParser = new JSONParser();
+                JSONObject jsonObject;
                 if (In_register_ID.getText().isEmpty() || In_register_Password.getText().isEmpty() || In_regisiter_Name.getText().isEmpty() || In_register_PhoneNumber.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "모두 입력하여 주십시오");
                 } else {
-
-                    JsonArray jsonArray = fileFacade.loadUsers();
-                    for (JsonElement jsonElement : jsonArray) {
-                        if (jsonElement.getAsJsonObject().get("userID").getAsString().equals(In_register_ID.getText())) {
-                            JOptionPane.showMessageDialog(null, "이미 존재하는 ID입니다");
-                            return;
-                        }
-                    }
                     User user = new User.UserBuilder()
                             .ID(In_register_ID.getText())
                             .PW(In_register_Password.getText())
                             .name(In_regisiter_Name.getText())
                             .phone(In_register_PhoneNumber.getText())
                             .build();
-                    fileFacade.saveUser(user);
+                    try {
+                        jsonObject = (JSONObject) jsonParser.parse(user.toString());
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                    fileFacade.putUser(jsonObject);
                     JOptionPane.showMessageDialog(null, "회원가입이 완료 되었습니다");
                     cardLayout.show(getContentPane(), "LoginPage");
                 }

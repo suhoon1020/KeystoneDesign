@@ -2,6 +2,8 @@ package ItemsManager;
 
 import java.util.HashMap;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.json.simple.JSONObject;
 
 public class Material implements Item{
@@ -19,7 +21,6 @@ public class Material implements Item{
         materialDetails.put("defence", 0);
 
         itemDetails = new JSONObject(materialDetails);
-
         return this;
     }
 

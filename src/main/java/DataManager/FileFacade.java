@@ -1,9 +1,7 @@
 package DataManager;
 
 import ItemsManager.Item;
-import UserOption.User;
-import com.google.gson.JsonArray;
-import java.util.List;
+import org.json.simple.JSONObject;
 
 
 public class FileFacade {
@@ -17,16 +15,20 @@ public class FileFacade {
         this.userManager=new UserFileSystem();
     }
 
-    public void saveUser(User user){
-        userManager.saveInfosToFile(user);
+    public void saveUser(){
+        userManager.saveInfosToFile();
     }
 
-    public JsonArray loadUsers(){
-        return userManager.loadInfosFromFile();
+    public void loadUsers(){
+        userManager.loadInfosFromFile();
     }
 
     public void getDefinedUser(String id){
         userManager.getUser(id);
+    }
+
+    public void putUser(JSONObject o){
+        userManager.putUser(o);
     }
 
     public void saveItem(Item item){
