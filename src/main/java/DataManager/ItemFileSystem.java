@@ -1,9 +1,15 @@
 package DataManager;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -12,7 +18,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import ItemsManager.Item;
-import UserOption.User;
 
 public class ItemFileSystem {
     public static final String ITEM_FILE = "items.json";
@@ -21,13 +26,11 @@ public class ItemFileSystem {
 
     public void saveInfosToFile() {
         Gson gson = new Gson();
-        FileWriter fw;
 
         try{
-            fw = new FileWriter(ITEM_FILE);
+            FileWriter fw = new FileWriter(ITEM_FILE);
 
             fw.write(gson.toJson(items));
-
             fw.close();
         } catch(IOException err){
             System.err.println(err);
@@ -35,23 +38,26 @@ public class ItemFileSystem {
     }
 
     public void loadInfosFromFile() {
-        Gson gson = new Gson();
-
-        try {
-            Reader reader = new FileReader(ITEM_FILE);
-            JsonElement jsonElement = JsonParser.parseReader(reader);
-
-            items = gson.fromJson(jsonElement, new TypeToken<List<User>>() {}.getType());
-
-        } catch(IOException err){
-            System.err.println(err);
-        }
         
+        if (Files.exists(Paths.get(ITEM_FILE))) {
+            items = new ArrayList<>();
+        }
+        else{
+            try {
+                Gson gson = new Gson();
+                Reader reader = new FileReader(ITEM_FILE);
+                JsonElement jsonElement = JsonParser.parseReader(reader);
+    
+                items = gson.fromJson(jsonElement, new TypeToken<List<Item>>() {}.getType());
+            } catch(IOException err){
+                System.err.println(err);
+            }
+        }
     }
 
     public Boolean putItem(Item newItem) {
         for (Item I : items) {
-            if(I.getID() == newItem.getID())
+            if(I.getName() == newItem.getName())
             return false;
         }
 
@@ -60,17 +66,17 @@ public class ItemFileSystem {
         return true;
     }
 
-    public Item getItem(int ID) {
+    public Item getItem(String name) {
         for (Item i : items) {
-            if(i.getID() == ID) return i;
+            if(i.getName() == name) return i;
         }
 
         return null;
     }
 
-    public boolean updateItem(int ID, Item newItem){
+    public boolean updateItem(String name, Item newItem){
         for(int i = 0; i < items.size(); ++i){
-            if(items.get(i).getID() == ID) {
+            if(items.get(i).getName() == name) {
                 items.set(i, newItem);
                 return true;
             }
@@ -79,9 +85,9 @@ public class ItemFileSystem {
         return false;
     }
 
-    public boolean deleteItem(int ID){
+    public boolean deleteItem(String name){
         for(int i = 0; i < items.size(); ++i){
-            if(items.get(i).getID() == ID) {
+            if(items.get(i).getName() == name) {
                 items.remove(i);
                 return true;
             }

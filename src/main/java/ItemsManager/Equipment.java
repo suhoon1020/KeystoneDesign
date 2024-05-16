@@ -1,7 +1,7 @@
 package ItemsManager;
 
 public class Equipment implements Item{
-    private int ID;
+    private String name;
     private String type;
     private String desc;
     private int price;
@@ -11,7 +11,7 @@ public class Equipment implements Item{
 
     @Override
     public Item createItemInfos() {
-        ID = 0;
+        name = "";
         type = "Equipment";
         desc = "";
         price = 0;
@@ -22,7 +22,7 @@ public class Equipment implements Item{
     }
     
     @Override
-    public int getID() {
+    public int getName() {
         return ID;
     }
 }
