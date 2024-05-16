@@ -78,7 +78,7 @@ public class UserFileSystem {
     }
 
 
-    public Boolean updateItem(String id, User user) {
+    public Boolean updateUser(String id, User user) {
         for (int i = 0; i < Users.size(); ++i) {
             if (Users.get(i).getUserID().equals(id)) {
                 Users.set(i, user);
@@ -89,7 +89,7 @@ public class UserFileSystem {
         return false;
     }
 
-    public Boolean deleteItem(String id) {
+    public Boolean deleteUser(String id) {
         for (int i = 0; i < Users.size(); ++i) {
             if (Users.get(i).getUserID().equals(id)) {
                 Users.remove(i);

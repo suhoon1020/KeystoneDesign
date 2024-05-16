@@ -62,13 +62,13 @@ public class ItemFileSystem {
         return null;
     }
 
-    public List<Item> getItems(){
+    public List<Item> getItemList(){
         return Items;
     }
 
     public Boolean putItem(Item newItem) {
         for (Item I : Items) {
-            if(I.getName() == newItem.getName())
+            if(I.getName().equals(newItem.getName()))
             return false;
         }
 

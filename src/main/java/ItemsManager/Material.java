@@ -3,6 +3,7 @@ package ItemsManager;
 public class Material implements Item{
     private String name;
     private String type;
+    private String grade;
     private String desc;
     private int price;
     private int count;
@@ -11,6 +12,7 @@ public class Material implements Item{
     public Item createItemInfos() {
         name = "";
         type = "Material";
+        grade = "";
         desc = "";
         price = 0;
         count = 0;

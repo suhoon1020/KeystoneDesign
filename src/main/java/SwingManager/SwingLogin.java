@@ -17,6 +17,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -93,8 +94,7 @@ public class SwingLogin extends JFrame {
         Btt_login.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                FileFacade fileFacade = new FileFacade();
-                List<User> users = fileFacade.getUsersList();
+                List<User> users = FileFacade.getFacade().getUsersList();
 
                 for (User user : users) {
                     if (user.getUserID().equals(In_ID.getText()) && user.getUserPW().equals(In_password.getText())) {
@@ -188,7 +188,6 @@ public class SwingLogin extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // TODO : 회원가입 검증 후 팝업창 띄우기
-                FileFacade fileFacade = new FileFacade();
 
                 if (In_register_ID.getText().isEmpty() || In_register_Password.getText().isEmpty() || In_regisiter_Name.getText().isEmpty() || In_register_PhoneNumber.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "모두 입력하여 주십시오");
@@ -200,9 +199,9 @@ public class SwingLogin extends JFrame {
                             .phone(In_register_PhoneNumber.getText())
                             .build();
 
-                    if (fileFacade.putUser(user)) {
+                    if (FileFacade.getFacade().putUser(user)) {
                         JOptionPane.showMessageDialog(null, "회원가입이 완료 되었습니다");
-                        fileFacade.saveUsers();
+                        FileFacade.getFacade().saveUsers();
                         cardLayout.show(getContentPane(), "LoginPage");
                     } else {
                         JOptionPane.showMessageDialog(null, "중복된 ID가 있습니다");

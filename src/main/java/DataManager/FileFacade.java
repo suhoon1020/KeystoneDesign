@@ -18,6 +18,7 @@ public class FileFacade {
         this.itemFileSystem = new ItemFileSystem();
         this.userFileSystem = new UserFileSystem();
 
+        inventoryFileSystem.loadInfosFromFile();
         itemFileSystem.loadInfosFromFile();
         userFileSystem.loadInfosFromFile();
     }
@@ -41,16 +42,24 @@ public class FileFacade {
         userFileSystem.loadInfosFromFile();
     }
 
-    public void getUser(String id) {
-        userFileSystem.getUser(id);
+    public User getUser(String id) {
+        return userFileSystem.getUser(id);
     }
 
     public List<User> getUsersList(){
         return userFileSystem.getUsersList();
     }
 
-    public void putUser(User user) {
-        userFileSystem.putUser(user);
+    public boolean putUser(User user) {
+        return userFileSystem.putUser(user);
+    }
+
+    public boolean updateUser(String id, User user){
+        return userFileSystem.updateUser(id, user);
+    }
+
+    public boolean deleteUser(String id){
+        return userFileSystem.deleteUser(id);
     }
 
     /* 
@@ -65,13 +74,16 @@ public class FileFacade {
         itemFileSystem.loadInfosFromFile();
     }
 
-    public void putItem(Item item) {
-        itemFileSystem.putItem(item);
-        itemFileSystem.saveInfosToFile();
+    public boolean putItem(Item item) {
+        return itemFileSystem.putItem(item);
     }
 
     public Item getItem(String name){
         return itemFileSystem.getItem(name);
+    }
+
+    public List<Item> getItemList(){
+        return itemFileSystem.getItemList();
     }
 
     public boolean updateItem(String name, Item item){
@@ -80,9 +92,5 @@ public class FileFacade {
 
     public boolean deleteItem(String name){
         return itemFileSystem.deleteItem(name);
-    }
-
-    public void getItems(){
-        itemFileSystem.getItems();
     }
 }
