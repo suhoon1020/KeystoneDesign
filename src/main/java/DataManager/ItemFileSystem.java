@@ -96,4 +96,9 @@ public class ItemFileSystem {
         return false;
     }
 
+
+    public List getItems(){
+        return items;
+    }
+
 }
