@@ -1,9 +1,11 @@
 package DataManager;
 
 
+import ItemsManager.Item;
 import UserOption.User;
 import com.google.gson.*;
 import com.google.gson.internal.bind.JsonTreeReader;
+import com.google.gson.reflect.TypeToken;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,12 +15,14 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserFileSystem {
 
     public static final String USER_FILE = "users.json";
-    private JsonArray Users;
+    private static List<User> Users;
 
     public void saveInfosToFile() {
         FileWriter fw;
@@ -38,58 +42,65 @@ public class UserFileSystem {
 
 
     public void loadInfosFromFile() {
+        Gson gson = new Gson();
+        if (Files.exists(Paths.get(USER_FILE))) {
+            Users = new ArrayList<>();
+        } else {
+            try {
+                Reader reader = new FileReader(USER_FILE);
+                JsonElement jsonElement = JsonParser.parseReader(reader);
 
-        Users = new JsonArray();
-        Reader reader;
+                Users = gson.fromJson(jsonElement, new TypeToken<List<User>>() {
+                }.getType());
 
-
-        try {
-            reader = new FileReader(USER_FILE);
-            JsonElement jsonElement = JsonParser.parseReader(reader);
-            Users = jsonElement.getAsJsonArray();
-        } catch (IOException err) {
-            System.err.println(err);
-        } catch (ParseException err) {
-            System.err.println(err);
+            } catch (IOException err) {
+                System.err.println(err);
+            }
         }
-
     }
 
-    public JSONObject getUser(String id) {
-        for (Object obj : Users) {
-            JSONObject jsonObject = (JSONObject) obj;
+    public User getUser(String id) {
 
-            // 오브젝트를 찾았다면
-            if (id.equals(jsonObject.get("ID"))) return jsonObject;
+        for (User user : Users) {
+            if (user.getUserID().equals(id)) return user;
         }
 
         // 찾는값이 없다면
         return null;
     }
 
-    public Boolean putUser(User user) {
-
-        String ID = user.getUserID();
-        Gson gson = new Gson();
-        JSONObject jsonObject;
-
-        for (Object obj : Users) {
-            jsonObject = (JSONObject) obj;
-
-            // 아이디가 같은 값이 있다면 중단
-            if (ID.equals(jsonObject.get("ID"))) return false;
+    public Boolean putUser(User newUser) {
+        for (User user : Users) {
+            if (user.getUserID() == newUser.getUserID())
+                return false;
         }
 
-        Users.add(jsonObject);
+        Users.add(newUser);
+
         return true;
     }
 
-    public void deleteUsersInfo(User user) {
-        //TODO : 유저 삭제
+
+    public Boolean updateItem(String id, User user) {
+        for (int i = 0; i < Users.size(); ++i) {
+            if (Users.get(i).getUserID().equals(id)) {
+                Users.set(i, user);
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public void updateUsersInfo(User user) {
-        //TODO 유저 업뎃
+    public Boolean deleteItem(String id) {
+        for (int i = 0; i < Users.size(); ++i) {
+            if (Users.get(i).getUserID().equals(id)) {
+                Users.remove(i);
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
