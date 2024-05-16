@@ -1,11 +1,13 @@
 package DataManager;
 
+import java.util.List;
+
 import ItemsManager.Item;
 import UserOption.User;
 
 
 public class FileFacade {
-    private FileFacade fileFacade;
+    private static FileFacade fileFacade;
 
     private InventoryFileSystem inventoryFileSystem;
     private ItemFileSystem itemFileSystem;
@@ -20,7 +22,7 @@ public class FileFacade {
         userFileSystem.loadInfosFromFile();
     }
 
-    public FileFacade getFacade(){
+    public static FileFacade getFacade(){
         if(fileFacade == null){
             fileFacade = new FileFacade();
         }
@@ -43,6 +45,10 @@ public class FileFacade {
         userFileSystem.getUser(id);
     }
 
+    public List<User> getUsersList(){
+        return userFileSystem.getUsersList();
+    }
+
     public void putUser(User user) {
         userFileSystem.putUser(user);
     }
@@ -51,8 +57,17 @@ public class FileFacade {
      *      ITEMS
      */
 
-    public void saveItem(Item item) {
+    public void saveItems() {
+        itemFileSystem.saveInfosToFile();
+    }
+
+    public void loadItems() {
+        itemFileSystem.loadInfosFromFile();
+    }
+
+    public void putItem(Item item) {
         itemFileSystem.putItem(item);
+        itemFileSystem.saveInfosToFile();
     }
 
     public Item getItem(String name){

@@ -22,7 +22,7 @@ public class Equipment implements Item{
     }
     
     @Override
-    public int getName() {
-        return ID;
+    public String getName() {
+        return name;
     }
 }

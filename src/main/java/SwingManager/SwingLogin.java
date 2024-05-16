@@ -8,8 +8,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 
-
-
 import java.awt.EventQueue;
 
 import javax.swing.*;
@@ -20,6 +18,7 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.List;
 
 public class SwingLogin extends JFrame {
 
@@ -94,9 +93,14 @@ public class SwingLogin extends JFrame {
         Btt_login.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                FileFacade fileFacade = new FileFacade();
+                List<User> users = fileFacade.getUsersList();
 
-
-
+                for (User user : users) {
+                    if (user.getUserID().equals(In_ID.getText()) && user.getUserPW().equals(In_password.getText())) {
+                        JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
+                    }
+                }
             }
         });
 
@@ -196,8 +200,14 @@ public class SwingLogin extends JFrame {
                             .phone(In_register_PhoneNumber.getText())
                             .build();
 
-                    JOptionPane.showMessageDialog(null, "회원가입이 완료 되었습니다");
-                    cardLayout.show(getContentPane(), "LoginPage");
+                    if (fileFacade.putUser(user)) {
+                        JOptionPane.showMessageDialog(null, "회원가입이 완료 되었습니다");
+                        fileFacade.saveUsers();
+                        cardLayout.show(getContentPane(), "LoginPage");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "중복된 ID가 있습니다");
+                    }
+
                 }
 
             }
@@ -207,22 +217,22 @@ public class SwingLogin extends JFrame {
         Btt_tryRegister.setFont(new Font("굴림", Font.PLAIN, 35));
         Btt_tryRegister.setBounds(150, 550, 250, 70);
         registerPage.add(Btt_tryRegister);
-        
+
         JLabel L_register_ID = new JLabel("아이디 :");
         L_register_ID.setFont(new Font("굴림", Font.PLAIN, 25));
         L_register_ID.setBounds(71, 140, 140, 41);
         registerPage.add(L_register_ID);
-        
+
         JLabel L_register_Password = new JLabel("비밀번호 :");
         L_register_Password.setFont(new Font("굴림", Font.PLAIN, 25));
         L_register_Password.setBounds(71, 215, 140, 41);
         registerPage.add(L_register_Password);
-        
+
         JLabel L_register_Name = new JLabel("이름 :");
         L_register_Name.setFont(new Font("굴림", Font.PLAIN, 25));
         L_register_Name.setBounds(71, 293, 140, 41);
         registerPage.add(L_register_Name);
-        
+
         JLabel L_register_PhoneNumber = new JLabel("전화번호 :");
         L_register_PhoneNumber.setFont(new Font("굴림", Font.PLAIN, 25));
         L_register_PhoneNumber.setBounds(71, 368, 140, 41);
@@ -247,22 +257,23 @@ public class SwingLogin extends JFrame {
         In_findID_Name.setColumns(10);
         In_findID_Name.setBounds(223, 140, 247, 41);
         findIDPage.add(In_findID_Name);
-        
+
         In_findID_PhoneNumber = new JTextField();
         In_findID_PhoneNumber.setColumns(10);
         In_findID_PhoneNumber.setBounds(223, 215, 247, 41);
         findIDPage.add(In_findID_PhoneNumber);
-        
+
         JLabel L_findID_ID = new JLabel("이름 :");
         L_findID_ID.setFont(new Font("굴림", Font.PLAIN, 25));
         L_findID_ID.setBounds(71, 140, 140, 41);
         findIDPage.add(L_findID_ID);
-        
+
         JLabel L_findID_Name = new JLabel("전화번호 :");
         L_findID_Name.setFont(new Font("굴림", Font.PLAIN, 25));
-        L_findID_Name.setBounds(71, 215, 140, 41);;
+        L_findID_Name.setBounds(71, 215, 140, 41);
+        ;
         findIDPage.add(L_findID_Name);
-        
+
         JButton Btt_tryFindID = new JButton("아이디 찾기");
         Btt_tryFindID.addMouseListener(new MouseAdapter() {
             @Override
@@ -275,56 +286,54 @@ public class SwingLogin extends JFrame {
         Btt_tryFindID.setFont(new Font("굴림", Font.PLAIN, 35));
         Btt_tryFindID.setBounds(150, 550, 250, 70);
         findIDPage.add(Btt_tryFindID);
-        
+
         JPanel findPasswordPage = new JPanel();
         findPasswordPage.setLayout(null);
         contentPane.add(findPasswordPage, "FindPasswordPage");
-        
+
         JLabel L_findPasswordTitle = new JLabel("비밀번호 찾기");
         L_findPasswordTitle.setFont(new Font("굴림", Font.BOLD, 30));
         L_findPasswordTitle.setBounds(182, 30, 200, 45);
         findPasswordPage.add(L_findPasswordTitle);
-        
+
         In_findPassword_ID = new JTextField();
         In_findPassword_ID.setColumns(10);
         In_findPassword_ID.setBounds(223, 140, 247, 41);
         findPasswordPage.add(In_findPassword_ID);
-        
+
         In_findPassword_Name = new JTextField();
         In_findPassword_Name.setColumns(10);
         In_findPassword_Name.setBounds(223, 215, 247, 41);
         findPasswordPage.add(In_findPassword_Name);
-        
+
         In_findPassword_PhoneNumber = new JTextField();
         In_findPassword_PhoneNumber.setColumns(10);
         In_findPassword_PhoneNumber.setBounds(223, 295, 247, 41);
         findPasswordPage.add(In_findPassword_PhoneNumber);
-        
+
         JLabel L_findPassword_ID = new JLabel("아이디 :");
         L_findPassword_ID.setFont(new Font("굴림", Font.PLAIN, 25));
         L_findPassword_ID.setBounds(71, 140, 140, 41);
         findPasswordPage.add(L_findPassword_ID);
-        
+
         JLabel L_findPassword_Name = new JLabel("이름 :");
         L_findPassword_Name.setFont(new Font("굴림", Font.PLAIN, 25));
         L_findPassword_Name.setBounds(71, 215, 140, 41);
         findPasswordPage.add(L_findPassword_Name);
-        
+
 
         JLabel L_findPassword_PhoneNumber = new JLabel("전화번호 :");
         L_findPassword_PhoneNumber.setFont(new Font("굴림", Font.PLAIN, 25));
         L_findPassword_PhoneNumber.setBounds(71, 295, 140, 41);
         findPasswordPage.add(L_findPassword_PhoneNumber);
-        
+
         JButton Btt_tryFindID_1 = new JButton("비밀번호 찾기");
         Btt_tryFindID_1.setFont(new Font("굴림", Font.PLAIN, 30));
         Btt_tryFindID_1.setBounds(150, 550, 250, 70);
         findPasswordPage.add(Btt_tryFindID_1);
-        
-        
+
 
     }
 }
-
 
 

@@ -1,16 +1,9 @@
 package DataManager;
 
 
-import ItemsManager.Item;
 import UserOption.User;
 import com.google.gson.*;
-import com.google.gson.internal.bind.JsonTreeReader;
 import com.google.gson.reflect.TypeToken;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 
 import java.io.*;
 import java.nio.file.Files;
@@ -42,11 +35,11 @@ public class UserFileSystem {
 
 
     public void loadInfosFromFile() {
-        Gson gson = new Gson();
-        if (Files.exists(Paths.get(USER_FILE))) {
+        if (!Files.exists(Paths.get(USER_FILE))) {
             Users = new ArrayList<>();
         } else {
             try {
+                Gson gson = new Gson();
                 Reader reader = new FileReader(USER_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
@@ -67,6 +60,10 @@ public class UserFileSystem {
 
         // 찾는값이 없다면
         return null;
+    }
+
+    public List<User> getUsersList() {
+        return Users;
     }
 
     public Boolean putUser(User newUser) {

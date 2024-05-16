@@ -1,7 +1,6 @@
 package UserOption;
 
 public class User {
-
     private String userID;
     private String userPW;
     private String userName;
