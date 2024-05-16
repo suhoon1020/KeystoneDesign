@@ -1,7 +1,7 @@
 package DataManager;
 
 import ItemsManager.Item;
-import org.json.simple.JSONObject;
+import UserOption.User;
 
 
 public class FileFacade {
@@ -9,32 +9,31 @@ public class FileFacade {
     private ItemFileSystem itemManager;
     private UserFileSystem userManager;
 
-    public FileFacade(){
-        this.inventoryManager=new InventoryFileSystem();
-        this.itemManager=new ItemFileSystem();
-        this.userManager=new UserFileSystem();
+    public FileFacade() {
+        this.inventoryManager = new InventoryFileSystem();
+        this.itemManager = new ItemFileSystem();
+        this.userManager = new UserFileSystem();
     }
 
-    public void saveUser(){
+    public void saveUsers() {
         userManager.saveInfosToFile();
     }
 
-    public void loadUsers(){
+    public void loadUsers() {
         userManager.loadInfosFromFile();
     }
 
-    public void getDefinedUser(String id){
+    public void getUser(String id) {
         userManager.getUser(id);
     }
 
-    public void putUser(JSONObject o){
-        userManager.putUser(o);
+    public void putUser(User user) {
+        userManager.putUser(user);
     }
 
-    public void saveItem(Item item){
-        itemManager.putItem(item.getJsonObject());
+    public void saveItem(Item item) {
+        itemManager.putItem(item);
     }
-
 
 
 }

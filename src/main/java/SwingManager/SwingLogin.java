@@ -6,8 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+
+
+
 
 import java.awt.EventQueue;
 
@@ -184,8 +185,7 @@ public class SwingLogin extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 // TODO : 회원가입 검증 후 팝업창 띄우기
                 FileFacade fileFacade = new FileFacade();
-                JSONParser jsonParser = new JSONParser();
-                JSONObject jsonObject;
+
                 if (In_register_ID.getText().isEmpty() || In_register_Password.getText().isEmpty() || In_regisiter_Name.getText().isEmpty() || In_register_PhoneNumber.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "모두 입력하여 주십시오");
                 } else {
@@ -195,12 +195,7 @@ public class SwingLogin extends JFrame {
                             .name(In_regisiter_Name.getText())
                             .phone(In_register_PhoneNumber.getText())
                             .build();
-                    try {
-                        jsonObject = (JSONObject) jsonParser.parse(user.toString());
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
-                    fileFacade.putUser(jsonObject);
+
                     JOptionPane.showMessageDialog(null, "회원가입이 완료 되었습니다");
                     cardLayout.show(getContentPane(), "LoginPage");
                 }
