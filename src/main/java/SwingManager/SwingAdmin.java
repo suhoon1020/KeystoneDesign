@@ -1,4 +1,4 @@
-package SwingManager;
+package test;
 
 import java.awt.EventQueue;
 
@@ -17,6 +17,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTable;
 
 public class SwingAdmin extends JFrame {
 
@@ -31,6 +32,8 @@ public class SwingAdmin extends JFrame {
 	private JTextField In_userName;
 	private JTextField In_userPhoneNumber;
 	private JTextField In_ItemOp2;
+	private JTable T_ItemList;
+	private JTable T_userList;
 
 	/**
 	 * Launch the application.
@@ -67,12 +70,13 @@ public class SwingAdmin extends JFrame {
 		contents.setLayout(cardLayout);
 		contentPane.add(contents);
 		
+		
 		/*
 		 * AuctionManage Page
 		 */
 		
 		JPanel panel = new JPanel();
-		contents.add(panel, "AuctionManagePage");
+		contents.add(panel, "AuctionManage Page");
 		
 		/*
 		 * ItemManage Page
@@ -83,9 +87,11 @@ public class SwingAdmin extends JFrame {
 		itemPage.setLayout(null);
 		
 		JPanel itemList = new JPanel();
-		itemList.setBorder(new LineBorder(new Color(0, 0, 0)));
 		itemList.setBounds(12, 10, 641, 526);
 		itemPage.add(itemList);
+		
+		T_ItemList = new JTable();
+		itemList.add(T_ItemList);
 		
 		JPanel itemManageContent = new JPanel();
 		itemManageContent.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -193,6 +199,9 @@ public class SwingAdmin extends JFrame {
 		userList.setBounds(12, 10, 641, 526);
 		userPage.add(userList);
 		
+		T_userList = new JTable();
+		userList.add(T_userList);
+		
 		JPanel userManageContent = new JPanel();
 		userManageContent.setBorder(new LineBorder(new Color(0, 0, 0)));
 		userManageContent.setLayout(null);
@@ -270,7 +279,7 @@ public class SwingAdmin extends JFrame {
 		JButton Btt_goAution = new JButton("경매장 관리");
 		Btt_goAution.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(contents, "AuctionManagePage");
+				cardLayout.show(getContentPane(), "AuctionManagePage");
 			}
 		});
 		Btt_goAution.setFont(new Font("굴림", Font.PLAIN, 20));
@@ -279,7 +288,7 @@ public class SwingAdmin extends JFrame {
 		JButton Btt_goItem = new JButton("아이템 관리");
 		Btt_goItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(contents, "ItemManagePage");
+				cardLayout.show(getContentPane(), "ItemManagePage");
 			}
 		});
 		Btt_goItem.setFont(new Font("굴림", Font.PLAIN, 20));
@@ -288,7 +297,7 @@ public class SwingAdmin extends JFrame {
 		JButton Btt_goUser = new JButton("유저 관리");
 		Btt_goUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(contents, "UserManagePage");
+				cardLayout.show(getContentPane(), "UserManagePage");
 			}
 		});
 		Btt_goUser.setFont(new Font("굴림", Font.PLAIN, 20));
