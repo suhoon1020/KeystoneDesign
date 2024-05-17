@@ -99,8 +99,11 @@ public class SwingLogin extends JFrame {
                 for (User user : users) {
                     if (user.getUserID().equals(In_ID.getText()) && user.getUserPW().equals(In_password.getText())) {
                         JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
+                        return;
                     }
                 }
+
+                JOptionPane.showMessageDialog(null, "로그인에 실패하였습니다");
             }
         });
 
@@ -262,24 +265,33 @@ public class SwingLogin extends JFrame {
         In_findID_PhoneNumber.setBounds(223, 215, 247, 41);
         findIDPage.add(In_findID_PhoneNumber);
 
-        JLabel L_findID_ID = new JLabel("이름 :");
-        L_findID_ID.setFont(new Font("굴림", Font.PLAIN, 25));
-        L_findID_ID.setBounds(71, 140, 140, 41);
-        findIDPage.add(L_findID_ID);
-
-        JLabel L_findID_Name = new JLabel("전화번호 :");
+        JLabel L_findID_Name = new JLabel("이름 :");
         L_findID_Name.setFont(new Font("굴림", Font.PLAIN, 25));
-        L_findID_Name.setBounds(71, 215, 140, 41);
-        ;
+        L_findID_Name.setBounds(71, 140, 140, 41);
         findIDPage.add(L_findID_Name);
+
+        JLabel L_findID_PhoneNum = new JLabel("전화번호 :");
+        L_findID_PhoneNum.setFont(new Font("굴림", Font.PLAIN, 25));
+        L_findID_PhoneNum.setBounds(71, 215, 140, 41);
+        ;
+        findIDPage.add(L_findID_PhoneNum);
 
         JButton Btt_tryFindID = new JButton("아이디 찾기");
         Btt_tryFindID.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // TODO : 아이디 찾기 팝업창 띄우기
+                List<User> users = FileFacade.getFacade().getUsersList();
 
-                cardLayout.show(getContentPane(), "LoginPage");
+                for (User user : users) {
+                    if (user.getUserName().equals(L_findID_PhoneNum.getText()) && user.getUserPhoneNum().equals(L_findID_PhoneNum.getText())) {
+                        String ID = user.getUserID();
+                        JOptionPane.showMessageDialog(null, user.getUserName() + "님의 ID는 " + ID + "입니다");
+                        cardLayout.show(getContentPane(), "LoginPage");
+                        return;
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "회원님의 정보를 찾을 수 없습니다");
             }
         });
         Btt_tryFindID.setFont(new Font("굴림", Font.PLAIN, 35));

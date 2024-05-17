@@ -80,7 +80,7 @@ public class ItemFileSystem {
 
     public boolean updateItem(String name, Item newItem){
         for(int i = 0; i < Items.size(); ++i){
-            if(Items.get(i).getName() == name) {
+            if(Items.get(i).getName().equals(name)) {
                 Items.set(i, newItem);
                 return true;
             }
@@ -91,7 +91,7 @@ public class ItemFileSystem {
 
     public boolean deleteItem(String name){
         for(int i = 0; i < Items.size(); ++i){
-            if(Items.get(i).getName() == name) {
+            if(Items.get(i).getName().equals(name)) {
                 Items.remove(i);
                 return true;
             }
@@ -100,7 +100,9 @@ public class ItemFileSystem {
         return false;
     }
 
+    public void defaultItem(){
 
+    }
 
 
 }

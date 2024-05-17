@@ -18,20 +18,17 @@ import UserOption.Inventory;
 
 public class InventoryFileSystem {
     public static final String INVENTORY_FILE = "invs.json";
-    public static final String AUCTION_FILE = "auction.json";
-
     private static List<Inventory> inventories;
-    private static Inventory auction;
 
     public void saveInfosToFile() {
         Gson gson = new Gson();
 
-        try{
+        try {
             FileWriter fw = new FileWriter(INVENTORY_FILE);
 
             fw.write(gson.toJson(inventories));
             fw.close();
-        } catch(IOException err){
+        } catch (IOException err) {
             System.err.println(err);
         }
     }
@@ -45,36 +42,8 @@ public class InventoryFileSystem {
                 Reader reader = new FileReader(INVENTORY_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                inventories = gson.fromJson(jsonElement, new TypeToken<List<Inventory>>() {}.getType());
-            } catch (IOException err) {
-                System.err.println(err);
-            }
-        }
-    }
-
-    public void saveAuctionToFile() {
-        Gson gson = new Gson();
-
-        try{
-            FileWriter fw = new FileWriter(AUCTION_FILE);
-
-            fw.write(gson.toJson(auction));
-            fw.close();
-        } catch(IOException err){
-            System.err.println(err);
-        }
-    }
-
-    public void loadAuctionFromFile() {
-        if (!Files.exists(Paths.get(AUCTION_FILE))) {
-            auction = new Inventory();
-        } else {
-            try {
-                Gson gson = new Gson();
-                Reader reader = new FileReader(AUCTION_FILE);
-                JsonElement jsonElement = JsonParser.parseReader(reader);
-
-                auction = gson.fromJson(jsonElement, new TypeToken<Inventory>() {}.getType());
+                inventories = gson.fromJson(jsonElement, new TypeToken<List<Inventory>>() {
+                }.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
@@ -83,15 +52,15 @@ public class InventoryFileSystem {
 
     public Inventory getIventory(String userID) {
         for (Inventory i : inventories) {
-            if(i.getUserID() == userID) return i;
+            if (i.getUserID().equals(userID)) return i;
         }
 
         return null;
     }
 
-    public boolean updateInventory(String userID, Inventory newInventory){
-        for(int i = 0; i < inventories.size(); ++i){
-            if(inventories.get(i).getUserID() == userID) {
+    public boolean updateInventory(String userID, Inventory newInventory) {
+        for (int i = 0; i < inventories.size(); ++i) {
+            if (inventories.get(i).getUserID().equals(userID)) {
                 inventories.set(i, newInventory);
                 return true;
             }
@@ -99,6 +68,5 @@ public class InventoryFileSystem {
 
         return false;
     }
-
 
 }

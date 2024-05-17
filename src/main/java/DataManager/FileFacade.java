@@ -12,15 +12,19 @@ public class FileFacade {
     private InventoryFileSystem inventoryFileSystem;
     private ItemFileSystem itemFileSystem;
     private UserFileSystem userFileSystem;
+    private AuctionFileSystem auctionFileSystem;
+
 
     private FileFacade() {
-        this.inventoryFileSystem = new InventoryFileSystem();
         this.itemFileSystem = new ItemFileSystem();
         this.userFileSystem = new UserFileSystem();
+        this.auctionFileSystem = new AuctionFileSystem();
+        this.inventoryFileSystem = new InventoryFileSystem();
 
         inventoryFileSystem.loadInfosFromFile();
         itemFileSystem.loadInfosFromFile();
         userFileSystem.loadInfosFromFile();
+        auctionFileSystem.loadAuctionFromFile();
     }
 
     public static FileFacade getFacade(){
@@ -92,5 +96,12 @@ public class FileFacade {
 
     public boolean deleteItem(String name){
         return itemFileSystem.deleteItem(name);
+    }
+
+    /*
+    TRADING
+     */
+    public void tradeItem(){
+
     }
 }
