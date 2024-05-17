@@ -2,22 +2,22 @@ package ItemsManager;
 
 public class ItemFactory {
 
-    public Item createItem(String type) {
+    private Item createItem(String type, String name, String grade, String desc, int price, int op1) {
 
         Item item = null;
 
         switch (type) {
             case "Equipment":
-                item = new Equipment().createItemInfos();
+                item = new Equipment().createItemInfos(type, name, grade, desc, price, op1);
                 break;
             case "Material":
-                item = new Material().createItemInfos();
+                item = new Material().createItemInfos(type, name, grade, desc, price, op1);
                 break;
             case "Potion":
-                item = new Potion().createItemInfos();
+                item = new Potion().createItemInfos(type, name, grade, desc, price, op1);
                 break;
             case "Weapon":
-                item = new Weapon().createItemInfos();
+                item = new Weapon().createItemInfos(type, name, grade, desc, price, op1);
                 break;
             default:
                 System.out.println("존재하지 않는 아이템");
@@ -26,4 +26,43 @@ public class ItemFactory {
 
         return item;
     }
+
+    public static class ItemBuilder {
+        private String type;
+        private String name;
+        private String grade;
+        private String desc;
+        private int price;
+        private int option1;
+    
+        public ItemBuilder type(String type){
+            return this;
+        }
+
+        public ItemBuilder name(String name){
+            return this;
+        }
+
+        public ItemBuilder grade(String grade){
+            return this;
+        }
+
+        public ItemBuilder desc(String desc){
+            return this;
+        }
+
+        public ItemBuilder price(int price){
+            return this;
+        }
+
+        public ItemBuilder option1(int option1){
+            return this;
+        }
+
+        public Item build(){
+            ItemFactory itemFactory = new ItemFactory();
+
+            return itemFactory.createItem(type, name, grade, desc, price, option1);
+        }
+    } 
 }

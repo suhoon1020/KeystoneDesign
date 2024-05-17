@@ -1,14 +1,11 @@
 package UserOption;
 
-import ItemsManager.Item;
-
-import java.util.List;
 import java.util.Map;
 
 public class Inventory {
     private String userID;
     private int gold;
-    private List<Item> itemList;
+    private Map<String, Integer> itemList;
 
     public Inventory(){
 
