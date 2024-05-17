@@ -56,3 +56,7 @@ N
 src/test/java/AuctionTEST.java,2\b\2bfae0263fcfcee4ba78b6307f15c044de91be83
 Z
 *src/main/java/SortingSystem/Ascending.java,7\2\72c7e56055f79f27c04f271420900c466ab58030
+V
+&src/main/java/DataManager/Utility.java,c\6\c6e6220f1d4c6a4b9719b203b4377dcfa4756b87
+Z
+*src/main/java/SwingManager/SwingAdmin.java,9\7\9783b7f830a2b1c8932e668401c4b67068824af0

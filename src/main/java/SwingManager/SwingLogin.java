@@ -1,6 +1,7 @@
 package SwingManager;
 
 import DataManager.FileFacade;
+import DataManager.Utility;
 import UserOption.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -282,11 +283,9 @@ public class SwingLogin extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 // TODO : 아이디 찾기 팝업창 띄우기
                 List<User> users = FileFacade.getFacade().getUsersList();
-
                 for (User user : users) {
-                    if (user.getUserName().equals(L_findID_PhoneNum.getText()) && user.getUserPhoneNum().equals(L_findID_PhoneNum.getText())) {
-                        String ID = user.getUserID();
-                        JOptionPane.showMessageDialog(null, user.getUserName() + "님의 ID는 " + ID + "입니다");
+                    if (Utility.isRightID(In_findID_Name.getText()) && Utility.isRightPhoneNum(In_findID_PhoneNumber.getText())) {
+                        JOptionPane.showMessageDialog(null, user.getUserName() + "님의 ID는 " + user.getUserID() + "입니다");
                         cardLayout.show(getContentPane(), "LoginPage");
                         return;
                     }
@@ -294,6 +293,7 @@ public class SwingLogin extends JFrame {
                 JOptionPane.showMessageDialog(null, "회원님의 정보를 찾을 수 없습니다");
             }
         });
+
         Btt_tryFindID.setFont(new Font("굴림", Font.PLAIN, 35));
         Btt_tryFindID.setBounds(150, 550, 250, 70);
         findIDPage.add(Btt_tryFindID);
@@ -338,10 +338,23 @@ public class SwingLogin extends JFrame {
         L_findPassword_PhoneNumber.setBounds(71, 295, 140, 41);
         findPasswordPage.add(L_findPassword_PhoneNumber);
 
-        JButton Btt_tryFindID_1 = new JButton("비밀번호 찾기");
-        Btt_tryFindID_1.setFont(new Font("굴림", Font.PLAIN, 30));
-        Btt_tryFindID_1.setBounds(150, 550, 250, 70);
-        findPasswordPage.add(Btt_tryFindID_1);
+        JButton Btt_tryFindPW = new JButton("비밀번호 찾기");
+        Btt_tryFindPW.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO : 아이디 찾기 팝업창 띄우기
+                if(Utility.findPW(In_findPassword_ID.getText(),In_findPassword_Name.getText(),In_findPassword_PhoneNumber.getText())){
+                    JOptionPane.showMessageDialog(null,"f");
+                }
+                cardLayout.show(getContentPane(), "LoginPage");
+
+
+            }
+
+        });
+        Btt_tryFindPW.setFont(new Font("굴림", Font.PLAIN, 30));
+        Btt_tryFindPW.setBounds(150, 550, 250, 70);
+        findPasswordPage.add(Btt_tryFindPW);
 
 
     }
