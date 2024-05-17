@@ -1,8 +1,8 @@
 package ItemsManager;
 
 public class Equipment implements Item{
-    private String name;
     private String type;
+    private String name;
     private String grade;
     private String desc;
     private int price;
@@ -10,14 +10,14 @@ public class Equipment implements Item{
     private int defence;
 
     @Override
-    public Item createItemInfos() {
-        name = "";
-        type = "Equipment";
-        grade = "";
-        desc = "";
-        price = 0;
-        count = 0;
-        defence = 0;
+    public Item createItemInfos(String type, String name, String grade, String desc, int price, int count, int op1) {
+        this.type = type;
+        this.name = name;
+        this.grade = grade;
+        this.desc = desc;
+        this.price = price;
+        this.count = count;
+        this.defence = op1;
         
         return this;
     }
