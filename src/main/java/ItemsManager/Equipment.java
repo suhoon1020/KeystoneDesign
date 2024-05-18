@@ -6,17 +6,15 @@ public class Equipment implements Item{
     private String grade;
     private String desc;
     private int price;
-    private int count;
     private int defence;
 
     @Override
-    public Item createItemInfos(String type, String name, String grade, String desc, int price, int count, int op1) {
+    public Item createItemInfos(String type, String name, String grade, String desc, int price, int op1) {
         this.type = type;
         this.name = name;
         this.grade = grade;
         this.desc = desc;
         this.price = price;
-        this.count = count;
         this.defence = op1;
         
         return this;
