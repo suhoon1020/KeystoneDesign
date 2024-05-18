@@ -3,11 +3,6 @@ package SwingManager;
 import DataManager.FileFacade;
 import DataManager.Utility;
 import UserOption.User;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-
 
 import java.awt.EventQueue;
 
@@ -18,8 +13,6 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class SwingLogin extends JFrame {

@@ -1,3 +1,5 @@
+import java.io.File;
+
 import DataManager.FileFacade;
 import ItemsManager.Item;
 import ItemsManager.ItemFactory;
@@ -17,6 +19,7 @@ public class AuctionTEST {
         FileFacade.getFacade().putItem(test1);
         FileFacade.getFacade().saveItems();
 
+
         User test2 = new User.UserBuilder()
                 .ID("suhoon")
                 .PW("1020")
@@ -26,5 +29,7 @@ public class AuctionTEST {
 
         FileFacade.getFacade().putUser(test2);;
         FileFacade.getFacade().saveUsers();
+
+        System.out.println(Integer.valueOf("100,000"));
     }
 }

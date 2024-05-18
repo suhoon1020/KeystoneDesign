@@ -3,7 +3,6 @@ package ItemsManager;
 public class ItemFactory {
 
     private Item createItem(String type, String name, String grade, String desc, int price, int op1) {
-
         Item item = null;
 
         switch (type) {
@@ -36,26 +35,32 @@ public class ItemFactory {
         private int option1;
     
         public ItemBuilder type(String type){
+            this.type = type;
             return this;
         }
 
         public ItemBuilder name(String name){
+            this.name = name;
             return this;
         }
 
         public ItemBuilder grade(String grade){
+            this.grade = grade;
             return this;
         }
 
         public ItemBuilder desc(String desc){
+            this.desc = desc;
             return this;
         }
 
         public ItemBuilder price(int price){
+            this.price = price;
             return this;
         }
 
         public ItemBuilder option1(int option1){
+            this.option1 = option1;
             return this;
         }
 

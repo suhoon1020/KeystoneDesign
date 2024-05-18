@@ -23,4 +23,9 @@ public class Material implements Item{
         return name;
     }
 
+    @Override
+    public String[] getData() {
+        return new String[]{type, name, grade, desc, Integer.toString(price), "NONE"};
+    }
+
 }
