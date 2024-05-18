@@ -79,7 +79,7 @@ public class SwingAdmin extends JFrame {
          */
 
         JPanel panel = new JPanel();
-        contents.add(panel, "AuctionManage Page");
+        contents.add(panel, "AuctionManagePage");
 
         /*
          * ItemManage Page
