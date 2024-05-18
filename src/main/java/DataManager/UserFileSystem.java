@@ -67,22 +67,19 @@ public class UserFileSystem {
     }
 
     public Boolean putUser(User newUser) {
-        for (User user : Users) {
-            if (user.getUserID().equals(newUser.getUserID()))
-                return false;
+        if (isExistID(newUser.getUserID())) {
+            return false;
         }
-
         Users.add(newUser);
-
         return true;
     }
 
-    public Boolean isExistID(String id){
+    public Boolean isExistID(String id) {
         for (User user : Users) {
             if (user.getUserID().equals(id))
-                return false;
+                return true;
         }
-        return true;
+        return false;
     }
 
     public Boolean updateUser(String id, User user) {
@@ -92,19 +89,15 @@ public class UserFileSystem {
                 return true;
             }
         }
-
         return false;
     }
 
-    public Boolean deleteUser(String id) {
+    public void deleteUser(String id) {
         for (int i = 0; i < Users.size(); ++i) {
             if (Users.get(i).getUserID().equals(id)) {
                 Users.remove(i);
-                return true;
             }
         }
-
-        return false;
     }
 
 }

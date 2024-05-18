@@ -17,12 +17,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
 public class SwingAdmin extends JFrame {
     private String[] ItemTypes = {"Equipment", "Material", "Potion", "Weapon"};
     private String[] ItemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
-
+    String[] userTableHeader = {"ID", "PW", "NAME", "PHONE"};
+    DefaultTableModel userTableModel = new DefaultTableModel(userTableHeader, 0);
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -202,10 +202,8 @@ public class SwingAdmin extends JFrame {
         userList.setBorder(new LineBorder(new Color(0, 0, 0)));
         userList.setBounds(12, 10, 641, 526);
 
-        String[] header = {"ID", "PW", "NAME", "PHONE"};
-        DefaultTableModel dtm = new DefaultTableModel(header, 0);
-        JTable T_userList = new JTable(dtm); // 직접 모델을 설정하여 JTable 생성
 
+        JTable T_userList = new JTable(userTableModel); // 직접 모델을 설정하여 JTable 생성
 
 
         JPanel userManageContent = new JPanel();
@@ -267,11 +265,10 @@ public class SwingAdmin extends JFrame {
                     int selectedRow = T_userList.getSelectedRow();
                     int selectedColumn = T_userList.getSelectedColumn();
 
-                    In_userID.setText(T_userList.getValueAt(selectedRow,0).toString());
-                    In_userPassword.setText(T_userList.getValueAt(selectedRow,1).toString());
-                    In_userName.setText(T_userList.getValueAt(selectedRow,2).toString());
-                    In_userPhoneNumber.setText(T_userList.getValueAt(selectedRow,3).toString());
-
+                    In_userID.setText(T_userList.getValueAt(selectedRow, 0).toString());
+                    In_userPassword.setText(T_userList.getValueAt(selectedRow, 1).toString());
+                    In_userName.setText(T_userList.getValueAt(selectedRow, 2).toString());
+                    In_userPhoneNumber.setText(T_userList.getValueAt(selectedRow, 3).toString());
                 }
             }
         });
@@ -288,7 +285,7 @@ public class SwingAdmin extends JFrame {
                 if (FileFacade.getFacade().putUser(user)) {
                     JOptionPane.showMessageDialog(null, "유저 생성이 완료 되었습니다");
                     FileFacade.getFacade().saveUsers();
-                    refreshTable(dtm);
+                    refreshUserTable(userTableModel);
                     // JScrollPane에 JTable 설정
                     userList.setViewportView(T_userList);
                     // 최종적으로 JScrollPane을 담고 있는 컨테이너에 추가
@@ -305,7 +302,27 @@ public class SwingAdmin extends JFrame {
         JButton Btt_updateUser = new JButton("유저 수정");
         Btt_updateUser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+            //todo 유저 수정 로직
+            if(In_userID.getText().isEmpty() || In_userPassword.getText().isEmpty() || In_userName.getText().isEmpty() || In_userPhoneNumber.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null,"올바른 입력이 아닙니다");
+            }else{
+                User user = new User.UserBuilder()
+                        .ID(In_userID.getText())
+                        .PW(In_userPassword.getText())
+                        .name(In_userName.getText())
+                        .phone(In_userPhoneNumber.getText())
+                        .build();
+                if(FileFacade.getFacade().isExistingUser(In_userID.getText())) {
+                    FileFacade.getFacade().updateUser(In_userID.getText(), user);
+                    FileFacade.getFacade().saveUsers();
+                    refreshUserTable(userTableModel);
+                    userList.setViewportView(T_userList);
+                    userPage.add(userList);
+                    JOptionPane.showMessageDialog(null,In_userID.getText() + "님의 정보가 수정되었습니다");
+                }else {
+                    JOptionPane.showMessageDialog(null,"존재하지 않는 유저입니다");
+                }
+            }
             }
         });
         Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));
@@ -315,17 +332,20 @@ public class SwingAdmin extends JFrame {
         JButton Btt_deleteUser = new JButton("유저 삭제");
         Btt_deleteUser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FileFacade.getFacade().deleteUser(In_userID.getText());
-                if(In_userID.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(null,"올바른 입력이 아닙니다");
-                }
-                else {
-                    FileFacade.getFacade().saveUsers();
-                    refreshTable(dtm);
-                    // JScrollPane에 JTable 설정
-                    userList.setViewportView(T_userList);
-                    // 최종적으로 JScrollPane을 담고 있는 컨테이너에 추가
-                    userPage.add(userList);
+                if (In_userID.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "올바른 입력이 아닙니다");
+                } else {
+                    if (FileFacade.getFacade().isExistingUser(In_userID.getText())) {
+                        FileFacade.getFacade().deleteUser(In_userID.getText());
+                        FileFacade.getFacade().saveUsers();
+                        refreshUserTable(userTableModel);
+                        // JScrollPane에 JTable 설정
+                        userList.setViewportView(T_userList);
+                        // 최종적으로 JScrollPane을 담고 있는 컨테이너에 추가
+                        userPage.add(userList);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "존재하지 않는 ID입니다");
+                    }
                 }
             }
         });
@@ -360,7 +380,7 @@ public class SwingAdmin extends JFrame {
         Btt_goUser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(contents, "UserManagePage");
-                refreshTable(dtm);
+                refreshUserTable(userTableModel);
                 // JScrollPane에 JTable 설정
                 userList.setViewportView(T_userList);
                 // 최종적으로 JScrollPane을 담고 있는 컨테이너에 추가
@@ -376,11 +396,11 @@ public class SwingAdmin extends JFrame {
 
     }
 
-    public void refreshTable(DefaultTableModel defaultTableModel){
-        defaultTableModel.setRowCount(0);
-        for(User user : FileFacade.getFacade().getUsersList()){
-            Object[] rowData = {user.getUserID(),user.getUserPW(),user.getUserName(),user.getUserPhoneNum()};
-            defaultTableModel.addRow(rowData);
+    public void refreshUserTable(DefaultTableModel dtm) {
+        dtm.setRowCount(0);
+        for (User user : FileFacade.getFacade().getUsersList()) {
+            Object[] rowData = {user.getUserID(), user.getUserPW(), user.getUserName(), user.getUserPhoneNum()};
+            dtm.addRow(rowData);
         }
 
     }

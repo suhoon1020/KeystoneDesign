@@ -36,14 +36,12 @@ S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 _
 /src/main/java/DataManager/ItemDeserializer.java,6\e\6e4dcf5420d074650285d771faaf1ceafbe7125a
-`
-0src/main/java/DataManager/AuctionFileSystem.java,8\c\8c88a74f8244b66a9d6b0553c3d28ecae887dc7f
 W
 'src/main/java/UserOption/Inventory.java,1\f\1fde80063a33f3c0c830992665dd59eb2f92c45d
+`
+0src/main/java/DataManager/AuctionFileSystem.java,8\c\8c88a74f8244b66a9d6b0553c3d28ecae887dc7f
 R
 "src/main/java/Auction/Auction.java,e\d\ed13650d394200c2c6913fe82addb269e1bb7c53
-R
-"src/main/java/UserOption/Item.java,2\6\267bac14d8c07cb1042d672f0c71f0e537900508
 \
 ,src/main/java/SwingManager/SwingAuction.java,b\b\bb974c67935ee09c72aaeecf650486ea75c7459a
 Y
@@ -60,3 +58,5 @@ V
 &src/main/java/DataManager/Utility.java,c\6\c6e6220f1d4c6a4b9719b203b4377dcfa4756b87
 Z
 *src/main/java/SwingManager/SwingAdmin.java,9\7\9783b7f830a2b1c8932e668401c4b67068824af0
+P
+ src/test/java/ExistUserTest.java,8\e\8e3e25b46e48bea748f14ac7ef520bf6917aba8e

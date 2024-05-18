@@ -20,7 +20,7 @@ public class Utility {
 
     public static Boolean isRightPW(String PW) {
         for (User user : users) {
-            if (user.getUserID().equals(PW))
+            if (user.getUserPW().equals(PW))
                 return true;
         }
 
@@ -29,7 +29,7 @@ public class Utility {
 
     public static Boolean isRightName(String name) {
         for (User user : users) {
-            if (user.getUserID().equals(name))
+            if (user.getUserName().equals(name))
                 return true;
         }
 
@@ -38,7 +38,7 @@ public class Utility {
 
     public static Boolean isRightPhoneNum(String phoneNum) {
         for (User user : users) {
-            if (user.getUserID().equals(phoneNum))
+            if (user.getUserPhoneNum().equals(phoneNum))
                 return true;
         }
 
