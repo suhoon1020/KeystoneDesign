@@ -39,12 +39,12 @@ public class ItemDeserializer implements JsonDeserializer<Item> {
         }
 
         return new ItemFactory.ItemBuilder()
-            .type(type)
-            .name(name)
-            .desc(desc)
-            .grade(grade)
-            .price(price)
-            .option1(op1)
-            .build();
+                .type(type)
+                .name(name)
+                .desc(desc)
+                .grade(grade)
+                .price(price)
+                .option1(op1)
+                .build();
     }
 }

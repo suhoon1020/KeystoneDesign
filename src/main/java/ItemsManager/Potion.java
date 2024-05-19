@@ -24,4 +24,9 @@ public class Potion implements Item {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String[] getData() {
+        return new String[]{type, name, grade, desc, Integer.toString(price), Integer.toString(effect)};
+    }
 }
