@@ -258,7 +258,7 @@ public class SwingAdmin extends JFrame {
                             FileFacade.getFacade().saveItems();
                             refreshItemTable();
                         } else {
-                            JOptionPane.showMessageDialog(null, "등록된 아이템이 없습니다");
+                            JOptionPane.showMessageDialog(null, "존재하지 않는 아이템입니다");
                         }
                     } catch(NumberFormatException err){
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
@@ -282,7 +282,7 @@ public class SwingAdmin extends JFrame {
                         refreshItemTable();
                     }
                     else
-                        JOptionPane.showMessageDialog(null, "존재하지 않는 아이템입니다.");
+                        JOptionPane.showMessageDialog(null, "존재하지 않는 아이템입니다");
                 }
             }
         });
@@ -410,16 +410,15 @@ public class SwingAdmin extends JFrame {
                         .name(In_userName.getText())
                         .phone(In_userPhoneNumber.getText())
                         .build();
-                if(FileFacade.getFacade().updateUser(In_userID.getText(),user)){
+                if (FileFacade.getFacade().updateUser(In_userID.getText(), user)) {
+                    JOptionPane.showMessageDialog(null, "유저 수정이 완료 되었습니다");
                     FileFacade.getFacade().saveUsers();
                     refreshUserTable();
-                }else {
-                    JOptionPane.showMessageDialog(null,"존재하지 않는 ID입니다");
+                } else {
+                    JOptionPane.showMessageDialog(null, "존재하지 않는 ID입니다");
                 }
-
             }
         });
-
         Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));
         Btt_updateUser.setBounds(67, 406, 258, 43);
         userManageContent.add(Btt_updateUser);
@@ -436,7 +435,7 @@ public class SwingAdmin extends JFrame {
                         refreshUserTable();
                     }
                     else
-                        JOptionPane.showMessageDialog(null, "존재하지 않는 유저입니다");
+                        JOptionPane.showMessageDialog(null, "존재하지 않는 ID입니다");
                 }
             }
         });
