@@ -64,8 +64,8 @@ public class FileFacade {
         return userFileSystem.updateUser(id, user);
     }
 
-    public void deleteUser(String id){
-        userFileSystem.deleteUser(id);
+    public Boolean deleteUser(String id){
+        return userFileSystem.deleteUser(id);
     }
 
     /* 

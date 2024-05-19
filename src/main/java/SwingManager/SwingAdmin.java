@@ -404,9 +404,22 @@ public class SwingAdmin extends JFrame {
         JButton Btt_updateUser = new JButton("유저 수정");
         Btt_updateUser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                User user = new User.UserBuilder()
+                        .ID(In_userID.getText())
+                        .PW(In_userPassword.getText())
+                        .name(In_userName.getText())
+                        .phone(In_userPhoneNumber.getText())
+                        .build();
+                if(FileFacade.getFacade().updateUser(In_userID.getText(),user)){
+                    FileFacade.getFacade().saveUsers();
+                    refreshUserTable();
+                }else {
+                    JOptionPane.showMessageDialog(null,"존재하지 않는 ID입니다");
+                }
 
             }
         });
+
         Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));
         Btt_updateUser.setBounds(67, 406, 258, 43);
         userManageContent.add(Btt_updateUser);
@@ -417,9 +430,9 @@ public class SwingAdmin extends JFrame {
                 if(In_userID.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
                 else{
-                    if(FileFacade.getFacade().deleteItem(In_itemName.getText())){
+                    if(FileFacade.getFacade().deleteUser(In_userID.getText())){
                         JOptionPane.showMessageDialog(null, "유저 삭제가 완료 되었습니다");
-                        FileFacade.getFacade().saveItems();
+                        FileFacade.getFacade().saveUsers();
                         refreshUserTable();
                     }
                     else

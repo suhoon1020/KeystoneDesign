@@ -92,12 +92,14 @@ public class UserFileSystem {
         return false;
     }
 
-    public void deleteUser(String id) {
+    public Boolean deleteUser(String id) {
         for (int i = 0; i < Users.size(); ++i) {
             if (Users.get(i).getUserID().equals(id)) {
                 Users.remove(i);
+                return true;
             }
         }
+        return false;
     }
 
 }
