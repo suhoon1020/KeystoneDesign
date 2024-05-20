@@ -10,13 +10,14 @@ public class Weapon implements Item {
     private int damage;
 
     @Override
-    public Item createItemInfos(String type, String name, String grade, String desc, int price, int count, int op1) {
-        this.type = type;
-        this.name = name;
-        this.grade = grade;
-        this.desc = desc;
-        this.price = price;
-        this.damage = op1;
+    public Item createItemInfos(ItemBuilder itemBuilder) {
+        this.type = itemBuilder.type;
+        this.name = itemBuilder.name;
+        this.grade = itemBuilder.grade;
+        this.desc = itemBuilder.desc;
+        this.price = itemBuilder.price;
+        this.count = itemBuilder.count;
+        this.damage = itemBuilder.option1;
 
         return this;
     }

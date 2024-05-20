@@ -10,15 +10,15 @@ public class Equipment implements Item{
     private int defence;
 
     @Override
-    public Item createItemInfos(String type, String name, String grade, String desc, int price, int count, int op1) {
-        this.type = type;
-        this.name = name;
-        this.grade = grade;
-        this.desc = desc;
-        this.price = price;
-        this.count = count;
-        this.defence = op1;
-        
+    public Item createItemInfos(ItemBuilder itemBuilder) {
+        this.type = itemBuilder.type;
+        this.name = itemBuilder.name;
+        this.grade = itemBuilder.grade;
+        this.desc = itemBuilder.desc;
+        this.price = itemBuilder.price;
+        this.count = itemBuilder.count;
+        this.defence = itemBuilder.option1;
+
         return this;
     }
     

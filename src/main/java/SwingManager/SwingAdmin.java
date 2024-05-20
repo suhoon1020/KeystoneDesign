@@ -2,7 +2,7 @@ package SwingManager;
 
 import DataManager.FileFacade;
 import ItemsManager.Item;
-import ItemsManager.ItemFactory;
+import ItemsManager.ItemBuilder;
 import UserOption.User;
 
 import java.awt.EventQueue;
@@ -211,14 +211,14 @@ public class SwingAdmin extends JFrame {
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else{
                     try{
-                        Item item = new ItemFactory.ItemBuilder()
-                        .type(C_itemType.getSelectedItem().toString())
-                        .name(In_itemName.getText())
-                        .grade(C_itemGrade.getSelectedItem().toString())
-                        .desc(In_itemDesc.getText())
-                        .price(Integer.valueOf(In_ItemPrice.getText().replace(",","")))
-                        .option1(Integer.valueOf(In_ItemOp1.getText().replace(",","")))
-                        .build();
+                        Item item = new ItemBuilder()
+                                .type(C_itemType.getSelectedItem().toString())
+                                .name(In_itemName.getText())
+                                .grade(C_itemGrade.getSelectedItem().toString())
+                                .desc(In_itemDesc.getText())
+                                .price(Integer.valueOf(In_ItemPrice.getText().replace(",","")))
+                                .option1(Integer.valueOf(In_ItemOp1.getText().replace(",","")))
+                                .build();
 
                         if (FileFacade.getFacade().putItem(item)) {
                             JOptionPane.showMessageDialog(null, "아이템 생성이 완료 되었습니다");
@@ -244,14 +244,14 @@ public class SwingAdmin extends JFrame {
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else{
                     try{
-                        Item item = new ItemFactory.ItemBuilder()
-                        .type(C_itemType.getSelectedItem().toString())
-                        .name(In_itemName.getText())
-                        .grade(C_itemGrade.getSelectedItem().toString())
-                        .desc(In_itemDesc.getText())
-                        .price(Integer.parseInt(In_ItemPrice.getText().replace(",","")))
-                        .option1(Integer.parseInt(In_ItemOp1.getText().replace(",","")))
-                        .build();
+                        Item item = new ItemBuilder()
+                                .type(C_itemType.getSelectedItem().toString())
+                                .name(In_itemName.getText())
+                                .grade(C_itemGrade.getSelectedItem().toString())
+                                .desc(In_itemDesc.getText())
+                                .price(Integer.parseInt(In_ItemPrice.getText().replace(",","")))
+                                .option1(Integer.parseInt(In_ItemOp1.getText().replace(",","")))
+                                .build();
 
                         if (FileFacade.getFacade().updateItem(In_itemName.getText(), item)) {
                             JOptionPane.showMessageDialog(null, "아이템 수정이 완료 되었습니다");

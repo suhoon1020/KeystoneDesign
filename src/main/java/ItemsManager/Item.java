@@ -1,7 +1,7 @@
 package ItemsManager;
 
 public interface Item {
-    Item createItemInfos(String type, String name, String grade, String desc, int price, int count, int op1);
+    Item createItemInfos(ItemBuilder itemFactory);
     String getName();
     int getCount();
     String[] getData();

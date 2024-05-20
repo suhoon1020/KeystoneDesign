@@ -9,17 +9,17 @@ public class Material implements Item{
     private int count;
 
     @Override
-    public Item createItemInfos(String type, String name, String grade, String desc, int price, int count, int op1) {
-        this.type = type;
-        this.name = name;
-        this.grade = grade;
-        this.desc = desc;
-        this.price = price;
-        this.count = count;
-        
+    public Item createItemInfos(ItemBuilder itemBuilder) {
+        this.type = itemBuilder.type;
+        this.name = itemBuilder.name;
+        this.grade = itemBuilder.grade;
+        this.desc = itemBuilder.desc;
+        this.price = itemBuilder.price;
+        this.count = itemBuilder.count;
+
         return this;
     }
-
+    
     @Override
     public String getName() {
         return name;

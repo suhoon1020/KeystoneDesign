@@ -2,21 +2,22 @@ import java.io.File;
 
 import DataManager.FileFacade;
 import ItemsManager.Item;
-import ItemsManager.ItemFactory;
+import ItemsManager.ItemBuilder;
 import UserOption.Inventory;
 import UserOption.User;
 
 public class AuctionTEST {
     public static void main(String[] args) {
-        Item test1 = new ItemFactory.ItemBuilder()
-            .type("Weapon")
-            .name("TEST1")
-            .desc("THIS IS WEAPON")
-            .grade("Common")
-            .price(10000)
-            .count(1)
-            .option1(10)
-            .build();
+
+        Item test1 = new ItemBuilder()
+                .type("Weapon")
+                .name("TEST1")
+                .desc("THIS IS WEAPON")
+                .grade("Common")
+                .price(10000)
+                .count(1)
+                .option1(10)
+                .build();
 
         FileFacade.getFacade().putItem(test1);
         FileFacade.getFacade().saveItems();

@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import ItemsManager.Item;
-import ItemsManager.ItemFactory;
+import ItemsManager.ItemBuilder;
 
 public class ItemDeserializer implements JsonDeserializer<Item> {
     @Override
@@ -39,7 +39,7 @@ public class ItemDeserializer implements JsonDeserializer<Item> {
                 break;
         }
 
-        return new ItemFactory.ItemBuilder()
+        return new ItemBuilder()
                 .type(type)
                 .name(name)
                 .desc(desc)

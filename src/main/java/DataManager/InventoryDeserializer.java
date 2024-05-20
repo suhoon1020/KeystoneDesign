@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import ItemsManager.Item;
-import ItemsManager.ItemFactory;
+import ItemsManager.ItemBuilder;
 import UserOption.Inventory;
 
 public class InventoryDeserializer implements JsonDeserializer<Inventory> {
@@ -51,7 +51,7 @@ public class InventoryDeserializer implements JsonDeserializer<Inventory> {
                 default:
                     break;
             }
-            Item item = new ItemFactory.ItemBuilder()
+            Item item = new ItemBuilder()
                     .type(type)
                     .name(name)
                     .desc(desc)
