@@ -1,10 +1,17 @@
 package UserOption;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ItemsManager.Item;
+
 public class User {
     private String userID;
     private String userPW;
     private String userName;
     private String userPhoneNum;
+    private int userGold;
+    private List<Item> userItemList;
 
     public String getUserName() {
         return userName;
@@ -22,6 +29,10 @@ public class User {
         return userPhoneNum;
     }
 
+    public int getGold(){
+        return userGold;
+    }
+
     @Override
     public String toString() {
         return userID + userPW + userName + userPhoneNum;
@@ -33,6 +44,12 @@ public class User {
         this.userPW = builder.userPW;
         this.userName = builder.userName;
         this.userPhoneNum = builder.userPhoneNum;
+        this.userGold = builder.userGold;
+        
+        if(builder.userItemList == null)
+            this.userItemList = new ArrayList<Item>();
+        else
+            this.userItemList = builder.userItemList;
     }
 
     //빌더 세팅
@@ -41,7 +58,8 @@ public class User {
         private String userPW;
         private String userName;
         private String userPhoneNum;
-
+        private int userGold;
+        private List<Item> userItemList;
 
         public UserBuilder ID(String userID) {
             this.userID = userID;
@@ -60,6 +78,16 @@ public class User {
 
         public UserBuilder phone(String userPhoneNum) {
             this.userPhoneNum = userPhoneNum;
+            return this;
+        }
+
+        public UserBuilder gold(int userGold){
+            this.userGold = userGold;
+            return this;
+        }
+
+        public UserBuilder itemList(List<Item> userItemList){
+            this.userItemList = userItemList;
             return this;
         }
 

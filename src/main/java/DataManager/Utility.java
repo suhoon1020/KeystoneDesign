@@ -2,7 +2,6 @@ package DataManager;
 
 import UserOption.User;
 
-import javax.swing.*;
 import java.util.List;
 
 public class Utility {

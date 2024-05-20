@@ -12,18 +12,21 @@ import com.google.gson.JsonParseException;
 
 import ItemsManager.Item;
 import ItemsManager.ItemBuilder;
-import UserOption.Inventory;
+import UserOption.User;
 
-public class InventoryDeserializer implements JsonDeserializer<Inventory> {
+public class UserDeserializer implements JsonDeserializer<User> {
     @Override
-    public Inventory deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public User deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-
+        
         String userID = jsonObject.get("userID").getAsString();
-        int gold = jsonObject.get("gold").getAsInt();
+        String userPW = jsonObject.get("userPW").getAsString();
+        String userName = jsonObject.get("userName").getAsString();
+        String userPhoneNum = jsonObject.get("userPhoneNum").getAsString();
+        int userGold = jsonObject.get("userGold").getAsInt();
 
-        JsonArray jsonItemList = jsonObject.getAsJsonArray("itemList");
-        List<Item> itemList = new ArrayList<Item>();
+        JsonArray jsonItemList = jsonObject.getAsJsonArray("userItemList");
+        List<Item> useriItemList = new ArrayList<Item>();
 
         for (JsonElement jsonItem : jsonItemList) {
             String type = jsonItem.getAsJsonObject().get("type").getAsString();
@@ -61,9 +64,15 @@ public class InventoryDeserializer implements JsonDeserializer<Inventory> {
                     .option1(op1)
                     .build();
 
-            itemList.add(item);
+            useriItemList.add(item);
         }
 
-        return new Inventory(userID, gold, itemList);
+        return new User.UserBuilder()
+                .ID(userID)
+                .PW(userPW)
+                .name(userName)
+                .phone(userPhoneNum)
+                .gold(userGold)
+                .build();
     }
 }

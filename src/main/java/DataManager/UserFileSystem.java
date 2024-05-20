@@ -39,13 +39,14 @@ public class UserFileSystem {
             Users = new ArrayList<>();
         } else {
             try {
-                Gson gson = new Gson();
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
+
+                Gson gson = gsonBuilder.create();
                 Reader reader = new FileReader(USER_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                Users = gson.fromJson(jsonElement, new TypeToken<List<User>>() {
-                }.getType());
-
+                Users = gson.fromJson(jsonElement, new TypeToken<List<User>>() {}.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
