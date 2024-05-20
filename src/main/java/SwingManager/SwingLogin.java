@@ -184,8 +184,6 @@ public class SwingLogin extends JFrame {
         Btt_tryRegister.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO : 회원가입 검증 후 팝업창 띄우기
-
                 if (In_register_ID.getText().isEmpty() || In_register_Password.getText().isEmpty() || In_regisiter_Name.getText().isEmpty() || In_register_PhoneNumber.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "모두 입력하여 주십시오");
                 } else {
@@ -274,7 +272,6 @@ public class SwingLogin extends JFrame {
         Btt_tryFindID.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO : 아이디 찾기 팝업창 띄우기
                 List<User> users = FileFacade.getFacade().getUsersList();
                 for (User user : users) {
                     if (Utility.isRightID(In_findID_Name.getText()) && Utility.isRightPhoneNum(In_findID_PhoneNumber.getText())) {
@@ -335,7 +332,6 @@ public class SwingLogin extends JFrame {
         Btt_tryFindPW.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO : 아이디 찾기 팝업창 띄우기
                 if(Utility.findPW(In_findPassword_ID.getText(),In_findPassword_Name.getText(),In_findPassword_PhoneNumber.getText())){
                     JOptionPane.showMessageDialog(null,"f");
                 }

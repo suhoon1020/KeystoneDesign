@@ -3,15 +3,16 @@ package DataManager;
 import java.util.List;
 
 import ItemsManager.Item;
+import UserOption.Inventory;
 import UserOption.User;
 
 
 public class FileFacade {
     private static FileFacade fileFacade;
 
-    private InventoryFileSystem inventoryFileSystem;
     private ItemFileSystem itemFileSystem;
     private UserFileSystem userFileSystem;
+    private InventoryFileSystem inventoryFileSystem;
     private AuctionFileSystem auctionFileSystem;
 
 
@@ -21,9 +22,9 @@ public class FileFacade {
         this.auctionFileSystem = new AuctionFileSystem();
         this.inventoryFileSystem = new InventoryFileSystem();
 
-        inventoryFileSystem.loadInfosFromFile();
         itemFileSystem.loadInfosFromFile();
         userFileSystem.loadInfosFromFile();
+        inventoryFileSystem.loadInfosFromFile();
         auctionFileSystem.loadAuctionFromFile();
     }
 
@@ -101,6 +102,27 @@ public class FileFacade {
     }
 
     /*
+     *      INVENTORY
+     */
+
+    public boolean putInventory(Inventory newInventory){
+        return inventoryFileSystem.putInventory(newInventory);
+    }
+
+    public Inventory getInventory(String userID){
+        return inventoryFileSystem.getInventory(userID);
+    }
+
+    public void saveInventories() {
+        inventoryFileSystem.saveInfosToFile();
+    }
+
+    public void loadInventories() {
+        inventoryFileSystem.loadInfosFromFile();
+    }
+
+    /*
+
     TRADING
      */
     public void tradeItem(){

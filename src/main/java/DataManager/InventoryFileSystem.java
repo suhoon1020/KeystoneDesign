@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import ItemsManager.Item;
 import UserOption.Inventory;
 
 public class InventoryFileSystem {
@@ -38,24 +40,37 @@ public class InventoryFileSystem {
             inventories = new ArrayList<>();
         } else {
             try {
-                Gson gson = new Gson();
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.registerTypeAdapter(Inventory.class, new InventoryDeserializer());
+
+                Gson gson = gsonBuilder.create();
                 Reader reader = new FileReader(INVENTORY_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                inventories = gson.fromJson(jsonElement, new TypeToken<List<Inventory>>() {
-                }.getType());
+                inventories = gson.fromJson(jsonElement, new TypeToken<List<Inventory>>() {}.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
         }
     }
 
-    public Inventory getIventory(String userID) {
+    public Inventory getInventory(String userID) {
         for (Inventory i : inventories) {
             if (i.getUserID().equals(userID)) return i;
         }
 
         return null;
+    }
+
+        public Boolean putInventory(Inventory newInventory) {
+        for (Inventory I : inventories) {
+            if(I.getUserID().equals(newInventory.getUserID()))
+            return false;
+        }
+
+        inventories.add(newInventory);
+
+        return true;
     }
 
     public boolean updateInventory(String userID, Inventory newInventory) {
@@ -68,5 +83,4 @@ public class InventoryFileSystem {
 
         return false;
     }
-
 }

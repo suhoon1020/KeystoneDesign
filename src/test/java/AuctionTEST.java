@@ -3,6 +3,7 @@ import java.io.File;
 import DataManager.FileFacade;
 import ItemsManager.Item;
 import ItemsManager.ItemFactory;
+import UserOption.Inventory;
 import UserOption.User;
 
 public class AuctionTEST {
@@ -13,6 +14,7 @@ public class AuctionTEST {
             .desc("THIS IS WEAPON")
             .grade("Common")
             .price(10000)
+            .count(1)
             .option1(10)
             .build();
 
@@ -30,6 +32,17 @@ public class AuctionTEST {
         FileFacade.getFacade().putUser(test2);;
         FileFacade.getFacade().saveUsers();
 
-        System.out.println(Integer.valueOf("100,000"));
+        // Inventory test3 = new Inventory("shhoon");
+        // test3.gainItem(test1);
+        // FileFacade.getFacade().putInventory(test3);
+        // FileFacade.getFacade().saveInventories();
+
+
+        Inventory test3 = FileFacade.getFacade().getInventory("suhoon");
+
+        if(test3 == null)
+            System.out.println("없음");
+        else
+            System.out.println(test3.getItemList());
     }
 }

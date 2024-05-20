@@ -2,21 +2,21 @@ package ItemsManager;
 
 public class ItemFactory {
 
-    private Item createItem(String type, String name, String grade, String desc, int price, int op1) {
+    private Item createItem(String type, String name, String grade, String desc, int price, int count, int op1) {
         Item item = null;
 
         switch (type) {
             case "Equipment":
-                item = new Equipment().createItemInfos(type, name, grade, desc, price, op1);
+                item = new Equipment().createItemInfos(type, name, grade, desc, price, count, op1);
                 break;
             case "Material":
-                item = new Material().createItemInfos(type, name, grade, desc, price, op1);
+                item = new Material().createItemInfos(type, name, grade, desc, price, count, op1);
                 break;
             case "Potion":
-                item = new Potion().createItemInfos(type, name, grade, desc, price, op1);
+                item = new Potion().createItemInfos(type, name, grade, desc, price, count, op1);
                 break;
             case "Weapon":
-                item = new Weapon().createItemInfos(type, name, grade, desc, price, op1);
+                item = new Weapon().createItemInfos(type, name, grade, desc, price, count, op1);
                 break;
             default:
                 System.out.println("존재하지 않는 아이템");
@@ -32,6 +32,7 @@ public class ItemFactory {
         private String grade;
         private String desc;
         private int price;
+        private int count;
         private int option1;
     
         public ItemBuilder type(String type){
@@ -59,6 +60,11 @@ public class ItemFactory {
             return this;
         }
 
+        public ItemBuilder count(int count){
+            this.count = count;
+            return this;
+        }
+
         public ItemBuilder option1(int option1){
             this.option1 = option1;
             return this;
@@ -67,7 +73,7 @@ public class ItemFactory {
         public Item build(){
             ItemFactory itemFactory = new ItemFactory();
 
-            return itemFactory.createItem(type, name, grade, desc, price, option1);
+            return itemFactory.createItem(type, name, grade, desc, price, count, option1);
         }
     } 
 }

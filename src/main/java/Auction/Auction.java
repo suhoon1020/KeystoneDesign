@@ -7,7 +7,6 @@ import ItemsManager.Item;
 import SwingManager.SwingLogin;
 
 public class Auction {
-    public List<Item> Items;
 
     public void LoadAuction(){
         FileFacade.getFacade();
@@ -16,7 +15,4 @@ public class Auction {
     public void run(){
         new SwingLogin();
     }
-
-    // TODO 인벤토리 로딩
-
 }
