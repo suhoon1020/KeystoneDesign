@@ -5,7 +5,6 @@ public class Potion implements Item {
     private String name;
     private String grade;
     private String desc;
-    private int price;
     private int count;
     private int effect;
 
@@ -15,7 +14,6 @@ public class Potion implements Item {
         this.name = itemBuilder.name;
         this.grade = itemBuilder.grade;
         this.desc = itemBuilder.desc;
-        this.price = itemBuilder.price;
         this.count = itemBuilder.count;
         this.effect = itemBuilder.option1;
 
@@ -34,7 +32,7 @@ public class Potion implements Item {
 
     @Override
     public String[] getData() {
-        return new String[]{type, name, grade, desc, Integer.toString(price), Integer.toString(count), Integer.toString(effect)};
+        return new String[]{type, name, grade, desc, Integer.toString(count), Integer.toString(effect)};
     }
 
     @Override

@@ -1,9 +1,7 @@
 package Auction;
 
-import java.util.List;
 
 import DataManager.FileFacade;
-import ItemsManager.Item;
 import SwingManager.SwingLogin;
 
 public class Auction {

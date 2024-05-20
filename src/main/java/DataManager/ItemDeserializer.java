@@ -18,7 +18,6 @@ public class ItemDeserializer implements JsonDeserializer<Item> {
         String name = jsonObject.get("name").getAsString();
         String grade = jsonObject.get("grade").getAsString();
         String desc = jsonObject.get("desc").getAsString();
-        int price = jsonObject.get("price").getAsInt();
         int count = jsonObject.get("count").getAsInt();
         int op1 = 0;
 
@@ -44,7 +43,6 @@ public class ItemDeserializer implements JsonDeserializer<Item> {
                 .name(name)
                 .desc(desc)
                 .grade(grade)
-                .price(price)
                 .count(count)
                 .option1(op1)
                 .build();

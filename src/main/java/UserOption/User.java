@@ -33,6 +33,10 @@ public class User {
         return userGold;
     }
 
+    public List<Item> getItems(){
+        return userItemList;
+    }
+
     @Override
     public String toString() {
         return userID + userPW + userName + userPhoneNum;

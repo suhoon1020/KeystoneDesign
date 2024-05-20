@@ -32,7 +32,6 @@ public class SwingAdmin extends JFrame {
     private JPanel contentPane;
     private JTextField In_itemName;
     private JTextField In_itemDesc;
-    private JFormattedTextField In_ItemPrice;
     private JFormattedTextField In_ItemOp1;
     private JTextField In_userID;
     private JTextField In_userPassword;
@@ -141,11 +140,6 @@ public class SwingAdmin extends JFrame {
         L_itemDesc.setFont(new Font("굴림", Font.PLAIN, 15));
         itemLab.add(L_itemDesc);
 
-        JLabel L_itemPrice = new JLabel("아이템 가격 :");
-        L_itemPrice.setHorizontalAlignment(SwingConstants.CENTER);
-        L_itemPrice.setFont(new Font("굴림", Font.PLAIN, 15));
-        itemLab.add(L_itemPrice);
-
         JLabel L_ItemOp1 = new JLabel("옵션 1 :");
         L_ItemOp1.setHorizontalAlignment(SwingConstants.CENTER);
         L_ItemOp1.setFont(new Font("굴림", Font.PLAIN, 15));
@@ -175,10 +169,6 @@ public class SwingAdmin extends JFrame {
         F_SetPriceNumber.setMinimum(Integer.valueOf(1));
         F_SetPriceNumber.setMaximum(Integer.valueOf(100000));
         
-        In_ItemPrice = new JFormattedTextField(F_SetPriceNumber);
-        itemIn.add(In_ItemPrice);
-        In_ItemPrice.setColumns(10);
-
         NumberFormatter F_SetOptionNumber = new NumberFormatter();
         F_SetOptionNumber.setValueClass(Integer.class);
         F_SetOptionNumber.setMinimum(Integer.valueOf(1));
@@ -198,7 +188,6 @@ public class SwingAdmin extends JFrame {
                     In_itemName.setText(T_ItemList.getValueAt(selectedRow, 1).toString());
                     C_itemGrade.setSelectedItem(T_ItemList.getValueAt(selectedRow, 2).toString());
                     In_itemDesc.setText(T_ItemList.getValueAt(selectedRow, 3).toString());
-                    In_ItemPrice.setText(T_ItemList.getValueAt(selectedRow, 4).toString());
                     In_ItemOp1.setText(T_ItemList.getValueAt(selectedRow, 5).toString());
                 }
             }
@@ -216,7 +205,6 @@ public class SwingAdmin extends JFrame {
                                 .name(In_itemName.getText())
                                 .grade(C_itemGrade.getSelectedItem().toString())
                                 .desc(In_itemDesc.getText())
-                                .price(Integer.valueOf(In_ItemPrice.getText().replace(",","")))
                                 .option1(Integer.valueOf(In_ItemOp1.getText().replace(",","")))
                                 .build();
 
@@ -249,7 +237,6 @@ public class SwingAdmin extends JFrame {
                                 .name(In_itemName.getText())
                                 .grade(C_itemGrade.getSelectedItem().toString())
                                 .desc(In_itemDesc.getText())
-                                .price(Integer.parseInt(In_ItemPrice.getText().replace(",","")))
                                 .option1(Integer.parseInt(In_ItemOp1.getText().replace(",","")))
                                 .build();
 

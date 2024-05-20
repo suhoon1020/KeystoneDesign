@@ -5,7 +5,6 @@ public class ItemBuilder {
     public String name;
     public String grade;
     public String desc;
-    public int price;
     public int count;
     public int option1;
         
@@ -26,11 +25,6 @@ public class ItemBuilder {
 
     public ItemBuilder desc(String desc){
         this.desc = desc;
-        return this;
-    }
-
-    public ItemBuilder price(int price){
-        this.price = price;
         return this;
     }
 

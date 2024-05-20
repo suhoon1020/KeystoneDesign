@@ -77,7 +77,6 @@ public class ItemFileSystem {
         return true;
     }
 
-
     public boolean updateItem(String name, Item newItem){
         for(int i = 0; i < Items.size(); ++i){
             if(Items.get(i).getName().equals(name)) {
@@ -99,10 +98,5 @@ public class ItemFileSystem {
 
         return false;
     }
-
-    public void defaultItem(){
-
-    }
-
 
 }

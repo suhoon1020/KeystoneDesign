@@ -5,7 +5,6 @@ public class Equipment implements Item{
     private String name;
     private String grade;
     private String desc;
-    private int price;
     private int count;
     private int defence;
 
@@ -15,7 +14,6 @@ public class Equipment implements Item{
         this.name = itemBuilder.name;
         this.grade = itemBuilder.grade;
         this.desc = itemBuilder.desc;
-        this.price = itemBuilder.price;
         this.count = itemBuilder.count;
         this.defence = itemBuilder.option1;
 
@@ -34,7 +32,7 @@ public class Equipment implements Item{
 
     @Override
     public String[] getData() {
-        return new String[]{type, name, grade, desc, Integer.toString(price), Integer.toString(count), Integer.toString(defence)};
+        return new String[]{type, name, grade, desc, Integer.toString(count), Integer.toString(defence)};
     }
 
     @Override

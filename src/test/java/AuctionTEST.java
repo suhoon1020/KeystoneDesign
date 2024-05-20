@@ -11,7 +11,6 @@ public class AuctionTEST {
                 .name("TEST1")
                 .desc("THIS IS WEAPON")
                 .grade("Common")
-                .price(10000)
                 .count(1)
                 .option1(10)
                 .build();
