@@ -97,7 +97,15 @@ public class FileFacade {
     /*
     TRADING
      */
-    public void tradeItem(){
+
+    public void uploadItem(String id, Item item){
+        for(User user : FileFacade.fileFacade.getUsersList()){
+            if(user.getUserID().equals(id)){
+
+            }
+        }
+    }
+    public void tradeItem(String buyer, String seller, Item item){
 
     }
 }

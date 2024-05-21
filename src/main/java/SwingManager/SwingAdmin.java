@@ -24,19 +24,22 @@ import javax.swing.text.NumberFormatter;
 public class SwingAdmin extends JFrame {
     private String[] ItemTypes = {"Equipment", "Material", "Potion", "Weapon"};
     private String[] ItemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
-    private String[] itemHeader = {"TYPE", "NAME", "GRADE", "DESC", "PRICE", "OPTION1"};
-    
-    private String[] userHeader = {"ID", "PW", "NAME", "PHONE"};
+
+    private String[] itemHeader = {"TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1"};
+    private String[] userHeader = {"ID", "PW", "NAME", "PHONE", "GOLD"};
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField In_itemName;
     private JTextField In_itemDesc;
+    private JFormattedTextField In_ItemCount;
     private JFormattedTextField In_ItemOp1;
     private JTextField In_userID;
     private JTextField In_userPassword;
     private JTextField In_userName;
     private JTextField In_userPhoneNumber;
+    private JFormattedTextField In_userGold;
+    
     private JTable T_ItemList;
     private JScrollPane S_itemList;
     private DefaultTableModel itemTableModel;
@@ -44,6 +47,7 @@ public class SwingAdmin extends JFrame {
     private JTable T_userList;
     private JScrollPane S_userList;
     private DefaultTableModel userTableModel;
+    
 
     /**
      * Launch the application.
@@ -140,10 +144,15 @@ public class SwingAdmin extends JFrame {
         L_itemDesc.setFont(new Font("굴림", Font.PLAIN, 15));
         itemLab.add(L_itemDesc);
 
-        JLabel L_ItemOp1 = new JLabel("옵션 1 :");
-        L_ItemOp1.setHorizontalAlignment(SwingConstants.CENTER);
-        L_ItemOp1.setFont(new Font("굴림", Font.PLAIN, 15));
-        itemLab.add(L_ItemOp1);
+        JLabel L_itemCount= new JLabel("아이템 개수 :");
+        L_itemCount.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemCount.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemCount);
+
+        JLabel L_itemOp1 = new JLabel("옵션 1 :");
+        L_itemOp1.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemOp1.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemOp1);
 
         JPanel itemIn = new JPanel();
         itemIn.setBounds(196, 10, 177, 320);
@@ -164,15 +173,19 @@ public class SwingAdmin extends JFrame {
         itemIn.add(In_itemDesc);
         In_itemDesc.setColumns(10);
 
-        NumberFormatter F_SetPriceNumber = new NumberFormatter();
-        F_SetPriceNumber.setValueClass(Integer.class);
-        F_SetPriceNumber.setMinimum(Integer.valueOf(1));
-        F_SetPriceNumber.setMaximum(Integer.valueOf(100000));
+        NumberFormatter F_SetCountNumber = new NumberFormatter();
+        F_SetCountNumber.setValueClass(Integer.class);
+        F_SetCountNumber.setMinimum(Integer.valueOf(1));
+        F_SetCountNumber.setMaximum(Integer.valueOf(100000));
         
         NumberFormatter F_SetOptionNumber = new NumberFormatter();
         F_SetOptionNumber.setValueClass(Integer.class);
         F_SetOptionNumber.setMinimum(Integer.valueOf(1));
         F_SetOptionNumber.setMaximum(Integer.valueOf(1000000));
+
+        In_ItemCount = new JFormattedTextField(F_SetCountNumber);
+        itemIn.add(In_ItemCount);
+        In_ItemCount.setColumns(10);
 
         In_ItemOp1 = new JFormattedTextField(F_SetOptionNumber);
         itemIn.add(In_ItemOp1);
@@ -188,6 +201,7 @@ public class SwingAdmin extends JFrame {
                     In_itemName.setText(T_ItemList.getValueAt(selectedRow, 1).toString());
                     C_itemGrade.setSelectedItem(T_ItemList.getValueAt(selectedRow, 2).toString());
                     In_itemDesc.setText(T_ItemList.getValueAt(selectedRow, 3).toString());
+                    In_ItemCount.setText(T_ItemList.getValueAt(selectedRow, 4).toString());
                     In_ItemOp1.setText(T_ItemList.getValueAt(selectedRow, 5).toString());
                 }
             }
@@ -205,6 +219,7 @@ public class SwingAdmin extends JFrame {
                                 .name(In_itemName.getText())
                                 .grade(C_itemGrade.getSelectedItem().toString())
                                 .desc(In_itemDesc.getText())
+                                .count(Integer.valueOf(In_ItemCount.getText().replace(",","")))
                                 .option1(Integer.valueOf(In_ItemOp1.getText().replace(",","")))
                                 .build();
 
@@ -237,6 +252,7 @@ public class SwingAdmin extends JFrame {
                                 .name(In_itemName.getText())
                                 .grade(C_itemGrade.getSelectedItem().toString())
                                 .desc(In_itemDesc.getText())
+                                .count(Integer.valueOf(In_ItemCount.getText().replace(",","")))
                                 .option1(Integer.parseInt(In_ItemOp1.getText().replace(",","")))
                                 .build();
 
@@ -329,6 +345,11 @@ public class SwingAdmin extends JFrame {
         L_userPhoneNumber.setHorizontalAlignment(SwingConstants.CENTER);
         L_userPhoneNumber.setFont(new Font("굴림", Font.PLAIN, 20));
         userLab.add(L_userPhoneNumber);
+        
+        JLabel L_userGold = new JLabel("골드 :");
+        L_userGold.setHorizontalAlignment(SwingConstants.CENTER);
+        L_userGold.setFont(new Font("굴림", Font.PLAIN, 20));
+        userLab.add(L_userGold);
 
         JPanel userIn = new JPanel();
         userIn.setBounds(196, 10, 177, 320);
@@ -350,6 +371,15 @@ public class SwingAdmin extends JFrame {
         In_userPhoneNumber = new JTextField();
         In_userPhoneNumber.setColumns(10);
         userIn.add(In_userPhoneNumber);
+        
+        NumberFormatter F_SetGoldNumber = new NumberFormatter();
+        F_SetCountNumber.setValueClass(Integer.class);
+        F_SetCountNumber.setMinimum(Integer.valueOf(1));
+        F_SetCountNumber.setMaximum(Integer.valueOf(100000));
+        
+        In_userGold = new JFormattedTextField(F_SetGoldNumber);
+        userIn.add(In_userGold);
+        In_userGold.setColumns(10);
 
         T_userList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
@@ -361,7 +391,7 @@ public class SwingAdmin extends JFrame {
                     In_userPassword.setText(T_userList.getValueAt(selectedRow,1).toString());
                     In_userName.setText(T_userList.getValueAt(selectedRow,2).toString());
                     In_userPhoneNumber.setText(T_userList.getValueAt(selectedRow,3).toString());
-
+                    In_userPhoneNumber.setText(T_userList.getValueAt(selectedRow,4).toString());
                 }
             }
         });
@@ -374,6 +404,7 @@ public class SwingAdmin extends JFrame {
                         .PW(In_userPassword.getText())
                         .name(In_userName.getText())
                         .phone(In_userPhoneNumber.getText())
+                        .gold(Integer.valueOf(In_userGold.getText().replace(",","")))
                         .build();
                 if (FileFacade.getFacade().putUser(user)) {
                     JOptionPane.showMessageDialog(null, "유저 생성이 완료 되었습니다");
@@ -396,6 +427,7 @@ public class SwingAdmin extends JFrame {
                         .PW(In_userPassword.getText())
                         .name(In_userName.getText())
                         .phone(In_userPhoneNumber.getText())
+                        .gold(Integer.valueOf(In_userGold.getText().replace(",","")))
                         .build();
                 if (FileFacade.getFacade().updateUser(In_userID.getText(), user)) {
                     JOptionPane.showMessageDialog(null, "유저 수정이 완료 되었습니다");
@@ -485,7 +517,7 @@ public class SwingAdmin extends JFrame {
         userTableModel.setRowCount(0);
 
         for(User user : FileFacade.getFacade().getUsersList()){
-            Object[] rowData = {user.getUserID(), user.getUserPW(), user.getUserName(), user.getUserPhoneNum()};
+            Object[] rowData = user.getData();
             userTableModel.addRow(rowData);
         }
 
