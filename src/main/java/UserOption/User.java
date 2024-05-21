@@ -37,6 +37,10 @@ public class User {
         return userItemList;
     }
 
+    public String[] getData(){
+        return new String[]{userID, userPW, userName, userPhoneNum, Integer.toString(userGold)};
+    }
+
     @Override
     public String toString() {
         return userID + userPW + userName + userPhoneNum;
