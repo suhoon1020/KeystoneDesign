@@ -10,11 +10,13 @@ import javax.swing.*;
 import java.util.List;
 
 public class Auction {
+
+
     private AuctionState state;
     User user;
     private static Auction auction;
 
-    private Auction(){
+    private Auction() {
         this.state = new OpenState();
     }
 
@@ -29,7 +31,11 @@ public class Auction {
         this.state = state;
     }
 
-    public void handleRequest(JButton jButton){
+    public AuctionState getState() {
+        return state;
+    }
+
+    public void handleRequest(JButton jButton) {
         state.handleRequest(jButton);
     }
 

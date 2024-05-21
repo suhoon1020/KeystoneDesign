@@ -1,5 +1,6 @@
 package SwingManager;
 
+import AuctionManager.Auction;
 import DataManager.FileFacade;
 import DataManager.Utility;
 import UserOption.User;
@@ -85,11 +86,12 @@ public class SwingLogin extends JFrame {
         loginPage.add(In_password);
 
         JButton Btt_login = new JButton("로그인");
+        Auction.getAuction().getState().handleRequest(Btt_login);
+
         Btt_login.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 List<User> users = FileFacade.getFacade().getUsersList();
-
                 for (User user : users) {
                     if (user.getUserID().equals(In_ID.getText()) && user.getUserPW().equals(In_password.getText())) {
                         JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
