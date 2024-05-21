@@ -6,7 +6,7 @@ import java.util.List;
 
 public class RegisterdItem {
     String id;
-    Item registerdItems;
+    Item registerdItem;
     int price;
 
 

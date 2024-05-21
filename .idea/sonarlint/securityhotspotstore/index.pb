@@ -90,3 +90,5 @@ Z
 *src/main/java/AuctionManager/SellItem.java,e\8\e8339aac20ac910458d86244faf0bcdca2fbcadd
 ^
 .src/main/java/AuctionManager/AuctionState.java,9\5\95230e72b0d2f0da5b3984984cb7ae81df755dc7
+Z
+*src/main/java/SortingSystem/QuickSort.java,8\4\848b08e238faccbb86b1acbadd7c33cca102aac1

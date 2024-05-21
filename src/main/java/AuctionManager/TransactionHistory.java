@@ -7,7 +7,7 @@ import java.util.List;
 public class TransactionHistory {
     String buyer;
     String seller;
-    Item transactionItem;
+    String itemName;
     int price;
 
 
