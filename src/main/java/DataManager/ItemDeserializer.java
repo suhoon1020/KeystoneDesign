@@ -37,7 +37,6 @@ public class ItemDeserializer implements JsonDeserializer<Item> {
             default:
                 break;
         }
-
         return new ItemBuilder()
                 .type(type)
                 .name(name)

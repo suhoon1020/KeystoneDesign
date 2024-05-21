@@ -11,7 +11,8 @@ public class FileFacade {
 
     private ItemFileSystem itemFileSystem;
     private UserFileSystem userFileSystem;
-
+    private AuctionItem auctionItem;
+    private TradeHistory tradeHistory;
 
     private FileFacade() {
         this.itemFileSystem = new ItemFileSystem();
@@ -94,18 +95,54 @@ public class FileFacade {
         return itemFileSystem.deleteItem(name);
     }
 
+
+    /*
+     *       AuctionItems
+     */
+    //todo auctionitems 퍼사드에 넣어야함
+    public void saveAuctionItems(){
+
+    }
+
+
+
+
     /*
     TRADING
      */
-
+    //todo 거래 시스템 구현 해야함
     public void uploadItem(String id, Item item){
+        /*
+        유저 인벤에서 삭제
+        경매장 파일에 등록
+         */
         for(User user : FileFacade.fileFacade.getUsersList()){
             if(user.getUserID().equals(id)){
-
+                user.getItems().remove(item);
+                //경매장에 등록
             }
         }
     }
-    public void tradeItem(String buyer, String seller, Item item){
+    public void tradeItem(String buyerID, String sellerID, Item item, int price){
+        /*
+         buyer 인벤에 아이템 추가
+         경매장 에서 아이템 삭제
+         buyer 골드 차감
+         seller 골드 추가
+         */
+        for(User user : FileFacade.fileFacade.getUsersList()){
+            if(user.getUserID().equals(buyerID)){
+                user.getItems().add(item);
+            }
+        }
+
+        //경매장에서 아이템 삭제
+
+        for(User user : FileFacade.fileFacade.getUsersList()){
+            if(user.getUserID().equals(sellerID)){
+                user.setUserGold(user.getGold()+price);
+            }
+        }
 
     }
 }

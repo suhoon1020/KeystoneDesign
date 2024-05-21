@@ -11,6 +11,8 @@ public class User {
     private String userName;
     private String userPhoneNum;
     private int userGold;
+
+
     private List<Item> userItemList;
 
     public String getUserName() {
@@ -32,6 +34,11 @@ public class User {
     public int getGold(){
         return userGold;
     }
+
+    public void setUserGold(int userGold){
+        this.userGold = userGold;
+    }
+
 
     public List<Item> getItems(){
         return userItemList;

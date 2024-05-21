@@ -1,6 +1,6 @@
 
 œ
-java:S2293:"YReplace the type specification in this constructor call with the diamond operator ("<>").(¿Ûô‰8Ã ÌÕù1J$2fa696a3-771a-4fd4-93bc-e025a561d3bf
-¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ˆ€Á×úÿÿÿÿ8”á“Çõ1J$2c5e0faa-78cf-4da2-9231-55477bafc07c
-	java:S100H"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŸØÛÔ8ñ ÌÕù1J$517c80e7-baad-461e-85c1-6707e7c4b79f
-•	java:S100M"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Û®áûÿÿÿÿ8ò ÌÕù1J$47f35ed7-25c2-49ab-bc81-bee04f7c5732
+java:S2293A"YReplace the type specification in this constructor call with the diamond operator ("<>").(¿Ûô‰8şÿ÷İù1J$7ef695ec-ea33-488b-b882-051ba887bb32
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ˆ€Á×úÿÿÿÿ8ÿÿ÷İù1J$d97571f2-30ea-4294-a517-e9cd66060142
+	java:S100O"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŸØÛÔ8…€øİù1J$85dd7d53-ea1e-4808-a3d2-0a60706e0710
+•	java:S100T"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Û®áûÿÿÿÿ8…€øİù1J$736cf6dc-b474-4ea8-9a46-91435446076e

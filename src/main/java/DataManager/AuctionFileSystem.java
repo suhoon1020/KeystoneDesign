@@ -22,20 +22,20 @@ public class AuctionFileSystem {
 
     private static List<AuctionItem> AuctionItems;
 
-    public void saveInfosToFile(){
+    public void saveInfosToFile() {
         Gson gson = new Gson();
 
-        try{
+        try {
             FileWriter fw = new FileWriter(AUCTION_ITEM_FILE);
 
             fw.write(gson.toJson(AuctionItems));
             fw.close();
-        } catch(IOException err){
+        } catch (IOException err) {
             System.err.println(err);
         }
     }
 
-    public void loadInfosFromFile(){
+    public void loadInfosFromFile() {
         if (!Files.exists(Paths.get(AUCTION_ITEM_FILE))) {
             AuctionItems = new ArrayList<>();
         } else {
@@ -47,16 +47,17 @@ public class AuctionFileSystem {
                 Reader reader = new FileReader(AUCTION_ITEM_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                AuctionItems = gson.fromJson(jsonElement, new TypeToken<List<AuctionItem>>() {}.getType());
+                AuctionItems = gson.fromJson(jsonElement, new TypeToken<List<AuctionItem>>() {
+                }.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
         }
     }
 
-    public Boolean putAuctionItem(AuctionItem newAuctionItem) {
+    public void putAuctionItem(AuctionItem newAuctionItem) {
         AuctionItems.add(newAuctionItem);
-
-        return true;
     }
+
+
 }

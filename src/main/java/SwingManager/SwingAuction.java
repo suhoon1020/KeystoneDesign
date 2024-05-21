@@ -206,7 +206,7 @@ public class SwingAuction extends JFrame {
         Btt_goAuction.setFont(new Font("굴림", Font.PLAIN, 25));
         manu.add(Btt_goAuction);
 
-        JButton Btt_goInventory = new JButton("인밴토리");
+        JButton Btt_goInventory = new JButton("인벤토리");
         Btt_goInventory.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		cardLayout.show(contents, "InventoryPage");

@@ -2,6 +2,8 @@ package DataManager;
 
 import ItemsManager.Item;
 
+import java.util.List;
+
 public class AuctionItem {
     String userId;
     int price;

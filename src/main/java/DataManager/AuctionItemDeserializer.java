@@ -43,6 +43,7 @@ public class AuctionItemDeserializer implements JsonDeserializer<AuctionItem> {
             default:
                 break;
         }
+
         Item item = new ItemBuilder()
                 .type(type)
                 .name(name)
