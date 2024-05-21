@@ -76,3 +76,17 @@ U
 %src/main/java/Auction/CloseState.java,c\b\cbd70965030ea070d6b73735866b46ffc9233b60
 T
 $src/main/java/Auction/OpenState.java,3\1\31d27384a7491fc945cec47c0afd820414c3be93
+Y
+)src/main/java/AuctionManager/Auction.java,5\0\50fc90341f8c126f641b1bca43ffe72880f1baa9
+_
+/src/main/java/AuctionManager/RegisterdItem.java,3\a\3a72a70d3de4ef48eaf6b9e78e1589f85e520ef9
+d
+4src/main/java/AuctionManager/TransactionHistory.java,c\c\cca6abd425541b3ac55e6e966ecec1c3da88160d
+[
++src/main/java/AuctionManager/OpenState.java,c\a\caa546814071d59675a8fc9a6f117b3d1a478e1e
+\
+,src/main/java/AuctionManager/CloseState.java,f\b\fbcf027d153398a77b915326dd99440b35252ca9
+Z
+*src/main/java/AuctionManager/SellItem.java,e\8\e8339aac20ac910458d86244faf0bcdca2fbcadd
+^
+.src/main/java/AuctionManager/AuctionState.java,9\5\95230e72b0d2f0da5b3984984cb7ae81df755dc7

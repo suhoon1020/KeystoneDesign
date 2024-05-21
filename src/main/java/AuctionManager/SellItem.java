@@ -1,4 +1,4 @@
-package Auction;
+package AuctionManager;
 
 public class SellItem {
     private String type;
