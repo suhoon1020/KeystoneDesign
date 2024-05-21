@@ -1,8 +1,13 @@
 package SortingSystem;
 
+import java.util.List;
+
+import ItemsManager.Item;
+
 public class Ascending implements SortState{
     @Override
-    public void sort() {
-        //todo 오름 차순
+    public List<Item> sort(List<Item> list) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'sort'");
     }
 }
