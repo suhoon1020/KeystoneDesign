@@ -11,7 +11,6 @@ import java.util.List;
 
 public class Auction {
 
-
     private AuctionState state;
     User user;
     private static Auction auction;

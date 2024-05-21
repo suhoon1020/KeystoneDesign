@@ -95,6 +95,7 @@ public class SwingLogin extends JFrame {
                 for (User user : users) {
                     if (user.getUserID().equals(In_ID.getText()) && user.getUserPW().equals(In_password.getText())) {
                         JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
+                        Auction.getAuction().setUser(user);
                         return;
                     }
                 }
