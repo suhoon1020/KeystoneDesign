@@ -391,7 +391,7 @@ public class SwingAdmin extends JFrame {
                     In_userPassword.setText(T_userList.getValueAt(selectedRow,1).toString());
                     In_userName.setText(T_userList.getValueAt(selectedRow,2).toString());
                     In_userPhoneNumber.setText(T_userList.getValueAt(selectedRow,3).toString());
-                    In_userPhoneNumber.setText(T_userList.getValueAt(selectedRow,4).toString());
+                    In_userGold.setText(T_userList.getValueAt(selectedRow,4).toString());
                 }
             }
         });

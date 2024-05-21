@@ -1,5 +1,7 @@
 package AuctionManager;
 
+import javax.swing.*;
+
 public interface AuctionState {
-    public void run();
+    public void handleRequest(JButton jButton);
 }

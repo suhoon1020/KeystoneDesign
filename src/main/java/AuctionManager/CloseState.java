@@ -1,8 +1,10 @@
 package AuctionManager;
 
+import javax.swing.*;
+
 public class CloseState implements AuctionState {
     @Override
-    public void run() {
-
+    public void handleRequest(JButton jButton) {
+        jButton.setEnabled(false);
     }
 }

@@ -192,6 +192,7 @@ public class SwingLogin extends JFrame {
                             .PW(In_register_Password.getText())
                             .name(In_regisiter_Name.getText())
                             .phone(In_register_PhoneNumber.getText())
+                            .gold(10000)
                             .build();
 
                     if (FileFacade.getFacade().putUser(user)) {
