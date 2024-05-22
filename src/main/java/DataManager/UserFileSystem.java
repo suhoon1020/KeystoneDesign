@@ -54,7 +54,6 @@ public class UserFileSystem {
     }
 
     public User getUser(String id) {
-
         for (User user : Users) {
             if (user.getUserID().equals(id)) return user;
         }

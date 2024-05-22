@@ -5,8 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import ItemsManager.Item;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;

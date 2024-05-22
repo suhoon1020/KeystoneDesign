@@ -1,6 +1,5 @@
 package DataManager;
 
-import AuctionManager.Auction;
 import UserOption.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

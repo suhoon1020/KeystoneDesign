@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 
 import DataManager.FileFacade;
 import ItemsManager.Item;
+import SortingSystem.ItemSort;
+import SortingSystem.ItemSortByCountRev;
 import UserOption.User;
 
 import java.awt.GridLayout;
@@ -24,12 +26,13 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class SwingAuction extends JFrame {
     private String[] ItemTypes = {"Equipment", "Material", "Potion", "Weapon"};
     private String[] ItemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
-    private String[] itemHeader = {"TYPE", "NAME", "GRADE", "DESC", "PRICE", "OPTION1"};
+    private String[] itemHeader = {"TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1"};
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -41,8 +44,8 @@ public class SwingAuction extends JFrame {
     private JScrollPane S_itemList;
     private DefaultTableModel itemTableModel;
     private DefaultTableModel inventoryTableModel;
-
-
+    
+    private ItemSort itemSort = new ItemSortByCountRev();
 
     private static SwingAuction swingAuction = new SwingAuction();
 
@@ -268,10 +271,19 @@ public class SwingAuction extends JFrame {
         manu.add(Btt_goUserInfo);
     }
 
+
+    public void setItemSort(ItemSort newSort){
+        itemSort = newSort;
+
+        refreshItemTable();
+    }
+
     public void refreshItemTable() {
         itemTableModel.setRowCount(0);
 
-        for (Item item : FileFacade.getFacade().getItemList()) {
+        List<Item> L = itemSort.sort(FileFacade.getFacade().getItemList());
+
+        for(Item item : L){
             Object[] rowData = item.getData();
             itemTableModel.addRow(rowData);
         }
