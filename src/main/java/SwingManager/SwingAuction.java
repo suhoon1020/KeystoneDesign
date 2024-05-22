@@ -41,6 +41,14 @@ public class SwingAuction extends JFrame {
     private JScrollPane S_itemList;
     private DefaultTableModel itemTableModel;
     private DefaultTableModel inventoryTableModel;
+
+
+
+    private static SwingAuction swingAuction = new SwingAuction();
+
+    public static SwingAuction getSwingAuction() {
+        return swingAuction;
+    }
     /**
      * Launch the application.
      */
@@ -48,8 +56,7 @@ public class SwingAuction extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    SwingAuction frame = new SwingAuction();
-                    frame.setVisible(true);
+                    SwingAuction.getSwingAuction().setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -148,6 +155,38 @@ public class SwingAuction extends JFrame {
         JButton B_goSearch = new JButton("검색");
         B_goSearch.setBounds(772, -1, 100, 56);
         search.add(B_goSearch);
+
+        JButton btn_Sort_Name = new JButton("이름(오름차순)");
+        btn_Sort_Name.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        btn_Sort_Name.setBounds(22, 297, 117, 38);
+        AuctionPage.add(btn_Sort_Name);
+
+        JButton btn_Reverse_Sort_Name = new JButton("이름(내림차순)");
+        btn_Reverse_Sort_Name.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        btn_Reverse_Sort_Name.setBounds(149, 297, 117, 38);
+        AuctionPage.add(btn_Reverse_Sort_Name);
+
+        JButton btn_Sort_Price = new JButton("가격(오름차순)");
+        btn_Sort_Price.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        btn_Sort_Price.setBounds(22, 343, 117, 38);
+        AuctionPage.add(btn_Sort_Price);
+
+        JButton btn_Reverse_Sort_Price = new JButton("가격(내림차순)");
+        btn_Reverse_Sort_Price.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        btn_Reverse_Sort_Price.setBounds(149, 343, 117, 38);
+        AuctionPage.add(btn_Reverse_Sort_Price);
 
         JPanel inventoryPage = new JPanel();
         contents.add(inventoryPage, "InventoryPage");

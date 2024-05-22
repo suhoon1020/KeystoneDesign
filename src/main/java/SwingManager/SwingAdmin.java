@@ -51,6 +51,12 @@ public class SwingAdmin extends JFrame {
     private JTextField jtext_State;
 
 
+
+    private static SwingAdmin swingAdmin = new SwingAdmin();
+
+    public static SwingAdmin getSwingAdmin() {
+        return swingAdmin;
+    }
     /**
      * Launch the application.
      */
@@ -58,8 +64,7 @@ public class SwingAdmin extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    SwingAdmin frame = new SwingAdmin();
-                    frame.setVisible(true);
+                    SwingAdmin.getSwingAdmin().setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

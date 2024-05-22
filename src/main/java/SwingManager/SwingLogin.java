@@ -32,8 +32,6 @@ public class SwingLogin extends JFrame {
     private JTextField In_findPassword_Name;
     private JTextField In_findPassword_PhoneNumber;
 
-
-
     private static SwingLogin swingLogin = new SwingLogin();
 
     public static SwingLogin getSwingLogin() {
@@ -46,8 +44,7 @@ public class SwingLogin extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    swingLogin;
-                    swingLogin.setVisible(true);
+                    SwingLogin.getSwingLogin().setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
