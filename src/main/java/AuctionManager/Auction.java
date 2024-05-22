@@ -13,16 +13,13 @@ public class Auction {
 
     private AuctionState state;
     User user;
-    private static Auction auction;
+    private static Auction auction = new Auction();
 
-    private Auction() {
-        this.state = new OpenState();
+    public Auction(){
+        this.state = new CloseState();
     }
 
     public static Auction getAuction() {
-        if (auction == null) {
-            auction = new Auction();
-        }
         return auction;
     }
 
@@ -34,12 +31,12 @@ public class Auction {
         return state;
     }
 
-    public void handleRequest(JButton jButton) {
-        state.handleRequest(jButton);
-    }
-
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void LoadAuction() {
@@ -47,6 +44,16 @@ public class Auction {
     }
 
     public void run() {
-        new SwingLogin();
+        state.run();
     }
+
+    public void aucitonOff() {
+        state.auctionOff();
+    }
+
+    public void auctionOn() {
+        state.auctionOn();
+    }
+
+
 }

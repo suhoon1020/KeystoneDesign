@@ -32,6 +32,13 @@ public class SwingLogin extends JFrame {
     private JTextField In_findPassword_Name;
     private JTextField In_findPassword_PhoneNumber;
 
+
+
+    private static SwingLogin swingLogin = new SwingLogin();
+
+    public static SwingLogin getSwingLogin() {
+        return swingLogin;
+    }
     /**
      * Launch the application.
      */
@@ -39,8 +46,8 @@ public class SwingLogin extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    SwingLogin frame = new SwingLogin();
-                    frame.setVisible(true);
+                    swingLogin;
+                    swingLogin.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -86,7 +93,6 @@ public class SwingLogin extends JFrame {
         loginPage.add(In_password);
 
         JButton Btt_login = new JButton("로그인");
-        Auction.getAuction().getState().handleRequest(Btt_login);
 
         Btt_login.addMouseListener(new MouseAdapter() {
             @Override

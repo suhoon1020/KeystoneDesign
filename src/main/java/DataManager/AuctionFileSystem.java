@@ -1,12 +1,12 @@
 package DataManager;
 
+import AuctionManager.Auction;
+import UserOption.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-
-import ItemsManager.Item;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,45 +18,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuctionFileSystem {
-    private static final String AUCTION_ITEM_FILE = "auctionItems.json";
+    private static final String REGISTER_ITEM_FILE = "registerItem.json";
+    private static List<AuctionItem> registerdItems;
 
-    private static List<AuctionItem> AuctionItems;
 
-    public void saveInfosToFile() {
+    public void saveRegisterdItems(){
         Gson gson = new Gson();
 
-        try {
-            FileWriter fw = new FileWriter(AUCTION_ITEM_FILE);
+        try{
+            FileWriter fileWriter = new FileWriter(REGISTER_ITEM_FILE);
 
-            fw.write(gson.toJson(AuctionItems));
-            fw.close();
-        } catch (IOException err) {
-            System.err.println(err);
+            String auctionString = gson.toJson(registerdItems);
+
+            fileWriter.write(auctionString);
+            fileWriter.close();
+        }catch(IOException ex){
+            ex.printStackTrace();
         }
     }
 
-    public void loadInfosFromFile() {
-        if (!Files.exists(Paths.get(AUCTION_ITEM_FILE))) {
-            AuctionItems = new ArrayList<>();
+    public void loadRegisterdItems(){
+        if (!Files.exists(Paths.get(REGISTER_ITEM_FILE))) {
+            registerdItems = new ArrayList<>();
         } else {
             try {
                 GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.registerTypeAdapter(AuctionItem.class, new UserDeserializer());
+                gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
 
                 Gson gson = gsonBuilder.create();
-                Reader reader = new FileReader(AUCTION_ITEM_FILE);
+                Reader reader = new FileReader(REGISTER_ITEM_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                AuctionItems = gson.fromJson(jsonElement, new TypeToken<List<AuctionItem>>() {
-                }.getType());
+                registerdItems = gson.fromJson(jsonElement, new TypeToken<List<User>>() {}.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
         }
-    }
-
-    public void putAuctionItem(AuctionItem newAuctionItem) {
-        AuctionItems.add(newAuctionItem);
     }
 
 
