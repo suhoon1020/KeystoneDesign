@@ -65,12 +65,15 @@ public class UserDeserializer implements JsonDeserializer<User> {
             useriItemList.add(item);
         }
 
+        
+
         return new User.UserBuilder()
                 .ID(userID)
                 .PW(userPW)
                 .name(userName)
                 .phone(userPhoneNum)
                 .gold(userGold)
+                .itemList(useriItemList)
                 .build();
     }
 }

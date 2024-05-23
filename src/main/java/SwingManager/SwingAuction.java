@@ -12,7 +12,6 @@ import DataManager.FileFacade;
 import ItemsManager.Item;
 import SortingSystem.ItemSort;
 import SortingSystem.ItemSortByCountRev;
-import UserOption.User;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -306,14 +305,10 @@ public class SwingAuction extends JFrame {
 
         List<Item> invItems = Auction.getAuction().getUser().getItems();
 
-        System.out.println(invItems);
-
         for(Item item : invItems){
             Object[] rowData = item.getData();
             inventoryTableModel.addRow(rowData);
         }
-
-
 
         S_inventory.setViewportView(inventoryTable);
     }
