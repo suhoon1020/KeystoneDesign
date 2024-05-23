@@ -56,7 +56,7 @@ public class ItemFileSystem {
 
     public Item getItem(String name) {
         for (Item i : Items) {
-            if(i.getName() == name) return i;
+            if(i.getName().equals(name)) return i;
         }
 
         return null;

@@ -3,6 +3,7 @@ package SwingManager;
 import AuctionManager.Auction;
 import DataManager.FileFacade;
 import DataManager.Utility;
+import ItemsManager.Item;
 import UserOption.User;
 
 import java.awt.EventQueue;
@@ -190,7 +191,10 @@ public class SwingLogin extends JFrame {
         Btt_tryRegister.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (In_register_ID.getText().isEmpty() || In_register_Password.getText().isEmpty() || In_regisiter_Name.getText().isEmpty() || In_register_PhoneNumber.getText().isEmpty()) {
+                if (In_register_ID.getText().isEmpty()
+                        || In_register_Password.getText().isEmpty()
+                        || In_regisiter_Name.getText().isEmpty()
+                        || In_register_PhoneNumber.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "모두 입력하여 주십시오");
                 } else {
                     User user = new User.UserBuilder()
@@ -200,9 +204,9 @@ public class SwingLogin extends JFrame {
                             .phone(In_register_PhoneNumber.getText())
                             .gold(10000)
                             .build();
-
                     if (FileFacade.getFacade().putUser(user)) {
                         JOptionPane.showMessageDialog(null, "회원가입이 완료 되었습니다");
+                        Item.makeDefaultItem(user.getUserID());
                         FileFacade.getFacade().saveUsers();
                         cardLayout.show(getContentPane(), "LoginPage");
                     } else {

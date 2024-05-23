@@ -12,7 +12,7 @@ public class Auction {
     private static Auction auction = new Auction();
 
     public Auction(){
-        this.state = new CloseState();
+        this.state = new OpenState();
     }
 
     public static Auction getAuction() {

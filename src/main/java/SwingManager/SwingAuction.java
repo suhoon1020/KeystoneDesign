@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import AuctionManager.Auction;
 import DataManager.FileFacade;
 import ItemsManager.Item;
 import SortingSystem.ItemSort;
@@ -209,6 +210,7 @@ public class SwingAuction extends JFrame {
         S_inventory = new JScrollPane();
         invItemList.add(S_inventory);
 
+
         JPanel sellItemInfos = new JPanel();
         sellItemInfos.setBorder(new LineBorder(new Color(0, 0, 0)));
         sellItemInfos.setBounds(840, 10, 310, 535);
@@ -262,6 +264,12 @@ public class SwingAuction extends JFrame {
         JButton Btt_goInventory = new JButton("인벤토리");
         Btt_goInventory.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                inventoryTableModel = new DefaultTableModel(itemHeader, 0);
+                inventoryTable = new JTable(inventoryTableModel);
+                inventoryTable.getTableHeader().setReorderingAllowed(false);
+                inventoryTable.getTableHeader().setResizingAllowed(false);
+                S_inventory = new JScrollPane();
+                invItemList.add(S_inventory);
                 refreshInvTable();
                 cardLayout.show(contents, "InventoryPage");
             }
@@ -300,8 +308,15 @@ public class SwingAuction extends JFrame {
     }
 
     public void refreshInvTable() {
-        inventoryTableModel.setRowCount(0);
 
+        inventoryTableModel.setRowCount(0);
+        User user = Auction.getAuction().getUser();
+        List<Item> invItems = user.getItems();
+
+        for(Item item : invItems){
+            Object[] rowData = item.getData();
+            inventoryTableModel.addRow(rowData);
+        }
         S_inventory.setViewportView(inventoryTable);
     }
 

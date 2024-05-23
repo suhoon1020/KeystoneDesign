@@ -108,3 +108,7 @@ _
 /src/main/java/SortingSystem/ItemSortByName.java,d\b\dbb016d3683cdb74215dec4f55479babdbbc28f1
 Z
 *src/main/java/DataManager/AuctionItem.java,5\5\555a8b980e398c56f8c865d4d3f5d962a616847c
+[
++src/main/java/DataManager/TradeHistory.java,c\2\c25e4aa3e77159a8855df013359760275edc9934
+f
+6src/main/java/DataManager/AuctionItemDeserializer.java,f\b\fb0647df54f7f6be50aa0e686bd38d836b85a3ec
