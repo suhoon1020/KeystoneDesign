@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import AuctionManager.Auction;
+import DataManager.AuctionItem;
 import DataManager.FileFacade;
 import ItemsManager.Item;
 import SortingSystem.ItemSort;
@@ -32,7 +33,7 @@ import java.awt.event.ActionEvent;
 public class SwingAuction extends JFrame {
     private String[] ItemTypes = {"Equipment", "Material", "Potion", "Weapon"};
     private String[] ItemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
-    private String[] itemHeader = {"TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1"};
+    private String[] itemHeader = {"TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1","PRICE"};
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField ItemSearch;
@@ -48,6 +49,8 @@ public class SwingAuction extends JFrame {
     private ItemSort itemSort = new ItemSortByCountRev();
 
     private static SwingAuction swingAuction = new SwingAuction();
+    private JTextField text_BuyItem;
+    private JTextField text_Price;
 
     public static SwingAuction getSwingAuction() {
         return swingAuction;
@@ -190,6 +193,15 @@ public class SwingAuction extends JFrame {
         });
         btn_Reverse_Sort_Price.setBounds(149, 343, 117, 38);
         AuctionPage.add(btn_Reverse_Sort_Price);
+        
+        JButton btn_BuyItem = new JButton("구매");
+        btn_BuyItem.setBounds(85, 508, 97, 23);
+        AuctionPage.add(btn_BuyItem);
+        
+        text_BuyItem = new JTextField();
+        text_BuyItem.setBounds(50, 465, 178, 23);
+        AuctionPage.add(text_BuyItem);
+        text_BuyItem.setColumns(10);
 
         JPanel inventoryPage = new JPanel();
         contents.add(inventoryPage, "InventoryPage");
@@ -218,7 +230,7 @@ public class SwingAuction extends JFrame {
 
         JPanel itemOption = new JPanel();
         itemOption.setBorder(new LineBorder(new Color(0, 0, 0)));
-        itemOption.setBounds(12, 10, 286, 372);
+        itemOption.setBounds(12, 10, 286, 311);
         sellItemInfos.add(itemOption);
         itemOption.setLayout(null);
 
@@ -226,12 +238,20 @@ public class SwingAuction extends JFrame {
         sellButton.setBounds(12, 397, 286, 128);
         sellItemInfos.add(sellButton);
         sellButton.setLayout(new GridLayout(0, 1, 0, 0));
+        
+        text_Price = new JTextField();
+        sellButton.add(text_Price);
+        text_Price.setColumns(10);
 
         In_itemSellCount = new JTextField();
         sellButton.add(In_itemSellCount);
         In_itemSellCount.setColumns(10);
 
         JButton Btt_itemSell = new JButton("판매");
+        Btt_itemSell.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
         sellButton.add(Btt_itemSell);
 
         JPanel UserInfoPage = new JPanel();

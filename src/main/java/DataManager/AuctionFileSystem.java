@@ -18,8 +18,12 @@ import java.util.List;
 
 public class AuctionFileSystem {
     private static final String REGISTER_ITEM_FILE = "registerItem.json";
-    private static List<AuctionItem> registerdItems;
 
+    private static List<AuctionItem> auctionItems;
+
+    public static List<AuctionItem> getAuctionItems() {
+        return auctionItems;
+    }
 
     public void saveRegisterdItems(){
         Gson gson = new Gson();
@@ -27,7 +31,7 @@ public class AuctionFileSystem {
         try{
             FileWriter fileWriter = new FileWriter(REGISTER_ITEM_FILE);
 
-            String auctionString = gson.toJson(registerdItems);
+            String auctionString = gson.toJson(auctionItems);
 
             fileWriter.write(auctionString);
             fileWriter.close();
@@ -38,7 +42,7 @@ public class AuctionFileSystem {
 
     public void loadRegisterdItems(){
         if (!Files.exists(Paths.get(REGISTER_ITEM_FILE))) {
-            registerdItems = new ArrayList<>();
+            auctionItems = new ArrayList<>();
         } else {
             try {
                 GsonBuilder gsonBuilder = new GsonBuilder();
@@ -48,11 +52,19 @@ public class AuctionFileSystem {
                 Reader reader = new FileReader(REGISTER_ITEM_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                registerdItems = gson.fromJson(jsonElement, new TypeToken<List<User>>() {}.getType());
+                auctionItems = gson.fromJson(jsonElement, new TypeToken<List<User>>() {}.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
         }
+    }
+
+    public void putItem(AuctionItem auctionItem){
+        auctionItems.add(auctionItem);
+    }
+
+    public void deleteItem(AuctionItem auctionItem){
+        auctionItems.remove(auctionItem);
     }
 
 

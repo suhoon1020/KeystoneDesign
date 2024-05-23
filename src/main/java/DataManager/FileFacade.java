@@ -11,7 +11,7 @@ public class FileFacade {
 
     private ItemFileSystem itemFileSystem;
     private UserFileSystem userFileSystem;
-    private AuctionItem auctionItem;
+    private AuctionFileSystem auctionFileSystem;
     private TradeHistory tradeHistory;
 
     private FileFacade() {
@@ -20,6 +20,7 @@ public class FileFacade {
 
         itemFileSystem.loadInfosFromFile();
         userFileSystem.loadInfosFromFile();
+        //auctionFileSystem.loadRegisterdItems();
     }
 
     public static FileFacade getFacade(){
@@ -101,46 +102,62 @@ public class FileFacade {
      */
     //todo auctionitems 퍼사드에 넣어야함
     public void saveAuctionItems(){
-
+        auctionFileSystem.saveRegisterdItems();
+    }
+    public void loadAuctionItems(){
+        auctionFileSystem.loadRegisterdItems();
     }
 
-
+    public List<AuctionItem> getAuctionItems(){
+        return auctionFileSystem.getAuctionItems();
+    }
 
 
     /*
     TRADING
      */
     //todo 거래 시스템 구현 해야함
-    public void uploadItem(String id, Item item){
+    public void uploadItem(AuctionItem auctionItem){
         /*
         유저 인벤에서 삭제
         경매장 파일에 등록
          */
         for(User user : FileFacade.fileFacade.getUsersList()){
-            if(user.getUserID().equals(id)){
-                user.getItems().remove(item);
+            if(user.getUserID().equals(auctionItem.getUserId())){
+                user.getItems().remove(auctionItem.getAuctionItem());
                 //경매장에 등록
+                AuctionFileSystem.getAuctionItems().add(auctionItem);
             }
         }
     }
-    public void tradeItem(String buyerID, String sellerID, Item item, int price){
+
+    public void unloadItem(AuctionItem auctionItem){
+        AuctionFileSystem.getAuctionItems().remove(auctionItem);
+    }
+
+    public void buyItem(String buyerID, String sellerID, AuctionItem auctionItem){
         /*
          buyer 인벤에 아이템 추가
          경매장 에서 아이템 삭제
          buyer 골드 차감
          seller 골드 추가
          */
+
+        //buyer 인벤에 아이템 추가 , 골드 차감
         for(User user : FileFacade.fileFacade.getUsersList()){
             if(user.getUserID().equals(buyerID)){
-                user.getItems().add(item);
+                user.getItems().add(auctionItem.getAuctionItem());
+                user.setUserGold(user.getGold()-auctionItem.getPrice());
             }
         }
 
         //경매장에서 아이템 삭제
+        unloadItem(auctionItem);
 
+        //seller에게 골드 추가
         for(User user : FileFacade.fileFacade.getUsersList()){
             if(user.getUserID().equals(sellerID)){
-                user.setUserGold(user.getGold()+price);
+                user.setUserGold(user.getGold()+auctionItem.getPrice());
             }
         }
 
