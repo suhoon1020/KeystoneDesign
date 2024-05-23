@@ -15,7 +15,7 @@ public class CloseState implements AuctionState {
     }
 
     @Override
-    public void run() {
+    public void login() {
         JOptionPane.showMessageDialog(null,"거래소가 닫혀있어 로그인에 실패하였습니다");
     }
 }

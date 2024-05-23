@@ -2,12 +2,8 @@ package AuctionManager;
 
 
 import DataManager.FileFacade;
-import ItemsManager.Item;
 import SwingManager.SwingLogin;
 import UserOption.User;
-
-import javax.swing.*;
-import java.util.List;
 
 public class Auction {
 
@@ -44,7 +40,7 @@ public class Auction {
     }
 
     public void run() {
-        state.run();
+        SwingLogin.getSwingLogin().setVisible(true);
     }
 
     public void aucitonOff() {
@@ -53,6 +49,10 @@ public class Auction {
 
     public void auctionOn() {
         state.auctionOn();
+    }
+
+    public void login(){
+        state.login();
     }
 
 

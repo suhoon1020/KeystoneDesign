@@ -33,7 +33,6 @@ public class SwingAuction extends JFrame {
     private String[] ItemTypes = {"Equipment", "Material", "Potion", "Weapon"};
     private String[] ItemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
     private String[] itemHeader = {"TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1"};
-
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField ItemSearch;
@@ -42,6 +41,7 @@ public class SwingAuction extends JFrame {
     private JTable T_ItemList;
     private JTable inventoryTable;
     private JScrollPane S_itemList;
+    private JScrollPane S_inventory;
     private DefaultTableModel itemTableModel;
     private DefaultTableModel inventoryTableModel;
     
@@ -195,11 +195,19 @@ public class SwingAuction extends JFrame {
         contents.add(inventoryPage, "InventoryPage");
         inventoryPage.setLayout(null);
 
+
         JPanel invItemList = new JPanel();
         invItemList.setBorder(new LineBorder(new Color(0, 0, 0)));
         invItemList.setBounds(12, 10, 816, 535);
         inventoryPage.add(invItemList);
         invItemList.setLayout(null);
+
+        inventoryTableModel = new DefaultTableModel(itemHeader, 0);
+        inventoryTable = new JTable(inventoryTableModel);
+        inventoryTable.getTableHeader().setReorderingAllowed(false);
+        inventoryTable.getTableHeader().setResizingAllowed(false);
+        S_inventory = new JScrollPane();
+        invItemList.add(S_inventory);
 
         JPanel sellItemInfos = new JPanel();
         sellItemInfos.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -254,8 +262,8 @@ public class SwingAuction extends JFrame {
         JButton Btt_goInventory = new JButton("인벤토리");
         Btt_goInventory.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                refreshInvTable();
                 cardLayout.show(contents, "InventoryPage");
-
             }
         });
         Btt_goInventory.setFont(new Font("굴림", Font.PLAIN, 25));
@@ -289,6 +297,12 @@ public class SwingAuction extends JFrame {
         }
 
         S_itemList.setViewportView(T_ItemList);
+    }
+
+    public void refreshInvTable() {
+        inventoryTableModel.setRowCount(0);
+
+        S_inventory.setViewportView(inventoryTable);
     }
 
 

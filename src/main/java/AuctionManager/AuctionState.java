@@ -5,5 +5,5 @@ public interface AuctionState {
 
     public void auctionOn();
 
-    public void run();
+    public void login();
 }

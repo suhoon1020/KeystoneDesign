@@ -97,13 +97,13 @@ public class SwingLogin extends JFrame {
                 List<User> users = FileFacade.getFacade().getUsersList();
                 for (User user : users) {
                     if (user.getUserID().equals(In_ID.getText()) && user.getUserPW().equals(In_password.getText())) {
-                        JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
                         Auction.getAuction().setUser(user);
+                        Auction.getAuction().login();
                         return;
                     }
                 }
 
-                JOptionPane.showMessageDialog(null, "로그인에 실패하였습니다");
+                JOptionPane.showMessageDialog(null, "올바른 사용자 정보가 아닙니다");
             }
         });
 

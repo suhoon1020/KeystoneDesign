@@ -18,7 +18,8 @@ public class OpenState implements AuctionState {
     }
 
     @Override
-    public void run() {
+    public void login() {
+        JOptionPane.showMessageDialog(null,"로그인 되었습니다");
         new SwingAuction();
     }
 }
