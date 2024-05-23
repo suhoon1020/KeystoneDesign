@@ -18,7 +18,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
     @Override
     public User deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        
+
         String userID = jsonObject.get("userID").getAsString();
         String userPW = jsonObject.get("userPW").getAsString();
         String userName = jsonObject.get("userName").getAsString();
@@ -65,12 +65,15 @@ public class UserDeserializer implements JsonDeserializer<User> {
             useriItemList.add(item);
         }
 
+
+
         return new User.UserBuilder()
                 .ID(userID)
                 .PW(userPW)
                 .name(userName)
                 .phone(userPhoneNum)
                 .gold(userGold)
+                .itemList(useriItemList)
                 .build();
     }
 }
