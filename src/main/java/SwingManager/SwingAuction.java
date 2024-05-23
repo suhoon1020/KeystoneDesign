@@ -201,7 +201,7 @@ public class SwingAuction extends JFrame {
         invItemList.setBorder(new LineBorder(new Color(0, 0, 0)));
         invItemList.setBounds(12, 10, 816, 535);
         inventoryPage.add(invItemList);
-        invItemList.setLayout(new GridLayout(0, 1, 0, 0));
+        invItemList.setLayout(null);
 
         inventoryTableModel = new DefaultTableModel(itemHeader, 0);
         inventoryTable = new JTable(inventoryTableModel);
@@ -209,7 +209,7 @@ public class SwingAuction extends JFrame {
         inventoryTable.getTableHeader().setResizingAllowed(false);
         S_inventory = new JScrollPane();
         invItemList.add(S_inventory);
-        refreshInvTable();
+
 
         JPanel sellItemInfos = new JPanel();
         sellItemInfos.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -264,8 +264,14 @@ public class SwingAuction extends JFrame {
         JButton Btt_goInventory = new JButton("인벤토리");
         Btt_goInventory.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(contents, "InventoryPage");
+                inventoryTableModel = new DefaultTableModel(itemHeader, 0);
+                inventoryTable = new JTable(inventoryTableModel);
+                inventoryTable.getTableHeader().setReorderingAllowed(false);
+                inventoryTable.getTableHeader().setResizingAllowed(false);
+                S_inventory = new JScrollPane();
+                invItemList.add(S_inventory);
                 refreshInvTable();
+                cardLayout.show(contents, "InventoryPage");
             }
         });
         Btt_goInventory.setFont(new Font("굴림", Font.PLAIN, 25));
@@ -302,19 +308,17 @@ public class SwingAuction extends JFrame {
     }
 
     public void refreshInvTable() {
+
         inventoryTableModel.setRowCount(0);
-
-        List<Item> invItems = Auction.getAuction().getUser().getItems();
-
-        System.out.println(invItems);
+        User user = Auction.getAuction().getUser();
+        List<Item> invItems = user.getItems();
 
         for(Item item : invItems){
             Object[] rowData = item.getData();
             inventoryTableModel.addRow(rowData);
         }
-
-
-
         S_inventory.setViewportView(inventoryTable);
     }
+
+
 }
