@@ -423,12 +423,15 @@ public class SwingAdmin extends JFrame {
                         .phoneNumber(In_userPhoneNumber.getText())
                         .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                         .build();
+
+
                 if (FileFacade.getFacade().putUser(user)) {
                     JOptionPane.showMessageDialog(null, "유저 생성이 완료 되었습니다");
                     refreshUserTable();
                 } else {
                     JOptionPane.showMessageDialog(null, "중복된 ID가 있습니다");
                 }
+
         	}
         });
         Btt_createUser.setFont(new Font("굴림", Font.PLAIN, 15));

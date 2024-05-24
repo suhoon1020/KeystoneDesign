@@ -3,7 +3,10 @@ package user.userprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
+import managers.FileFacade;
 import user.inventoryItem.Item;
+
+import javax.swing.*;
 
 
 public class User {
@@ -107,4 +110,6 @@ public class User {
             return new User(this);
         }
     }
+
+
 }

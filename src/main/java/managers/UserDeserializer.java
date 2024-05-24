@@ -20,7 +20,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
     public User deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
 
-        String userID = jsonObject.get("id").getAsString();
+        String userID = jsonObject.get("ID").getAsString();
         String userPW = jsonObject.get("password").getAsString();
         String userName = jsonObject.get("name").getAsString();
         String userPhoneNum = jsonObject.get("phoneNumber").getAsString();

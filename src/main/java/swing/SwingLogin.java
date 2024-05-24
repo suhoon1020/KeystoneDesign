@@ -37,6 +37,7 @@ public class SwingLogin extends JFrame {
     public static SwingLogin getSwingLogin() {
         return swingLogin;
     }
+
     /**
      * Launch the application.
      */
@@ -94,14 +95,13 @@ public class SwingLogin extends JFrame {
         Btt_login.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(Auction.getAuction().login(In_ID.getText(), In_password.getText())){
+                if (Auction.getAuction().login(In_ID.getText(), In_password.getText())) {
                     JOptionPane.showMessageDialog(null, "로그인이 완료 되었습니다");
                     dispose();
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(null, "회원정보가 없습니다.");
                 }
-                
+
             }
         });
 
@@ -201,12 +201,15 @@ public class SwingLogin extends JFrame {
                             .phoneNumber(In_register_PhoneNumber.getText())
                             .gold(10000)
                             .build();
+
                     if (FileFacade.getFacade().putUser(user)) {
                         JOptionPane.showMessageDialog(null, "회원가입이 완료 되었습니다");
                         cardLayout.show(getContentPane(), "LoginPage");
                     } else {
                         JOptionPane.showMessageDialog(null, "중복된 ID가 있습니다");
                     }
+
+
                 }
             }
         });
@@ -276,7 +279,7 @@ public class SwingLogin extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 String result = Auction.getAuction().findID(In_findID_Name.getText(), In_findID_PhoneNumber.getText());
 
-                if(!result.isEmpty())
+                if (!result.isEmpty())
                     JOptionPane.showMessageDialog(null, "회원님의 아이디는 " + result + " 입니다.");
                 else
                     JOptionPane.showMessageDialog(null, "회원님의 정보를 찾을 수 없습니다");
@@ -335,7 +338,7 @@ public class SwingLogin extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 String result = Auction.getAuction().findPassword(In_findPassword_ID.getText(), In_findID_Name.getText(), In_findID_PhoneNumber.getText());
 
-                if(!result.isEmpty())
+                if (!result.isEmpty())
                     JOptionPane.showMessageDialog(null, "회원님의 비밀번호는 " + result + " 입니다.");
                 else
                     JOptionPane.showMessageDialog(null, "회원님의 정보를 찾을 수 없습니다");
