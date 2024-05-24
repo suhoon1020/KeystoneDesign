@@ -7,7 +7,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import auctionData.TradeItem;
-import user.userprivacy.User;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -81,6 +80,7 @@ public class TradeItemFileSystem {
         for (int i = 0; i < tradeItems.size(); ++i) {
             if (tradeItems.get(i).getTradeId() == id) {
                 tradeItems.set(i, tradeItem);
+                saveInfosToFile();
                 return true;
             }
         }
@@ -91,6 +91,7 @@ public class TradeItemFileSystem {
         for (int i = 0; i < tradeItems.size(); ++i) {
             if (tradeItems.get(i).getTradeId() == id) {
                 tradeItems.remove(i);
+                saveInfosToFile();
                 return true;
             }
         }

@@ -54,9 +54,9 @@ public class UserFileSystem {
         }
     }
 
-    public User getUserByID(String ID) {
+    public User getUserById(String id) {
         for (User user : users) {
-            if (user.getID().equals(ID)) 
+            if (user.getId().equals(id)) 
                 return user;
         }
 
@@ -77,7 +77,7 @@ public class UserFileSystem {
     }
 
     public Boolean putUser(User newUser) {
-        if (isExistID(newUser.getID()))
+        if (isExistID(newUser.getId()))
             return false;
 
         users.add(newUser);
@@ -87,7 +87,7 @@ public class UserFileSystem {
 
     public Boolean isExistID(String id) {
         for (User user : users) {
-            if (user.getID().equals(id))
+            if (user.getId().equals(id))
                 return true;
         }
         return false;
@@ -95,8 +95,9 @@ public class UserFileSystem {
 
     public Boolean updateUser(String id, User user) {
         for (int i = 0; i < users.size(); ++i) {
-            if (users.get(i).getID().equals(id)) {
+            if (users.get(i).getId().equals(id)) {
                 users.set(i, user);
+                saveInfosToFile();
                 return true;
             }
         }
@@ -105,8 +106,9 @@ public class UserFileSystem {
 
     public Boolean deleteUser(String id) {
         for (int i = 0; i < users.size(); ++i) {
-            if (users.get(i).getID().equals(id)) {
+            if (users.get(i).getId().equals(id)) {
                 users.remove(i);
+                saveInfosToFile();
                 return true;
             }
         }

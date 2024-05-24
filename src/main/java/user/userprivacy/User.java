@@ -7,7 +7,7 @@ import user.inventoryItem.Item;
 
 
 public class User {
-    private String ID;
+    private String id;
     private String password;
     private String name;
     private String phoneNumber;
@@ -18,8 +18,8 @@ public class User {
         return name;
     }
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
     public String getPassword() {
@@ -39,7 +39,7 @@ public class User {
     }
 
     public String[] getListData(){
-        return new String[]{ID, password, name, phoneNumber, Integer.toString(gold)};
+        return new String[]{id, password, name, phoneNumber, Integer.toString(gold)};
     }
 
     public void sell(){
@@ -52,7 +52,7 @@ public class User {
 
     //Product
     private User(UserBuilder builder) {
-        this.ID = builder.ID;
+        this.id = builder.ID;
         this.password = builder.password;
         this.name = builder.name;
         this.phoneNumber = builder.phoneNumber;

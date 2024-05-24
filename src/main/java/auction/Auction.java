@@ -6,14 +6,14 @@ import auctionData.TradeItem;
 import managers.TradeHistoryFileSystem;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;
-import swing.SwingAuction;
+import swing.SwingAdmin;
 import swing.SwingLogin;
 import user.inventoryItem.Item;
 import user.userprivacy.User;
 
-
 public class Auction {
     private static Auction auction;
+
     private static UserFileSystem userFileSystem;
     private static TradeItemFileSystem tradeItemFileSystem;
     private static TradeHistoryFileSystem tradeHistoryFileSystem;
@@ -39,6 +39,12 @@ public class Auction {
         return auction;
     }
 
+    // 개인
+
+    public List<Item> getInventory() {
+        return user.getItems();
+    }
+
     // 거래소 실행
     public void run(){
         SwingLogin.getSwingLogin().setVisible(true);
@@ -52,17 +58,13 @@ public class Auction {
         auctionState = auctionState.changeState();
     }
 
-    // 개인
-    public List<Item> getInventory() {
-        return user.getItems();
-    }
+
 
     public boolean login(String ID, String password){
-        User newUser = auctionState.login(ID, password, userFileSystem);
+        setUser(auctionState.login(ID, password, userFileSystem));
 
-        if(newUser != null){
-            user = newUser;
-            SwingAuction.getSwingAuction().setVisible(true);
+        if(user != null){
+            SwingAdmin.getSwingAdmin().setVisible(true);
             return true;
         }
         else{
@@ -74,7 +76,7 @@ public class Auction {
         User user = userFileSystem.getUserByName(name);
         if(user != null){
             if(user.getPhoneNumber().equals(phoneNumber))
-                return user.getID();
+                return user.getId();
             else
                 return "";
         }
@@ -83,7 +85,7 @@ public class Auction {
     }
 
     public String findPassword(String ID, String name, String phoneNumber){
-        User user = userFileSystem.getUserByID(ID);
+        User user = userFileSystem.getUserById(ID);
 
         if(user != null){
             if(user.getName().equals(name) && user.getPhoneNumber().equals(phoneNumber))
@@ -114,6 +116,12 @@ public class Auction {
     public List<User> getUserList(){
         return userFileSystem.getUserList();
     }
+
+    /*
+     *      USER INVENTORY MANAGE
+     */
+
+    
 
     /*
      *      TRADE ITEM MANAGE

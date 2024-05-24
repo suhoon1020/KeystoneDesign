@@ -5,7 +5,7 @@ public class Potion extends Item {
 
     @Override
     protected void setSpecificAttributes(ItemBuilder itemBuilder) {
-
+        effect = itemBuilder.option1;
     }
     @Override
     public int getOption1() {
