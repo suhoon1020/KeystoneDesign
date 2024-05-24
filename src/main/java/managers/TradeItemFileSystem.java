@@ -55,8 +55,6 @@ public class TradeItemFileSystem {
         }
     }
 
-
-
     public TradeItem getTradeItem(int id) {
         for (TradeItem item : tradeItems) {
             if (item.getTradeId() == id) 

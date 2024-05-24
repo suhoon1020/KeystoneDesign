@@ -77,7 +77,7 @@ public class UserFileSystem {
     }
 
     public Boolean putUser(User newUser) {
-        if (isExistID(newUser.getId()))
+        if (getUserById(newUser.getId()) == null)
             return false;
 
         users.add(newUser);
@@ -85,13 +85,6 @@ public class UserFileSystem {
         return true;
     }
 
-    public Boolean isExistID(String id) {
-        for (User user : users) {
-            if (user.getId().equals(id))
-                return true;
-        }
-        return false;
-    }
 
     public Boolean updateUser(String id, User user) {
         for (int i = 0; i < users.size(); ++i) {
