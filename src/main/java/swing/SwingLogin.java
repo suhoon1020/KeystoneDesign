@@ -8,6 +8,9 @@ import javax.swing.border.EmptyBorder;
 
 import auction.Auction;
 import managers.FileFacade;
+import user.userprivacy.CreateUserCommand;
+import user.userprivacy.DeleteUserCommand;
+import user.userprivacy.Invoker;
 import user.userprivacy.User;
 
 import java.awt.CardLayout;
@@ -37,6 +40,8 @@ public class SwingLogin extends JFrame {
     public static SwingLogin getSwingLogin() {
         return swingLogin;
     }
+
+    Invoker invoker = new Invoker();
 
     /**
      * Launch the application.
@@ -201,12 +206,20 @@ public class SwingLogin extends JFrame {
                             .gold(10000)
                             .build();
 
+                    CreateUserCommand command = new CreateUserCommand(user);
+                    invoker.setCommand(command);
+                    invoker.buttonPressed();
+
+
+                    /*
                     if (FileFacade.getFacade().putUser(user)) {
                         JOptionPane.showMessageDialog(null, "회원가입이 완료 되었습니다");
                         cardLayout.show(getContentPane(), "LoginPage");
                     } else {
                         JOptionPane.showMessageDialog(null, "중복된 ID가 있습니다");
                     }
+
+                     */
 
 
                 }

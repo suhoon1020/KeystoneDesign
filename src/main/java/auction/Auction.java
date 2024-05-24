@@ -3,6 +3,7 @@ package auction;
 import java.util.List;
 
 import managers.FileFacade;
+import managers.UserFileSystem;
 import swing.SwingLogin;
 import user.inventoryItem.Item;
 import user.userprivacy.User;
@@ -54,7 +55,7 @@ public class Auction {
      */
 
     public String findID(String name, String phoneNumber){
-        User user = FileFacade.getFacade().getUserByName(name);
+        User user = UserFileSystem.getUserFileSystem().getUserByName(name);
 
         if(user != null){
             if(user.getPhoneNumber().equals(phoneNumber))
@@ -67,7 +68,7 @@ public class Auction {
     }
 
     public String findPassword(String ID, String name, String phoneNumber){
-        User user = FileFacade.getFacade().getUserById(ID);
+        User user = UserFileSystem.getUserFileSystem().getUserById(ID);
 
         if(user != null){
             if(user.getName().equals(name) && user.getPhoneNumber().equals(phoneNumber))

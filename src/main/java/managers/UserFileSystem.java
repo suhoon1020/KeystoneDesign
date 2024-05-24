@@ -18,6 +18,17 @@ public class UserFileSystem {
     public static final String USER_FILE = "users.json";
     private static List<User> users;
 
+    private static UserFileSystem userFileSystem = new UserFileSystem();
+
+
+    public static UserFileSystem getUserFileSystem() {
+        return userFileSystem;
+    }
+
+    private UserFileSystem() {
+        loadInfosFromFile();
+    }
+
     public void saveInfosToFile() {
         FileWriter fw;
         Gson gson = new Gson();
@@ -77,12 +88,12 @@ public class UserFileSystem {
     }
 
     public Boolean putUser(User newUser) {
-        if (getUserById(newUser.getId()) == null)
+        if (getUserById(newUser.getId()) == null){
+            users.add(newUser);
+            saveInfosToFile();
+            return true;
+        }
             return false;
-
-        users.add(newUser);
-        saveInfosToFile();
-        return true;
     }
 
 

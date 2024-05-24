@@ -13,11 +13,11 @@ public class FileFacade {
     private TradeHistoryFileSystem tradeHistoryFileSystem;
 
     private FileFacade() {
-        this.userFileSystem = new UserFileSystem();
+        //this.userFileSystem = new UserFileSystem();
         this.tradeItemFileSystem = new TradeItemFileSystem();
         this.tradeHistoryFileSystem = new TradeHistoryFileSystem();
 
-        userFileSystem.loadInfosFromFile();
+        //userFileSystem.loadInfosFromFile();
         tradeItemFileSystem.loadInfosFromFile();
         tradeHistoryFileSystem.loadInfosFromFile();
     }
@@ -32,7 +32,7 @@ public class FileFacade {
     /* 
      *      USERS
      */
-
+/*
     public void saveUsers() {
         userFileSystem.saveInfosToFile();
     }
@@ -64,6 +64,8 @@ public class FileFacade {
     public Boolean deleteUser(String id){
         return userFileSystem.deleteUser(id);
     }
+
+ */
 
     /*
      *       TRADE ITEM

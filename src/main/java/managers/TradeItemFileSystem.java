@@ -21,6 +21,16 @@ public class TradeItemFileSystem {
     private static final String TRADE_ITEM_FILE = "TradeItems.json";
     private static List<TradeItem> tradeItems;
 
+    private static TradeItemFileSystem tradeItemFileSystem;
+
+    public static TradeItemFileSystem getTradeItemFileSystem() {
+        return tradeItemFileSystem;
+    }
+
+    private TradeItemFileSystem(){
+        loadInfosFromFile();
+    }
+
     public void saveInfosToFile(){
         Gson gson = new Gson();
 

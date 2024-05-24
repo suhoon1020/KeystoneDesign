@@ -18,9 +18,10 @@ import javax.swing.text.NumberFormatter;
 
 import auctionData.TradeItem;
 import managers.FileFacade;
+import managers.UserFileSystem;
 import user.inventoryItem.Item;
 import user.inventoryItem.ItemBuilder;
-import user.userprivacy.User;
+import user.userprivacy.*;
 
 
 public class SwingAdmin extends JFrame {
@@ -70,6 +71,9 @@ public class SwingAdmin extends JFrame {
     private DefaultTableModel userItemTableModel;
 
     private static SwingAdmin swingAdmin = new SwingAdmin();
+
+
+    Invoker invoker = new Invoker();
 
 
     public static SwingAdmin getSwingAdmin() {
@@ -426,7 +430,12 @@ public class SwingAdmin extends JFrame {
                         .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                         .build();
 
+                CreateUserCommand command = new CreateUserCommand(user);
+                invoker.setCommand(command);
+                invoker.buttonPressed();
+                refreshUserTable();
 
+                /*
                 if (FileFacade.getFacade().putUser(user)) {
                     JOptionPane.showMessageDialog(null, "유저 생성이 완료 되었습니다");
                     refreshUserTable();
@@ -434,6 +443,8 @@ public class SwingAdmin extends JFrame {
                     JOptionPane.showMessageDialog(null, "중복된 ID가 있습니다");
                 }
 
+
+                 */
         	}
         });
         Btt_createUser.setFont(new Font("굴림", Font.PLAIN, 15));
@@ -449,12 +460,21 @@ public class SwingAdmin extends JFrame {
                         .phoneNumber(In_userPhoneNumber.getText())
                         .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                         .build();
+
+                UpdateUserCommand command = new UpdateUserCommand(user);
+                invoker.setCommand(command);
+                invoker.buttonPressed();
+                refreshUserTable();
+
+                /*
                 if (FileFacade.getFacade().updateUser(In_userID.getText(), user)) {
                     JOptionPane.showMessageDialog(null, "유저 수정이 완료 되었습니다");
                     refreshUserTable();
                 } else {
                     JOptionPane.showMessageDialog(null, "존재하지 않는 ID입니다");
                 }
+
+                 */
         	}
         });
         Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));
@@ -466,11 +486,26 @@ public class SwingAdmin extends JFrame {
                 if (In_userID.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
                 else {
+                    User user = new User.UserBuilder()
+                            .ID(In_userID.getText())
+                            .password(In_userPassword.getText())
+                            .name(In_userName.getText())
+                            .phoneNumber(In_userPhoneNumber.getText())
+                            .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
+                            .build();
+
+                    DeleteUserCommand command = new DeleteUserCommand(user);
+                    invoker.setCommand(command);
+                    invoker.buttonPressed();
+                    refreshUserTable();
+                    /*
                     if (FileFacade.getFacade().deleteUser(In_userID.getText())) {
                         JOptionPane.showMessageDialog(null, "유저 삭제가 완료 되었습니다");
                         refreshUserTable();
                     } else
                         JOptionPane.showMessageDialog(null, "존재하지 않는 ID입니다");
+
+                     */
                 }
         	}
         });
@@ -621,7 +656,7 @@ public class SwingAdmin extends JFrame {
                                 .build();
 
                         if(currentUser.addItem(item)){
-                            if(FileFacade.getFacade().updateUser(currentUser.getId(), currentUser)){
+                            if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
                                 JOptionPane.showMessageDialog(null, "아이템 생성이 완료 되었습니다");
                                 refreshUserInventoryTable();
                             }
@@ -658,7 +693,7 @@ public class SwingAdmin extends JFrame {
                                 .build();
 
                         if(currentUser.updateItem(In_userItemName.getText(), item)){
-                            if(FileFacade.getFacade().updateUser(currentUser.getId(), currentUser)){
+                            if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
                                 JOptionPane.showMessageDialog(null, "아이템 수정이 완료되었습니다");
                                 refreshUserInventoryTable();
                             }
@@ -685,7 +720,7 @@ public class SwingAdmin extends JFrame {
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
                     if (currentUser.deleteItem(In_userItemName.getText())) {
-                        if(FileFacade.getFacade().updateUser(currentUser.getId(), currentUser)){
+                        if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
                             JOptionPane.showMessageDialog(null, "아이템 삭제가 완료되었습니다");
                             refreshUserInventoryTable();
                         }
@@ -761,7 +796,7 @@ public class SwingAdmin extends JFrame {
         JButton Btt_userInventory = new JButton("유저 인벤토리");
         Btt_userInventory.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                currentUser = FileFacade.getFacade().getUserById(In_userID.getText());
+                currentUser = UserFileSystem.getUserFileSystem().getUserById(In_userID.getText());
 
                 if(currentUser != null){
                     In_inventoryUserName.setText(In_userID.getText());
@@ -821,7 +856,7 @@ public class SwingAdmin extends JFrame {
     public void refreshUserTable() {
         userTableModel.setRowCount(0);
 
-        for (User user : FileFacade.getFacade().getUserList()) {
+        for (User user : UserFileSystem.getUserFileSystem().getUserList()) {
             Object[] rowData = user.getListData();
             userTableModel.addRow(rowData);
         }

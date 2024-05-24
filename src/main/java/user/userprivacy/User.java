@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import managers.FileFacade;
+import managers.UserFileSystem;
 import user.inventoryItem.Item;
 
 import javax.swing.*;
@@ -139,5 +140,32 @@ public class User {
         }
     }
 
+    public void createUser(User user){
+        //유저 생성
+        if(UserFileSystem.getUserFileSystem().putUser(user)){
+            JOptionPane.showMessageDialog(null,"유저 생성이 완료 되었습니다");
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"중복된 ID 가 있습니다");
+        }
+    }
+    public void deleteUser(User user){
+        //유저 삭제
+        if(UserFileSystem.getUserFileSystem().deleteUser(user.getId())){
+            JOptionPane.showMessageDialog(null,"해당 유저가 삭제 되었습니다");
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"존재하지 않는 유저 입니다");
+        }
+    }
+    public void updateUser(User user){
+        //유저 업뎃
+        if(UserFileSystem.getUserFileSystem().updateUser(user.getId(),user)){
+            JOptionPane.showMessageDialog(null,"유저 정보가 수정되었습니다");
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"존재하지 않는 유저입니다");
+        }
+    }
 
 }
