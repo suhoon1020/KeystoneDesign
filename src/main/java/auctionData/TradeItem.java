@@ -3,14 +3,21 @@ package auctionData;
 import user.inventoryItem.Item;
 
 public class TradeItem {
-    String userId;
-    int price;
-    Item auctionItem;
+    private static int TRADE = 0;
+    private int tradeID;
+    private String userId;
+    private int price;
+    private Item auctionItem;
 
     public TradeItem(String userId, int price, Item registerdItem) {
+        this.tradeID = TRADE++;
         this.userId = userId;
         this.price = price;
         this.auctionItem = registerdItem;
+    }
+
+    public int getTradeId(){
+        return tradeID;
     }
 
     public String getUserId() {

@@ -118,11 +118,20 @@ public class Auction {
      *      TRADE ITEM MANAGE
      */
 
-    public List<TradeItem> getAuctionItemList(){
-        return tradeItemFileSystem.getAuctionItemList();
+    public void putTradeItem(TradeItem newTradeItem){
+        tradeItemFileSystem.putTradeItem(newTradeItem);
     }
 
+    public boolean updateTradeItem(int id, TradeItem item){
+        return tradeItemFileSystem.updateItem(id, item);
+    }
 
+    public Boolean deleteTradeItem(int id){
+        return tradeItemFileSystem.deleteTradeItem(id);
+    }
 
+    public List<TradeItem> getTradeItemList(){
+        return tradeItemFileSystem.getTradeItemList();
+    }
 
 }

@@ -311,7 +311,7 @@ public class SwingAuction extends JFrame {
     public void refreshTradeItemTable() {
         TradeItemTableModel.setRowCount(0);
 
-        List<TradeItem> L = itemSort.sort(Auction.getAuction().getAuctionItemList());
+        List<TradeItem> L = itemSort.sort(Auction.getAuction().getTradeItemList());
 
         for(TradeItem i : L){
             Object[] rowData = i.getListData();

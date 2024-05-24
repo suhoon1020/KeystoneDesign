@@ -17,20 +17,28 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
 import auction.Auction;
+import auctionData.TradeItem;
+import user.inventoryItem.Item;
+import user.inventoryItem.ItemBuilder;
 import user.userprivacy.User;
 
 
 public class SwingAdmin extends JFrame {
-    // private String[] ItemTypes = {"Equipment", "Material", "Potion", "Weapon"};
-    // private String[] ItemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
-    // private String[] itemHeader = {"TYPE", "NAME", "GRADE", "DESC", "OPTION1"};
+    private String[] ItemTypes = {"Equipment", "Material", "Potion", "Weapon"};
+    private String[] ItemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
 
+    private String[] itemHeader = {"TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1"};
     private String[] userHeader = {"ID", "PW", "NAME", "PHONE", "GOLD"};
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+    private JTextField In_itemTradeId;
+    private JComboBox<String> C_itemType;
     private JTextField In_itemName;
+    private JComboBox<String> C_itemGrade;
     private JTextField In_itemDesc;
+    private JFormattedTextField In_ItemCount;
+    private JFormattedTextField In_ItemPrice;
     private JFormattedTextField In_ItemOp1;
     private JTextField In_userID;
     private JTextField In_userPassword;
@@ -45,9 +53,6 @@ public class SwingAdmin extends JFrame {
     private JTable T_userList;
     private JScrollPane S_userList;
     private DefaultTableModel userTableModel;
-    private JTextField jtext_State;
-
-
 
     private static SwingAdmin swingAdmin = new SwingAdmin();
 
@@ -89,37 +94,232 @@ public class SwingAdmin extends JFrame {
         contentPane.add(contents);
 
 
+
         /*
-         * AuctionManage Page
+         *      AuctionManage Page
          */
 
-        JPanel auctionPage = new JPanel();
-        contents.add(auctionPage, "AuctionManagePage");
-        auctionPage.setLayout(null);
+        JPanel itemPage = new JPanel();
+        contents.add(itemPage, "AuctionManagePage");
+        itemPage.setLayout(null);
 
-        jtext_State = new JTextField();
-        jtext_State.setBounds(850, 32, 116, 21);
-        auctionPage.add(jtext_State);
-        jtext_State.setColumns(10);
+        JPanel itemList = new JPanel();
+        itemList.setBounds(12, 10, 641, 526);
+        itemList.setBorder(new LineBorder(new Color(0, 0, 0)));
+        itemList.setLayout(new GridLayout(0, 1, 0, 0));
+        itemPage.add(itemList);
 
-        jtext_State.setText("닫힘");
-        jtext_State.setEnabled(false);
-        JButton btn_Auction_Open = new JButton("거래소 열기");
-        btn_Auction_Open.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Auction.getAuction().changeState();
-                if(Auction.getAuction().isOpen())
-                    jtext_State.setText("열림");
-                else
-                    jtext_State.setText("닫힘");
+        itemTableModel = new DefaultTableModel(itemHeader, 0);
+        T_ItemList = new JTable(itemTableModel);
+        T_ItemList.getTableHeader().setReorderingAllowed(false);
+        T_ItemList.getTableHeader().setResizingAllowed(false);
+        S_itemList = new JScrollPane();
+        itemList.add(S_itemList);
 
+        JPanel itemManageContent = new JPanel();
+        itemManageContent.setBorder(new LineBorder(new Color(0, 0, 0)));
+        itemManageContent.setBounds(665, 10, 385, 526);
+        itemPage.add(itemManageContent);
+        itemManageContent.setLayout(null);
+
+        JPanel itemLab = new JPanel();
+        itemLab.setBounds(12, 10, 177, 320);
+        itemManageContent.add(itemLab);
+        itemLab.setLayout(new GridLayout(0, 1, 0, 0));
+
+        JLabel L_itemTradeId = new JLabel("거래 번호 :");
+        L_itemTradeId.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemTradeId.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemTradeId);
+
+        JLabel L_itemType = new JLabel("타입 :");
+        L_itemType.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemType.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemType);
+
+        JLabel L_itemName = new JLabel("이름 :");
+        L_itemName.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemName.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemName);
+
+        JLabel L_itemGrade = new JLabel("등급 :");
+        L_itemGrade.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemGrade.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemGrade);
+
+        JLabel L_itemDesc = new JLabel("설명 :");
+        L_itemDesc.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemDesc.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemDesc);
+
+        JLabel L_itemCount = new JLabel("개수 :");
+        L_itemCount.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemCount.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemCount);
+
+        JLabel L_itemPrice = new JLabel("가격 :");
+        L_itemPrice.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemPrice.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemPrice);
+
+        JLabel L_itemOp1 = new JLabel("옵션 1 :");
+        L_itemOp1.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemOp1.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemOp1);
+
+        JPanel itemIn = new JPanel();
+        itemIn.setBounds(196, 10, 177, 320);
+        itemManageContent.add(itemIn);
+        itemIn.setLayout(new GridLayout(0, 1, 0, 0));
+
+        In_itemTradeId = new JTextField();
+        In_itemTradeId.setEditable(false);
+        itemIn.add(In_itemTradeId);
+        In_itemTradeId.setColumns(10);
+
+        C_itemType = new JComboBox<String>(ItemTypes);
+        itemIn.add(C_itemType);
+
+        In_itemName = new JTextField();
+        itemIn.add(In_itemName);
+        In_itemName.setColumns(10);
+
+        C_itemGrade = new JComboBox<String>(ItemGrades);
+        itemIn.add(C_itemGrade);
+
+        In_itemDesc = new JTextField();
+        itemIn.add(In_itemDesc);
+        In_itemDesc.setColumns(10);
+
+        NumberFormatter F_SetCountNumber = new NumberFormatter();
+        F_SetCountNumber.setValueClass(Integer.class);
+        F_SetCountNumber.setMinimum(Integer.valueOf(1));
+        F_SetCountNumber.setMaximum(Integer.valueOf(100000));
+
+        In_ItemCount = new JFormattedTextField(F_SetCountNumber);
+        itemIn.add(In_ItemCount);
+        In_ItemCount.setColumns(10);
+
+        NumberFormatter F_SetPriceNumber = new NumberFormatter();
+        F_SetPriceNumber.setValueClass(Integer.class);
+        F_SetPriceNumber.setMinimum(Integer.valueOf(1));
+        F_SetPriceNumber.setMaximum(Integer.valueOf(100000));
+
+        In_ItemPrice = new JFormattedTextField(F_SetPriceNumber);
+        itemIn.add(In_ItemPrice);
+        In_ItemPrice.setColumns(10);
+
+        NumberFormatter F_SetOptionNumber = new NumberFormatter();
+        F_SetOptionNumber.setValueClass(Integer.class);
+        F_SetOptionNumber.setMinimum(Integer.valueOf(1));
+        F_SetOptionNumber.setMaximum(Integer.valueOf(1000000));
+
+        In_ItemOp1 = new JFormattedTextField(F_SetOptionNumber);
+        itemIn.add(In_ItemOp1);
+        In_ItemOp1.setColumns(10);
+
+        T_ItemList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting() && T_ItemList.getSelectedRow() != -1) {
+                    // 선택된 행의 데이터 출력
+                    int selectedRow = T_ItemList.getSelectedRow();
+
+                    In_itemTradeId.setText(T_ItemList.getValueAt(selectedRow, 0).toString());
+                    C_itemType.setSelectedItem(T_ItemList.getValueAt(selectedRow, 1).toString());
+                    In_itemName.setText(T_ItemList.getValueAt(selectedRow, 2).toString());
+                    C_itemGrade.setSelectedItem(T_ItemList.getValueAt(selectedRow, 3).toString());
+                    In_itemDesc.setText(T_ItemList.getValueAt(selectedRow, 4).toString());
+                    In_ItemCount.setText(T_ItemList.getValueAt(selectedRow, 5).toString());
+                    In_ItemPrice.setText(T_ItemList.getValueAt(selectedRow, 6).toString());
+                    In_ItemOp1.setText(T_ItemList.getValueAt(selectedRow, 7).toString());
+                }
             }
         });
-        btn_Auction_Open.setBounds(300, 116, 700, 213);
 
-        JLabel lblNewLabel = new JLabel("현 거래소 상태 : ");
-        lblNewLabel.setBounds(723, 29, 111, 27);
-        auctionPage.add(lblNewLabel);
+        JButton Btt_createItem = new JButton("아이템 생성");
+        Btt_createItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (In_itemTradeId.getText().isEmpty())
+                    JOptionPane.showMessageDialog(null, "이름을 채워주세요");
+                else {
+                    try {
+                        Item item = new ItemBuilder()
+                                .type(C_itemType.getSelectedItem().toString())
+                                .name(In_itemName.getText())
+                                .grade(C_itemGrade.getSelectedItem().toString())
+                                .desc(In_itemDesc.getText())
+                                .count(Integer.valueOf(In_ItemCount.getText().replace(",", "")))
+                                .option1(Integer.valueOf(In_ItemOp1.getText().replace(",", "")))
+                                .build();
+
+                        TradeItem newitem = new TradeItem("AUCTION", Integer.valueOf(In_ItemPrice.getText().replace(",", "")), item);
+                        Auction.getAuction().putTradeItem(newitem);
+                        JOptionPane.showMessageDialog(null, "아이템 생성이 완료 되었습니다");
+                        refreshTradeItemTable();
+
+                    } catch (NumberFormatException err) {
+                        JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
+                    }
+                }
+            }
+        });
+        Btt_createItem.setFont(new Font("굴림", Font.PLAIN, 15));
+        Btt_createItem.setBounds(67, 340, 258, 43);
+        itemManageContent.add(Btt_createItem);
+
+        JButton Btt_updateItem = new JButton("아이템 수정");
+        Btt_updateItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (In_itemTradeId.getText().isEmpty())
+                    JOptionPane.showMessageDialog(null, "이름을 채워주세요");
+                else {
+                    try {
+                        Item item = new ItemBuilder()
+                                .type(C_itemType.getSelectedItem().toString())
+                                .name(In_itemName.getText())
+                                .grade(C_itemGrade.getSelectedItem().toString())
+                                .desc(In_itemDesc.getText())
+                                .count(Integer.valueOf(In_ItemCount.getText().replace(",", "")))
+                                .option1(Integer.valueOf(In_ItemOp1.getText().replace(",", "")))
+                                .build();
+
+                        TradeItem newitem = new TradeItem("AUCTION", Integer.valueOf(In_ItemPrice.getText().replace(",", "")), item);
+                        JOptionPane.showMessageDialog(null, "아이템 생성이 완료 되었습니다");
+                        refreshTradeItemTable();
+
+                        if (Auction.getAuction().updateTradeItem(Integer.parseInt(In_itemTradeId.getText()), newitem)) {
+                            JOptionPane.showMessageDialog(null, "아이템 수정이 완료 되었습니다");
+                            refreshTradeItemTable();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "존재하지 않는 아이템입니다");
+                        }
+                    } catch (NumberFormatException err) {
+                        JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
+                    }
+                }
+            }
+        });
+        Btt_updateItem.setFont(new Font("굴림", Font.PLAIN, 15));
+        Btt_updateItem.setBounds(67, 406, 258, 43);
+        itemManageContent.add(Btt_updateItem);
+
+        JButton Btt_deleteItem = new JButton("아이템 삭제");
+        Btt_deleteItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (In_itemTradeId.getText().isEmpty())
+                    JOptionPane.showMessageDialog(null, "아이템을 선택해주세요.");
+                else {
+                    if (Auction.getAuction().deleteTradeItem(Integer.parseInt(In_itemTradeId.getText()))) {
+                        JOptionPane.showMessageDialog(null, "아이템 삭제가 완료 되었습니다");
+                        refreshTradeItemTable();
+                    } else
+                        JOptionPane.showMessageDialog(null, "존재하지 않는 아이템입니다");
+                }
+            }
+        });
+        Btt_deleteItem.setFont(new Font("굴림", Font.PLAIN, 15));
+        Btt_deleteItem.setBounds(67, 473, 258, 43);
+        itemManageContent.add(Btt_deleteItem);
         
         /*
          * UserManage Page
@@ -285,6 +485,8 @@ public class SwingAdmin extends JFrame {
         Btt_deleteUser.setFont(new Font("굴림", Font.PLAIN, 15));
         Btt_deleteUser.setBounds(67, 473, 258, 43);
         userManageContent.add(Btt_deleteUser);
+        
+        
 
         JPanel manu = new JPanel();
         manu.setBounds(172, 10, 902, 78);
@@ -314,6 +516,17 @@ public class SwingAdmin extends JFrame {
         btnNewButton_3.setFont(new Font("굴림", Font.PLAIN, 20));
         manu.add(btnNewButton_3);
 
+    }
+
+    public void refreshTradeItemTable() {
+        itemTableModel.setRowCount(0);
+
+        for (TradeItem item : Auction.getAuction().getTradeItemList()) {
+            Object[] rowData = item.getListData();
+            userTableModel.addRow(rowData);
+        }
+
+        S_itemList.setViewportView(T_ItemList);
     }
 
     public void refreshUserTable() {

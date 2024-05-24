@@ -96,7 +96,6 @@ public class SwingLogin extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if(Auction.getAuction().login(In_ID.getText(), In_password.getText())){
                     JOptionPane.showMessageDialog(null, "로그인이 완료 되었습니다");
-                    SwingAuction.getSwingAuction().setVisible(true);
                     dispose();
                 }
                 else{
