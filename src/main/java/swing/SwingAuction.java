@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 import auction.Auction;
 import auctionData.TradeItem;
+import managers.FileFacade;
 import sort.TradeItemSort;
 import sort.TradeItemSortByCount;
 import user.inventoryItem.Item;
@@ -311,7 +312,7 @@ public class SwingAuction extends JFrame {
     public void refreshTradeItemTable() {
         TradeItemTableModel.setRowCount(0);
 
-        List<TradeItem> L = itemSort.sort(Auction.getAuction().getTradeItemList());
+        List<TradeItem> L = itemSort.sort(FileFacade.getFacade().getTradeItemList());
 
         for(TradeItem i : L){
             Object[] rowData = i.getListData();

@@ -1,19 +1,24 @@
 package auction;
 
-import managers.UserFileSystem;
+import managers.FileFacade;
 import user.userprivacy.User;
 
 public class OpenState implements AuctionState {
 
     @Override
-    public User login(String ID, String password, UserFileSystem userFileSystem) {
+    public boolean login(String id, String password) {
+        User loginUser = FileFacade.getFacade().getUserById(id);
 
-        User user = userFileSystem.getUserByID(ID);
-
-        if(user.getPassword().equals(password))
-            return user;
-        else
-            return null;
+        if(loginUser != null){
+            if(loginUser.getPassword().equals(password)){
+                Auction.getAuction().setUser(loginUser);
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override

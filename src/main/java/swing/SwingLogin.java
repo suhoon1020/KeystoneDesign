@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import auction.Auction;
+import managers.FileFacade;
 import user.userprivacy.User;
 
 import java.awt.CardLayout;
@@ -200,7 +201,7 @@ public class SwingLogin extends JFrame {
                             .phoneNumber(In_register_PhoneNumber.getText())
                             .gold(10000)
                             .build();
-                    if (Auction.getAuction().putUser(user)) {
+                    if (FileFacade.getFacade().putUser(user)) {
                         JOptionPane.showMessageDialog(null, "회원가입이 완료 되었습니다");
                         cardLayout.show(getContentPane(), "LoginPage");
                     } else {
