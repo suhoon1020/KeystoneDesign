@@ -27,7 +27,7 @@ public class SwingAdmin extends JFrame {
     private String[] ItemTypes = {"Equipment", "Material", "Potion", "Weapon"};
     private String[] ItemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
 
-    private String[] itemHeader = {"TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1"};
+    private String[] tradeItemHeader = {"TRADEID", "USERID", "TYPE", "NAME", "GRADE", "DESC", "COUNT", "PRICE", "OPTION1"};
     private String[] userHeader = {"ID", "PW", "NAME", "PHONE", "GOLD"};
 
     private static final long serialVersionUID = 1L;
@@ -109,12 +109,13 @@ public class SwingAdmin extends JFrame {
         itemList.setLayout(new GridLayout(0, 1, 0, 0));
         itemPage.add(itemList);
 
-        itemTableModel = new DefaultTableModel(itemHeader, 0);
+        itemTableModel = new DefaultTableModel(tradeItemHeader, 0);
         T_ItemList = new JTable(itemTableModel);
         T_ItemList.getTableHeader().setReorderingAllowed(false);
         T_ItemList.getTableHeader().setResizingAllowed(false);
         S_itemList = new JScrollPane();
         itemList.add(S_itemList);
+        refreshTradeItemTable();
 
         JPanel itemManageContent = new JPanel();
         itemManageContent.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -157,15 +158,15 @@ public class SwingAdmin extends JFrame {
         L_itemCount.setFont(new Font("굴림", Font.PLAIN, 15));
         itemLab.add(L_itemCount);
 
-        JLabel L_itemPrice = new JLabel("가격 :");
-        L_itemPrice.setHorizontalAlignment(SwingConstants.CENTER);
-        L_itemPrice.setFont(new Font("굴림", Font.PLAIN, 15));
-        itemLab.add(L_itemPrice);
-
         JLabel L_itemOp1 = new JLabel("옵션 1 :");
         L_itemOp1.setHorizontalAlignment(SwingConstants.CENTER);
         L_itemOp1.setFont(new Font("굴림", Font.PLAIN, 15));
         itemLab.add(L_itemOp1);
+
+        JLabel L_itemPrice = new JLabel("가격 :");
+        L_itemPrice.setHorizontalAlignment(SwingConstants.CENTER);
+        L_itemPrice.setFont(new Font("굴림", Font.PLAIN, 15));
+        itemLab.add(L_itemPrice);
 
         JPanel itemIn = new JPanel();
         itemIn.setBounds(196, 10, 177, 320);
@@ -200,15 +201,6 @@ public class SwingAdmin extends JFrame {
         itemIn.add(In_ItemCount);
         In_ItemCount.setColumns(10);
 
-        NumberFormatter F_SetPriceNumber = new NumberFormatter();
-        F_SetPriceNumber.setValueClass(Integer.class);
-        F_SetPriceNumber.setMinimum(Integer.valueOf(1));
-        F_SetPriceNumber.setMaximum(Integer.valueOf(100000));
-
-        In_ItemPrice = new JFormattedTextField(F_SetPriceNumber);
-        itemIn.add(In_ItemPrice);
-        In_ItemPrice.setColumns(10);
-
         NumberFormatter F_SetOptionNumber = new NumberFormatter();
         F_SetOptionNumber.setValueClass(Integer.class);
         F_SetOptionNumber.setMinimum(Integer.valueOf(1));
@@ -217,6 +209,15 @@ public class SwingAdmin extends JFrame {
         In_ItemOp1 = new JFormattedTextField(F_SetOptionNumber);
         itemIn.add(In_ItemOp1);
         In_ItemOp1.setColumns(10);
+
+        NumberFormatter F_SetPriceNumber = new NumberFormatter();
+        F_SetPriceNumber.setValueClass(Integer.class);
+        F_SetPriceNumber.setMinimum(Integer.valueOf(1));
+        F_SetPriceNumber.setMaximum(Integer.valueOf(100000));
+
+        In_ItemPrice = new JFormattedTextField(F_SetPriceNumber);
+        itemIn.add(In_ItemPrice);
+        In_ItemPrice.setColumns(10);
 
         T_ItemList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
@@ -230,8 +231,9 @@ public class SwingAdmin extends JFrame {
                     C_itemGrade.setSelectedItem(T_ItemList.getValueAt(selectedRow, 3).toString());
                     In_itemDesc.setText(T_ItemList.getValueAt(selectedRow, 4).toString());
                     In_ItemCount.setText(T_ItemList.getValueAt(selectedRow, 5).toString());
-                    In_ItemPrice.setText(T_ItemList.getValueAt(selectedRow, 6).toString());
-                    In_ItemOp1.setText(T_ItemList.getValueAt(selectedRow, 7).toString());
+                    In_ItemOp1.setText(T_ItemList.getValueAt(selectedRow, 6).toString());
+                    In_ItemPrice.setText(T_ItemList.getValueAt(selectedRow, 7).toString());
+
                 }
             }
         });
@@ -239,7 +241,7 @@ public class SwingAdmin extends JFrame {
         JButton Btt_createItem = new JButton("아이템 생성");
         Btt_createItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (In_itemTradeId.getText().isEmpty())
+                if (In_itemName.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
                     try {
@@ -497,6 +499,7 @@ public class SwingAdmin extends JFrame {
         Btt_goAution.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(contents, "AuctionManagePage");
+                refreshTradeItemTable();
             }
         });
         Btt_goAution.setFont(new Font("굴림", Font.PLAIN, 20));
@@ -523,7 +526,7 @@ public class SwingAdmin extends JFrame {
 
         for (TradeItem item : Auction.getAuction().getTradeItemList()) {
             Object[] rowData = item.getListData();
-            userTableModel.addRow(rowData);
+            itemTableModel.addRow(rowData);
         }
 
         S_itemList.setViewportView(T_ItemList);

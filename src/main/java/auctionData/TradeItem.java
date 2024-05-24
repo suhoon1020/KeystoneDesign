@@ -4,20 +4,20 @@ import user.inventoryItem.Item;
 
 public class TradeItem {
     private static int TRADE = 0;
-    private int tradeID;
+    private int tradeId;
     private String userId;
     private int price;
     private Item auctionItem;
 
     public TradeItem(String userId, int price, Item registerdItem) {
-        this.tradeID = TRADE++;
+        this.tradeId = TRADE++;
         this.userId = userId;
         this.price = price;
         this.auctionItem = registerdItem;
     }
 
     public int getTradeId(){
-        return tradeID;
+        return tradeId;
     }
 
     public String getUserId() {
@@ -41,7 +41,9 @@ public class TradeItem {
     }
 
     public String[] getListData(){
-        return new String[]{userId, 
+        return new String[]{Integer.toString(tradeId),
+                            userId, 
+                            auctionItem.getType(),
                             auctionItem.getName(), 
                             auctionItem.getGrade(), 
                             auctionItem.getDesc(),
