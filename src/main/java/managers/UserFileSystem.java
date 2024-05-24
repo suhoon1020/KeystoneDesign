@@ -1,10 +1,10 @@
-package deu.cse.managers;
+package managers;
 
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
-import deu.cse.user.userprivacy.User;
+import user.userprivacy.User;
 
 import java.io.*;
 import java.nio.file.Files;

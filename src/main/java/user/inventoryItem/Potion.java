@@ -1,4 +1,4 @@
-package deu.cse.user.inventoryItem;
+package user.inventoryItem;
 
 public class Potion extends Item {
     protected int effect;

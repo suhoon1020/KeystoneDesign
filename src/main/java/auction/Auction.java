@@ -1,14 +1,15 @@
-package deu.cse.auction;
+package auction;
 
 import java.util.List;
 
-import deu.cse.auctionData.TradeItem;
-import deu.cse.managers.TradeHistoryFileSystem;
-import deu.cse.managers.TradeItemFileSystem;
-import deu.cse.managers.UserFileSystem;
-import deu.cse.swing.SwingLogin;
-import deu.cse.user.inventoryItem.Item;
-import deu.cse.user.userprivacy.User;
+import auctionData.TradeItem;
+import managers.TradeHistoryFileSystem;
+import managers.TradeItemFileSystem;
+import managers.UserFileSystem;
+import swing.SwingLogin;
+import user.inventoryItem.Item;
+import user.userprivacy.User;
+
 
 public class Auction {
     private static Auction auction;

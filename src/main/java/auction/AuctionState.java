@@ -1,7 +1,7 @@
-package deu.cse.auction;
+package auction;
 
-import deu.cse.managers.UserFileSystem;
-import deu.cse.user.userprivacy.User;
+import managers.UserFileSystem;
+import user.userprivacy.User;
 
 public interface AuctionState {
     public User login(String ID, String password, UserFileSystem userFileSystem);

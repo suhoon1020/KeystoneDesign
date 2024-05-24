@@ -1,6 +1,6 @@
-package deu.cse.auctionData;
+package auctionData;
 
-import deu.cse.user.inventoryItem.Item;
+import user.inventoryItem.Item;
 
 public class TradeItem {
     String userId;

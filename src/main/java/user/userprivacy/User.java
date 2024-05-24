@@ -1,9 +1,10 @@
-package deu.cse.user.userprivacy;
+package user.userprivacy;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import deu.cse.user.inventoryItem.Item;
+import user.inventoryItem.Item;
+
 
 public class User {
     private String ID;

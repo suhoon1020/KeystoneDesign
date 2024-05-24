@@ -1,11 +1,11 @@
-package deu.cse.sort;
+package sort;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import deu.cse.auctionData.TradeItem;
+import auctionData.TradeItem;
 
 
 public class TradeItemSortByName implements TradeItemSort{

@@ -1,4 +1,4 @@
-package deu.cse.swing;
+package swing;
 
 import java.awt.EventQueue;
 
@@ -7,11 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import deu.cse.auction.Auction;
-import deu.cse.auctionData.TradeItem;
-import deu.cse.sort.TradeItemSort;
-import deu.cse.sort.TradeItemSortByCount;
-import deu.cse.user.inventoryItem.Item;
+import auction.Auction;
+import auctionData.TradeItem;
+import sort.TradeItemSort;
+import sort.TradeItemSortByCount;
+import user.inventoryItem.Item;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;

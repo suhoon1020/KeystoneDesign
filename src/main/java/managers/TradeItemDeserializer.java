@@ -1,4 +1,4 @@
-package deu.cse.managers;
+package managers;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -6,9 +6,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import deu.cse.auctionData.TradeItem;
-import deu.cse.user.inventoryItem.Item;
-import deu.cse.user.inventoryItem.ItemBuilder;
+import auctionData.TradeItem;
+import user.inventoryItem.Item;
+import user.inventoryItem.ItemBuilder;
+
 
 
 public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {

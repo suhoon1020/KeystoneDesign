@@ -1,4 +1,4 @@
-package deu.cse.user.inventoryItem;
+package user.inventoryItem;
 
 public class ItemBuilder {
     public String type;

@@ -1,8 +1,8 @@
-package deu.cse.auction;
+package auction;
 
-import deu.cse.managers.UserFileSystem;
-import deu.cse.swing.SwingLogin;
-import deu.cse.user.userprivacy.User;
+import managers.UserFileSystem;
+import swing.SwingLogin;
+import user.userprivacy.User;
 
 public class OpenState implements AuctionState {
 

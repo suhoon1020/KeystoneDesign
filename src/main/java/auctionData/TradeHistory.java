@@ -1,4 +1,4 @@
-package deu.cse.auctionData;
+package auctionData;
 
 public class TradeHistory {
     String buyer;

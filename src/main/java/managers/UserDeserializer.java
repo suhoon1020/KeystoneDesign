@@ -1,4 +1,4 @@
-package deu.cse.managers;
+package managers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +10,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import deu.cse.user.inventoryItem.Item;
-import deu.cse.user.inventoryItem.ItemBuilder;
-import deu.cse.user.userprivacy.User;
+import user.inventoryItem.Item;
+import user.inventoryItem.ItemBuilder;
+import user.userprivacy.User;
+
 
 public class UserDeserializer implements JsonDeserializer<User> {
     @Override

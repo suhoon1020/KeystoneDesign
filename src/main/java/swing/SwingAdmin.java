@@ -1,4 +1,4 @@
-package deu.cse.swing;
+package swing;
 
 import java.awt.EventQueue;
 
@@ -16,8 +16,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
-import deu.cse.auction.Auction;
-import deu.cse.user.userprivacy.User;
+import auction.Auction;
+import user.userprivacy.User;
+
 
 public class SwingAdmin extends JFrame {
     // private String[] ItemTypes = {"Equipment", "Material", "Potion", "Weapon"};

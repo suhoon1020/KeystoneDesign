@@ -1,4 +1,4 @@
-package deu.cse.swing;
+package swing;
 
 
 import java.awt.EventQueue;
@@ -6,8 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import deu.cse.auction.Auction;
-import deu.cse.user.userprivacy.User;
+import auction.Auction;
+import user.userprivacy.User;
 
 import java.awt.CardLayout;
 import java.awt.Font;
