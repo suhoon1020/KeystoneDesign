@@ -45,12 +45,40 @@ public class User {
         return new String[]{id, password, name, phoneNumber, Integer.toString(gold)};
     }
 
-    public void sell(){
+    public boolean addItem(Item newItem){
+        if (checkItemByName(newItem.getName()))
+            return false;
 
+        itemList.add(newItem);
+        return true;
     }
 
-    public void buy(){
+    public Boolean checkItemByName(String name) {
+        for (Item item : itemList) {
+            if (item.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
 
+    public boolean updateItem(String name, Item item){
+        for (int i = 0; i < itemList.size(); ++i) {
+            if (itemList.get(i).getName().equals(name)) {
+                itemList.set(i, item);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean deleteItem(String name) {
+        for (int i = 0; i < itemList.size(); ++i) {
+            if (itemList.get(i).getName().equals(name)) {
+                itemList.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     //Product

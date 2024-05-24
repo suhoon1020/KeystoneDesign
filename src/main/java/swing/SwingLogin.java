@@ -68,8 +68,7 @@ public class SwingLogin extends JFrame {
 
         /*
          * 로그인 페이지
-         *
-         * */
+         */
 
         JPanel loginPage = new JPanel();
         contentPane.add(loginPage, "LoginPage");

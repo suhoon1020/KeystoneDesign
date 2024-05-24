@@ -57,10 +57,6 @@ public class FileFacade {
         return userFileSystem.putUser(user);
     }
 
-    public Boolean isExistingUser(String id) {
-        return userFileSystem.isExistID(id);
-    }
-
     public boolean updateUser(String id, User user){
         return userFileSystem.updateUser(id, user);
     }
