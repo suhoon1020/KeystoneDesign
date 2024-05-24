@@ -99,15 +99,15 @@ public class SwingAdmin extends JFrame {
          *      AuctionManage Page
          */
 
-        JPanel itemPage = new JPanel();
-        contents.add(itemPage, "AuctionManagePage");
-        itemPage.setLayout(null);
+        JPanel auctionPage = new JPanel();
+        contents.add(auctionPage, "AuctionManagePage");
+        auctionPage.setLayout(null);
 
         JPanel itemList = new JPanel();
         itemList.setBounds(12, 10, 641, 526);
         itemList.setBorder(new LineBorder(new Color(0, 0, 0)));
         itemList.setLayout(new GridLayout(0, 1, 0, 0));
-        itemPage.add(itemList);
+        auctionPage.add(itemList);
 
         itemTableModel = new DefaultTableModel(tradeItemHeader, 0);
         T_ItemList = new JTable(itemTableModel);
@@ -120,7 +120,7 @@ public class SwingAdmin extends JFrame {
         JPanel itemManageContent = new JPanel();
         itemManageContent.setBorder(new LineBorder(new Color(0, 0, 0)));
         itemManageContent.setBounds(665, 10, 385, 526);
-        itemPage.add(itemManageContent);
+        auctionPage.add(itemManageContent);
         itemManageContent.setLayout(null);
 
         JPanel itemLab = new JPanel();

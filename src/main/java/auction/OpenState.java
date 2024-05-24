@@ -1,8 +1,6 @@
 package auction;
 
 import managers.UserFileSystem;
-import swing.SwingAdmin;
-import swing.SwingLogin;
 import user.userprivacy.User;
 
 public class OpenState implements AuctionState {
@@ -12,11 +10,8 @@ public class OpenState implements AuctionState {
 
         User user = userFileSystem.getUserByID(ID);
 
-        if(user.getPassword().equals(password)){
-            SwingAdmin.getSwingAdmin().setVisible(true);
+        if(user.getPassword().equals(password))
             return user;
-
-        }
         else
             return null;
     }

@@ -6,6 +6,7 @@ import auctionData.TradeItem;
 import managers.TradeHistoryFileSystem;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;
+import swing.SwingAuction;
 import swing.SwingLogin;
 import user.inventoryItem.Item;
 import user.userprivacy.User;
@@ -56,12 +57,12 @@ public class Auction {
         return user.getItems();
     }
 
-
     public boolean login(String ID, String password){
         User newUser = auctionState.login(ID, password, userFileSystem);
 
         if(newUser != null){
             user = newUser;
+            SwingAuction.getSwingAuction().setVisible(true);
             return true;
         }
         else{
