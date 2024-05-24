@@ -1,14 +1,8 @@
 package auction;
 
-import java.io.File;
 import java.util.List;
 
-import auctionData.TradeItem;
 import managers.FileFacade;
-import managers.TradeHistoryFileSystem;
-import managers.TradeItemFileSystem;
-import managers.UserFileSystem;
-import swing.SwingAdmin;
 import swing.SwingLogin;
 import user.inventoryItem.Item;
 import user.userprivacy.User;

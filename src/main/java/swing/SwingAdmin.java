@@ -16,7 +16,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
-import auction.Auction;
 import auctionData.TradeItem;
 import managers.FileFacade;
 import user.inventoryItem.Item;
@@ -34,6 +33,7 @@ public class SwingAdmin extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+
     private JTextField In_tradeItemId;
     private JComboBox<String> C_tradeItemType;
     private JTextField In_tradeItemName;
@@ -42,6 +42,20 @@ public class SwingAdmin extends JFrame {
     private JFormattedTextField In_tradeItemCount;
     private JFormattedTextField In_tradeItemPrice;
     private JFormattedTextField In_tradeItemOp1;
+
+    private JTextField In_userID;
+    private JTextField In_userPassword;
+    private JTextField In_userName;
+    private JTextField In_userPhoneNumber;
+    private JFormattedTextField In_userGold;
+
+    private JTextField In_inventoryUserName;
+    private JComboBox<String> C_userItemType;
+    private JTextField In_userItemName;
+    private JComboBox<String> C_userItemGrade;
+    private JTextField In_userItemDesc;
+    private JFormattedTextField In_userItemCount;
+    private JFormattedTextField In_userItemOp1;
 
     private JTable T_ItemList;
     private JScrollPane S_itemList;
@@ -52,13 +66,7 @@ public class SwingAdmin extends JFrame {
     private DefaultTableModel userTableModel;
 
     private static SwingAdmin swingAdmin = new SwingAdmin();
-    private JTextField In_userID;
-    private JTextField In_userPassword;
-    private JTextField In_userName;
-    private JTextField In_userPhoneNumber;
-    private JTextField In_userItemName;
-    private JTextField In_userItemDesc;
-    private JTextField In_inventoryUserName;
+
 
     public static SwingAdmin getSwingAdmin() {
         return swingAdmin;
@@ -311,7 +319,6 @@ public class SwingAdmin extends JFrame {
                     In_tradeItemCount.setText(T_ItemList.getValueAt(selectedRow, 6).toString());
                     In_tradeItemOp1.setText(T_ItemList.getValueAt(selectedRow, 7).toString());
                     In_tradeItemPrice.setText(T_ItemList.getValueAt(selectedRow, 8).toString());
-
                 }
             }
         });
@@ -367,7 +374,7 @@ public class SwingAdmin extends JFrame {
         In_userPhoneNumber.setColumns(10);
         userIn.add(In_userPhoneNumber);
         
-        JFormattedTextField In_userGold = new JFormattedTextField(F_NumberFormet);
+        In_userGold = new JFormattedTextField(F_NumberFormet);
         In_userGold.setColumns(10);
         userIn.add(In_userGold);
         
@@ -561,25 +568,25 @@ public class SwingAdmin extends JFrame {
         In_inventoryUserName.setColumns(10);
         tradeItemIn_1.add(In_inventoryUserName);
         
-        JComboBox<String> C_userItemType = new JComboBox<String>(itemTypes);
+        C_userItemType = new JComboBox<String>(itemTypes);
         tradeItemIn_1.add(C_userItemType);
         
         In_userItemName = new JTextField();
         In_userItemName.setColumns(10);
         tradeItemIn_1.add(In_userItemName);
         
-        JComboBox<String> C_userItemGrade = new JComboBox<String>(itemGrades);
+        C_userItemGrade = new JComboBox<String>(itemGrades);
         tradeItemIn_1.add(C_userItemGrade);
         
         In_userItemDesc = new JTextField();
         In_userItemDesc.setColumns(10);
         tradeItemIn_1.add(In_userItemDesc);
         
-        JFormattedTextField In_userItemCount = new JFormattedTextField(F_NumberFormet);
+        In_userItemCount = new JFormattedTextField(F_NumberFormet);
         In_userItemCount.setColumns(10);
         tradeItemIn_1.add(In_userItemCount);
         
-        JFormattedTextField In_userItemOp1 = new JFormattedTextField(F_NumberFormet);
+        In_userItemOp1 = new JFormattedTextField(F_NumberFormet);
         In_userItemOp1.setColumns(10);
         tradeItemIn_1.add(In_userItemOp1);
         
@@ -590,8 +597,9 @@ public class SwingAdmin extends JFrame {
         
         JButton Btt_createUserItem = new JButton("아이템 생성");
         Btt_createUserItem.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
+            public void actionPerformed(ActionEvent e) {
+                
+            }
         });
         Btt_createUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
         tradeItemButtons_1.add(Btt_createUserItem);
@@ -720,5 +728,9 @@ public class SwingAdmin extends JFrame {
         }
 
         S_userList.setViewportView(T_userList);
+    }
+
+    public void refreshUserInventory(){
+        
     }
 }

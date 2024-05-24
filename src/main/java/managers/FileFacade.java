@@ -9,16 +9,16 @@ public class FileFacade {
     private static FileFacade fileFacade;
 
     private UserFileSystem userFileSystem;
-    private TradeItemFileSystem tradeItemFIleSystem;
+    private TradeItemFileSystem tradeItemFileSystem;
     private TradeHistoryFileSystem tradeHistoryFileSystem;
 
     private FileFacade() {
         this.userFileSystem = new UserFileSystem();
-        this.tradeItemFIleSystem = new TradeItemFileSystem();
+        this.tradeItemFileSystem = new TradeItemFileSystem();
         this.tradeHistoryFileSystem = new TradeHistoryFileSystem();
 
         userFileSystem.loadInfosFromFile();
-        tradeItemFIleSystem.loadInfosFromFile();
+        tradeItemFileSystem.loadInfosFromFile();
         tradeHistoryFileSystem.loadInfosFromFile();
     }
 
@@ -69,21 +69,32 @@ public class FileFacade {
         return userFileSystem.deleteUser(id);
     }
 
-
     /*
-     *       TRADE ITEMS
+     *       TRADE ITEM
      */
 
     public void saveTradeItems(){
-        tradeItemFIleSystem.saveInfosToFile();
+        tradeItemFileSystem.saveInfosToFile();
     }
 
     public void loadTradeItems(){
-        tradeItemFIleSystem.loadInfosFromFile();
+        tradeItemFileSystem.loadInfosFromFile();
+    }
+
+    public void putTradeItem(TradeItem newTradeItem){
+        tradeItemFileSystem.putTradeItem(newTradeItem);
+    }
+
+    public boolean updateTradeItem(int id, TradeItem item){
+        return tradeItemFileSystem.updateItem(id, item);
+    }
+
+    public Boolean deleteTradeItem(int id){
+        return tradeItemFileSystem.deleteTradeItem(id);
     }
 
     public List<TradeItem> getTradeItemList(){
-        return tradeItemFIleSystem.getTradeItemList();
+        return tradeItemFileSystem.getTradeItemList();
     }
 
     /*
