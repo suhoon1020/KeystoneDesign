@@ -3,12 +3,7 @@ package user.userprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
-import managers.FileFacade;
-import managers.UserFileSystem;
 import user.inventoryItem.Item;
-
-import javax.swing.*;
-
 
 public class User {
     private String id;
@@ -40,6 +35,10 @@ public class User {
 
     public int getGold(){
         return gold;
+    }
+
+    public void setGold(int gold){
+        this.gold = gold;
     }
 
     public String[] getListData(){
@@ -103,42 +102,4 @@ public class User {
             return new User(this);
         }
     }
-
-
-    public boolean addItem(Item newItem){
-        if (checkItemByName(newItem.getName()))
-            return false;
-
-        itemList.add(newItem);
-        return true;
-    }
-
-    public Boolean checkItemByName(String name) {
-        for (Item item : itemList) {
-            if (item.getName().equals(name))
-                return true;
-        }
-        return false;
-    }
-
-    public boolean updateItem(String name, Item item){
-        for (int i = 0; i < itemList.size(); ++i) {
-            if (itemList.get(i).getName().equals(name)) {
-                itemList.set(i, item);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean deleteItem(String name) {
-        for (int i = 0; i < itemList.size(); ++i) {
-            if (itemList.get(i).getName().equals(name)) {
-                itemList.remove(i);
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

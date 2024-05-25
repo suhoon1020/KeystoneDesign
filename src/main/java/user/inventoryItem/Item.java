@@ -1,5 +1,7 @@
 package user.inventoryItem;
 
+import auctionData.TradeItem;
+
 public abstract class Item {
     protected String type;
     protected String name;
@@ -38,24 +40,8 @@ public abstract class Item {
         return count;
     }
 
-    public boolean addCount(int count){
-        if(0 < count){
-            this.count += count;
-            return true;
-        }
-        if(0 > count){
-            if(this.count + count > 0){
-                this.count += count;
-                return true;
-            }
-            else if(this.count + count == 0){
-                this.count = 0;
-                return true;
-            }
-            else
-                return false;
-        }
-        return true;
+    public void setCount(int count){
+        this.count = count;
     }
 
     //하위 클래스에서 구현
@@ -65,5 +51,6 @@ public abstract class Item {
 
     public abstract String[] getListData();
 
+    public abstract TradeItem getTradeItem(String userName, int count, int price);
 
 }

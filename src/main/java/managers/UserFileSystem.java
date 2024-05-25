@@ -15,14 +15,16 @@ import java.util.List;
 
 
 public class UserFileSystem {
-
     public static final String USER_FILE = "users.json";
+
     private static List<User> users;
-    private static List<Item> items =
+
     private static UserFileSystem userFileSystem = new UserFileSystem();
 
 
     public static UserFileSystem getUserFileSystem() {
+        if(userFileSystem == null)
+            userFileSystem = new UserFileSystem();
         return userFileSystem;
     }
 
@@ -120,46 +122,45 @@ public class UserFileSystem {
         return false;
     }
 
-    public Boolean checkItemByName(User user, String name) {
-        for (Item item : user.getItemList()) {
-            if (item.getName().equals(name))
-                return true;
+    public void addItem(User user, Item addItem){
+        List<Item> userItemList = user.getItemList();
+        String addItemName = addItem.getName();
+
+        for(int i = 0; i < userItemList.size(); ++i){
+            if(userItemList.get(i).getName().equals(addItemName)){
+                addItem.setCount(addItem.getCount() + userItemList.get(i).getCount());
+                userItemList.set(i, addItem);
+                return;
+            }
         }
+
+        userItemList.add(addItem);
+        return;
+    }
+
+    public boolean updateItem(User user, Item updateItem){
+        List<Item> userItemList = user.getItemList();
+        String updateItemName = updateItem.getName();
+
+        for(int i = 0; i < userItemList.size(); ++i){
+            if(userItemList.get(i).getName().equals(updateItemName)){
+                userItemList.set(i, updateItem);
+            }
+        }
+
         return false;
     }
 
-    //유저한테 아이템 생성?
-    public boolean addItem(String userID,Item newItem){
-        User user = getUserById(userID);
+    public boolean deleteItem(User user, String deleteItemnName){
+        List<Item> userItemList = user.getItemList();
 
-        if (checkItemByName(user,newItem.getName())) {
-            return false;
-        }
-
-        user.getItemList().add(newItem);
-        updateUser(userID,user);
-        return true;
-    }
-
-
-
-    public boolean updateItem(String name, Item item){
-        for (int i = 0; i < itemList.size(); ++i) {
-            if (itemList.get(i).getName().equals(name)) {
-                itemList.set(i, item);
+        for(int i = 0; i < userItemList.size(); ++i){
+            if(userItemList.get(i).getName().equals(deleteItemnName)){
+                userItemList.remove(i);
                 return true;
             }
         }
-        return false;
-    }
 
-    public Boolean deleteItem(String name) {
-        for (int i = 0; i < itemList.size(); ++i) {
-            if (itemList.get(i).getName().equals(name)) {
-                itemList.remove(i);
-                return true;
-            }
-        }
         return false;
     }
 }

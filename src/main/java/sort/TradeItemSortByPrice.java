@@ -8,13 +8,13 @@ import java.util.List;
 import auctionData.TradeItem;
 
 
-public class TradeItemSortByCount implements TradeItemSort{
+public class TradeItemSortByPrice implements TradeItemSort{
 
     @Override
     public List<TradeItem> sort(List<TradeItem> list) {
         List<TradeItem> sortedItemList = new ArrayList<TradeItem>(list);
 
-        Collections.sort(sortedItemList, Comparator.comparingInt(TradeItem::getCount)); 
+        Collections.sort(sortedItemList, Comparator.comparingInt(TradeItem::getPrice)); 
         
         return sortedItemList;
     }

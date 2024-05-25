@@ -12,6 +12,5 @@ public class CreateItemCommand implements Command{
     }
     @Override
     public void execute() {
-        user.addItem(item);
     }
 }

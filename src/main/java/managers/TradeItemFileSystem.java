@@ -24,6 +24,8 @@ public class TradeItemFileSystem {
     private static TradeItemFileSystem tradeItemFileSystem;
 
     public static TradeItemFileSystem getTradeItemFileSystem() {
+        if(tradeItemFileSystem == null)
+            tradeItemFileSystem = new TradeItemFileSystem();
         return tradeItemFileSystem;
     }
 
@@ -65,7 +67,7 @@ public class TradeItemFileSystem {
         }
     }
 
-    public TradeItem getTradeItem(int id) {
+    public TradeItem getTradeItemById(int id) {
         for (TradeItem item : tradeItems) {
             if (item.getTradeId() == id) 
                 return item;

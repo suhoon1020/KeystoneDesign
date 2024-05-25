@@ -32,7 +32,7 @@ public class FileFacade {
     /* 
      *      USERS
      */
-/*
+
     public void saveUsers() {
         userFileSystem.saveInfosToFile();
     }
@@ -65,8 +65,6 @@ public class FileFacade {
         return userFileSystem.deleteUser(id);
     }
 
- */
-
     /*
      *       TRADE ITEM
      */
@@ -77,6 +75,10 @@ public class FileFacade {
 
     public void loadTradeItems(){
         tradeItemFileSystem.loadInfosFromFile();
+    }
+
+    public TradeItem getTradeItemById(int id){
+        return tradeItemFileSystem.getTradeItemById(id);
     }
 
     public void putTradeItem(TradeItem newTradeItem){
