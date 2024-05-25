@@ -655,17 +655,13 @@ public class SwingAdmin extends JFrame {
                                 .option1(Integer.valueOf(In_userItemOp1.getText().replace(",", "")))
                                 .build();
 
-                        if(currentUser.addItem(item)){
-                            if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
-                                JOptionPane.showMessageDialog(null, "아이템 생성이 완료 되었습니다");
-                                refreshUserInventoryTable();
-                            }
-                            else{
-                                JOptionPane.showMessageDialog(null, "유저가 존재하지 않습니다");
-                            }
+                        UserFileSystem.getUserFileSystem().addItem(currentUser, item);
+                        if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
+                            JOptionPane.showMessageDialog(null, "아이템 생성이 완료 되었습니다");
+                            refreshUserInventoryTable();
                         }
                         else{
-                            JOptionPane.showMessageDialog(null, "중복된 이름이 있습니다");
+                            JOptionPane.showMessageDialog(null, "유저가 존재하지 않습니다");
                         }
                     } catch (NumberFormatException err) {
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
@@ -692,7 +688,7 @@ public class SwingAdmin extends JFrame {
                                 .option1(Integer.valueOf(In_userItemOp1.getText().replace(",", "")))
                                 .build();
 
-                        if(currentUser.updateItem(In_userItemName.getText(), item)){
+                        if(UserFileSystem.getUserFileSystem().updateItem(currentUser, item)){
                             if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
                                 JOptionPane.showMessageDialog(null, "아이템 수정이 완료되었습니다");
                                 refreshUserInventoryTable();
@@ -719,7 +715,7 @@ public class SwingAdmin extends JFrame {
                 if (In_userItemName.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
-                    if (currentUser.deleteItem(In_userItemName.getText())) {
+                    if (UserFileSystem.getUserFileSystem().deleteItem(currentUser, (In_userItemName.getText()))) {
                         if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
                             JOptionPane.showMessageDialog(null, "아이템 삭제가 완료되었습니다");
                             refreshUserInventoryTable();

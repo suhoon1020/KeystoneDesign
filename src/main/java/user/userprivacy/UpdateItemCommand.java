@@ -13,6 +13,6 @@ public class UpdateItemCommand implements Command {
 
     @Override
     public void execute() {
-        user.updateItem(user, item);
+        // user.updateItem(user, item);
     }
 }

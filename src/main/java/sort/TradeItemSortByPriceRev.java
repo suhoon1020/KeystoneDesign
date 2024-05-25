@@ -7,12 +7,12 @@ import java.util.List;
 
 import auctionData.TradeItem;
 
-public class TradeItemSortByCountRev implements TradeItemSort{
+public class TradeItemSortByPriceRev implements TradeItemSort{
     @Override
     public List<TradeItem> sort(List<TradeItem> list) {
         List<TradeItem> sortedItemList = new ArrayList<TradeItem>(list);
 
-        Collections.sort(sortedItemList, Comparator.comparingInt(TradeItem::getCount).reversed()); 
+        Collections.sort(sortedItemList, Comparator.comparingInt(TradeItem::getPrice).reversed()); 
         
         return sortedItemList;
     }

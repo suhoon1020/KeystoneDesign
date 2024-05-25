@@ -23,6 +23,8 @@ public class UserFileSystem {
 
 
     public static UserFileSystem getUserFileSystem() {
+        if(userFileSystem == null)
+            userFileSystem = new UserFileSystem();
         return userFileSystem;
     }
 
@@ -120,69 +122,45 @@ public class UserFileSystem {
         return false;
     }
 
-    public Boolean checkItemByName(User user, String name) {
-        for (Item item : user.getItemList()) {
-            if (item.getName().equals(name))
-                return true;
+    public void addItem(User user, Item addItem){
+        List<Item> userItemList = user.getItemList();
+        String addItemName = addItem.getName();
+
+        for(int i = 0; i < userItemList.size(); ++i){
+            if(userItemList.get(i).getName().equals(addItemName)){
+                addItem.setCount(addItem.getCount() + userItemList.get(i).getCount());
+                userItemList.set(i, addItem);
+                return;
+            }
         }
+
+        userItemList.add(addItem);
+        return;
+    }
+
+    public boolean updateItem(User user, Item updateItem){
+        List<Item> userItemList = user.getItemList();
+        String updateItemName = updateItem.getName();
+
+        for(int i = 0; i < userItemList.size(); ++i){
+            if(userItemList.get(i).getName().equals(updateItemName)){
+                userItemList.set(i, updateItem);
+            }
+        }
+
         return false;
     }
 
-    public boolean updateItem(String userId, Item updateItem){
-        User user = getUserById(userId);
-        String findItemName = updateItem.getName();
+    public boolean deleteItem(User user, String deleteItemnName){
+        List<Item> userItemList = user.getItemList();
 
-        if(user != null){
-            if(updateItem.getCount() > 0){
-                // 아이템 플러스
-                List<Item> userItemList = user.getItemList();
-
-                for(int i = 0; i < userItemList.size(); i++){
-                    if(userItemList.get(i).getName().equals(findItemName)){
-                        // 아이템 정보 있음
-                        userItemList.get(i).setCount(updateItem.getCount());
-                        return true;
-                    }
-                }
-                // 아이템 생성 후 리스트 추가
-                userItemList.add(updateItem);
+        for(int i = 0; i < userItemList.size(); ++i){
+            if(userItemList.get(i).getName().equals(deleteItemnName)){
+                userItemList.remove(i);
                 return true;
             }
-            else if(updateItem.getCount() < 0){
-                // 아이템 마이너스
-                List<Item> userItemList = user.getItemList();
-
-                for(int i = 0; i < userItemList.size(); ++i){
-                    if(userItemList.get(i).getName().equals(findItemName)){
-                        // 아이템 정보 있음
-                        if(userItemList.get(i).setCount(updateItem.getCount())){
-                            if(userItemList.get(i).getCount() == 0){
-                                // 아이템 사라짐
-                                userItemList.remove(i);
-                                return true;
-                            }
-                            // 감소 완료 리턴
-                            return true;
-                        }
-                        else{
-                            // 아이템 수량부족
-                            return false;
-                        }
-                    }
-                        
-                }
-                // 아이템 정보 없음 마이너스 불가
-                return false;
-            }
-            else{
-                // 무의미
-                return false;
-            }
-        }
-        else{
-            // 유저 정보 없음
-            return false;
         }
 
+        return false;
     }
 }

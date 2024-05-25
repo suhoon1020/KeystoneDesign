@@ -13,6 +13,5 @@ public class DeleteItemCommand implements Command{
 
     @Override
     public void execute() {
-        user.deleteItem(item.getName());
     }
 }
