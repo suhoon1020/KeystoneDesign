@@ -1,9 +1,5 @@
 package user.inventoryItem;
 
-import user.userprivacy.User;
-
-import java.util.List;
-
 public abstract class Item {
     protected String type;
     protected String name;
@@ -41,6 +37,25 @@ public abstract class Item {
         return count;
     }
 
+    public boolean setCount(int count){
+        if(0 < count){
+            this.count += count;
+            return true;
+        }
+        if(count > 0){
+            if(this.count > count){
+                this.count += count;
+                return true;
+            }
+            else if(this.count == count){
+                this.count = 0;
+                return true;
+            }
+            else
+                return false;
+        }
+        return true;
+    }
 
     //하위 클래스에서 구현
     protected abstract void setSpecificAttributes(ItemBuilder itemBuilder);

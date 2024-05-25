@@ -15,10 +15,10 @@ import java.util.List;
 
 
 public class UserFileSystem {
-
     public static final String USER_FILE = "users.json";
+
     private static List<User> users;
-    private static List<Item> items =
+
     private static UserFileSystem userFileSystem = new UserFileSystem();
 
 
@@ -128,38 +128,61 @@ public class UserFileSystem {
         return false;
     }
 
-    //유저한테 아이템 생성?
-    public boolean addItem(String userID,Item newItem){
-        User user = getUserById(userID);
+    public boolean updateItem(String userId, Item updateItem){
+        User user = getUserById(userId);
+        String findItemName = updateItem.getName();
 
-        if (checkItemByName(user,newItem.getName())) {
+        if(user != null){
+            if(updateItem.getCount() > 0){
+                // 아이템 플러스
+                List<Item> userItemList = user.getItemList();
+
+                for(int i = 0; i < userItemList.size(); i++){
+                    if(userItemList.get(i).getName().equals(findItemName)){
+                        // 아이템 정보 있음
+                        userItemList.get(i).setCount(updateItem.getCount());
+                        return true;
+                    }
+                }
+                // 아이템 생성 후 리스트 추가
+                userItemList.add(updateItem);
+                return true;
+            }
+            else if(updateItem.getCount() < 0){
+                // 아이템 마이너스
+                List<Item> userItemList = user.getItemList();
+
+                for(int i = 0; i < userItemList.size(); ++i){
+                    if(userItemList.get(i).getName().equals(findItemName)){
+                        // 아이템 정보 있음
+                        if(userItemList.get(i).setCount(updateItem.getCount())){
+                            if(userItemList.get(i).getCount() == 0){
+                                // 아이템 사라짐
+                                userItemList.remove(i);
+                                return true;
+                            }
+                            // 감소 완료 리턴
+                            return true;
+                        }
+                        else{
+                            // 아이템 수량부족
+                            return false;
+                        }
+                    }
+                        
+                }
+                // 아이템 정보 없음 마이너스 불가
+                return false;
+            }
+            else{
+                // 무의미
+                return false;
+            }
+        }
+        else{
+            // 유저 정보 없음
             return false;
         }
 
-        user.getItemList().add(newItem);
-        updateUser(userID,user);
-        return true;
-    }
-
-
-
-    public boolean updateItem(String name, Item item){
-        for (int i = 0; i < itemList.size(); ++i) {
-            if (itemList.get(i).getName().equals(name)) {
-                itemList.set(i, item);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean deleteItem(String name) {
-        for (int i = 0; i < itemList.size(); ++i) {
-            if (itemList.get(i).getName().equals(name)) {
-                itemList.remove(i);
-                return true;
-            }
-        }
-        return false;
     }
 }
