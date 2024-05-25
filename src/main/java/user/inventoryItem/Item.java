@@ -6,6 +6,7 @@ public abstract class Item {
     protected String grade;
     protected String desc;
     protected int count;
+
     //템플릿 메소드
     public Item createItemInfos(ItemBuilder itemBuilder) {
         this.type = itemBuilder.type;
@@ -37,17 +38,17 @@ public abstract class Item {
         return count;
     }
 
-    public boolean setCount(int count){
+    public boolean addCount(int count){
         if(0 < count){
             this.count += count;
             return true;
         }
-        if(count > 0){
-            if(this.count > count){
+        if(0 > count){
+            if(this.count + count > 0){
                 this.count += count;
                 return true;
             }
-            else if(this.count == count){
+            else if(this.count + count == 0){
                 this.count = 0;
                 return true;
             }
@@ -63,8 +64,6 @@ public abstract class Item {
     public abstract int getOption1();
 
     public abstract String[] getListData();
-
-
 
 
 }
