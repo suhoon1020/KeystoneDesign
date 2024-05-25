@@ -14,38 +14,39 @@ public class Auction {
     private AuctionState auctionState;
     private User user;
 
-    private Auction(){
+    private Auction() {
         auctionState = new OpenState();
+
     }
-    
-    public static Auction getAuction(){
-        if(auction == null)
+
+    public static Auction getAuction() {
+        if (auction == null)
             auction = new Auction();
         return auction;
     }
 
-    public void changeState(){
+    public void changeState() {
         auctionState = auctionState.changeState();
     }
 
     public List<Item> getInventory() {
-        return user.getItems();
+        return user.getItemList();
     }
 
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
     }
 
     // 거래소 실행
-    public void run(){
+    public void run() {
         SwingLogin.getSwingLogin().setVisible(true);
     }
-    
-    public boolean isOpen(){
+
+    public boolean isOpen() {
         return auctionState.isOpen();
     }
 
-    public boolean login(String ID, String password){
+    public boolean login(String ID, String password) {
         return auctionState.login(ID, password);
     }
 
@@ -54,31 +55,30 @@ public class Auction {
      *      LOGIN
      */
 
-    public String findID(String name, String phoneNumber){
+    public String findID(String name, String phoneNumber) {
         User user = UserFileSystem.getUserFileSystem().getUserByName(name);
 
-        if(user != null){
-            if(user.getPhoneNumber().equals(phoneNumber))
+        if (user != null) {
+            if (user.getPhoneNumber().equals(phoneNumber))
                 return user.getId();
             else
                 return "";
         }
-        
+
         return "";
     }
 
-    public String findPassword(String ID, String name, String phoneNumber){
+    public String findPassword(String ID, String name, String phoneNumber) {
         User user = UserFileSystem.getUserFileSystem().getUserById(ID);
 
-        if(user != null){
-            if(user.getName().equals(name) && user.getPhoneNumber().equals(phoneNumber))
+        if (user != null) {
+            if (user.getName().equals(name) && user.getPhoneNumber().equals(phoneNumber))
                 return user.getPassword();
             else
                 return "";
         }
         return "";
     }
-
 
 
 }

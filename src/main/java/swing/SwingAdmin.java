@@ -430,7 +430,7 @@ public class SwingAdmin extends JFrame {
                         .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                         .build();
 
-                CreateUserCommand command = new CreateUserCommand(user);
+                CreateUserCommand command = new CreateUserCommand(user,UserFileSystem.getUserFileSystem());
                 invoker.setCommand(command);
                 invoker.buttonPressed();
                 refreshUserTable();
@@ -461,7 +461,7 @@ public class SwingAdmin extends JFrame {
                         .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                         .build();
 
-                UpdateUserCommand command = new UpdateUserCommand(user);
+                UpdateUserCommand command = new UpdateUserCommand(user,UserFileSystem.getUserFileSystem());
                 invoker.setCommand(command);
                 invoker.buttonPressed();
                 refreshUserTable();
@@ -494,7 +494,7 @@ public class SwingAdmin extends JFrame {
                             .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                             .build();
 
-                    DeleteUserCommand command = new DeleteUserCommand(user);
+                    DeleteUserCommand command = new DeleteUserCommand(user,UserFileSystem.getUserFileSystem());
                     invoker.setCommand(command);
                     invoker.buttonPressed();
                     refreshUserTable();
@@ -867,7 +867,7 @@ public class SwingAdmin extends JFrame {
     public void refreshUserInventoryTable(){
         userItemTableModel.setRowCount(0);
 
-        for (Item item : currentUser.getItems()) {
+        for (Item item : currentUser.getItemList()) {
             Object[] rowData = item.getListData();
             userItemTableModel.addRow(rowData);
         }

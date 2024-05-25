@@ -4,6 +4,7 @@ package managers;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
+import user.inventoryItem.Item;
 import user.userprivacy.User;
 
 import java.io.*;
@@ -17,7 +18,7 @@ public class UserFileSystem {
 
     public static final String USER_FILE = "users.json";
     private static List<User> users;
-
+    private static List<Item> items =
     private static UserFileSystem userFileSystem = new UserFileSystem();
 
 
@@ -119,4 +120,46 @@ public class UserFileSystem {
         return false;
     }
 
+    public Boolean checkItemByName(User user, String name) {
+        for (Item item : user.getItemList()) {
+            if (item.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
+
+    //유저한테 아이템 생성?
+    public boolean addItem(String userID,Item newItem){
+        User user = getUserById(userID);
+
+        if (checkItemByName(user,newItem.getName())) {
+            return false;
+        }
+
+        user.getItemList().add(newItem);
+        updateUser(userID,user);
+        return true;
+    }
+
+
+
+    public boolean updateItem(String name, Item item){
+        for (int i = 0; i < itemList.size(); ++i) {
+            if (itemList.get(i).getName().equals(name)) {
+                itemList.set(i, item);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean deleteItem(String name) {
+        for (int i = 0; i < itemList.size(); ++i) {
+            if (itemList.get(i).getName().equals(name)) {
+                itemList.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
 }

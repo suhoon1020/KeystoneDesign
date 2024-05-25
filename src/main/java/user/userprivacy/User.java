@@ -18,6 +18,10 @@ public class User {
     private int gold;
     private List<Item> itemList;
 
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
     public String getName() {
         return name;
     }
@@ -38,48 +42,8 @@ public class User {
         return gold;
     }
 
-    public List<Item> getItems(){
-        return itemList;
-    }
-
     public String[] getListData(){
         return new String[]{id, password, name, phoneNumber, Integer.toString(gold)};
-    }
-
-    public boolean addItem(Item newItem){
-        if (checkItemByName(newItem.getName()))
-            return false;
-
-        itemList.add(newItem);
-        return true;
-    }
-
-    public Boolean checkItemByName(String name) {
-        for (Item item : itemList) {
-            if (item.getName().equals(name))
-                return true;
-        }
-        return false;
-    }
-
-    public boolean updateItem(String name, Item item){
-        for (int i = 0; i < itemList.size(); ++i) {
-            if (itemList.get(i).getName().equals(name)) {
-                itemList.set(i, item);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean deleteItem(String name) {
-        for (int i = 0; i < itemList.size(); ++i) {
-            if (itemList.get(i).getName().equals(name)) {
-                itemList.remove(i);
-                return true;
-            }
-        }
-        return false;
     }
 
     //Product
@@ -140,32 +104,41 @@ public class User {
         }
     }
 
-    public void createUser(User user){
-        //유저 생성
-        if(UserFileSystem.getUserFileSystem().putUser(user)){
-            JOptionPane.showMessageDialog(null,"유저 생성이 완료 되었습니다");
-        }
-        else{
-            JOptionPane.showMessageDialog(null,"중복된 ID 가 있습니다");
-        }
+
+    public boolean addItem(Item newItem){
+        if (checkItemByName(newItem.getName()))
+            return false;
+
+        itemList.add(newItem);
+        return true;
     }
-    public void deleteUser(User user){
-        //유저 삭제
-        if(UserFileSystem.getUserFileSystem().deleteUser(user.getId())){
-            JOptionPane.showMessageDialog(null,"해당 유저가 삭제 되었습니다");
+
+    public Boolean checkItemByName(String name) {
+        for (Item item : itemList) {
+            if (item.getName().equals(name))
+                return true;
         }
-        else{
-            JOptionPane.showMessageDialog(null,"존재하지 않는 유저 입니다");
-        }
+        return false;
     }
-    public void updateUser(User user){
-        //유저 업뎃
-        if(UserFileSystem.getUserFileSystem().updateUser(user.getId(),user)){
-            JOptionPane.showMessageDialog(null,"유저 정보가 수정되었습니다");
+
+    public boolean updateItem(String name, Item item){
+        for (int i = 0; i < itemList.size(); ++i) {
+            if (itemList.get(i).getName().equals(name)) {
+                itemList.set(i, item);
+                return true;
+            }
         }
-        else{
-            JOptionPane.showMessageDialog(null,"존재하지 않는 유저입니다");
+        return false;
+    }
+
+    public Boolean deleteItem(String name) {
+        for (int i = 0; i < itemList.size(); ++i) {
+            if (itemList.get(i).getName().equals(name)) {
+                itemList.remove(i);
+                return true;
+            }
         }
+        return false;
     }
 
 }

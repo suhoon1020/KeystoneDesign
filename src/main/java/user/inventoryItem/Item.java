@@ -1,12 +1,15 @@
 package user.inventoryItem;
 
+import user.userprivacy.User;
+
+import java.util.List;
+
 public abstract class Item {
     protected String type;
     protected String name;
     protected String grade;
     protected String desc;
     protected int count;
-
     //템플릿 메소드
     public Item createItemInfos(ItemBuilder itemBuilder) {
         this.type = itemBuilder.type;
@@ -45,4 +48,8 @@ public abstract class Item {
     public abstract int getOption1();
 
     public abstract String[] getListData();
+
+
+
+
 }

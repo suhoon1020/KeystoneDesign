@@ -305,3 +305,13 @@ e
 ,src/main/java/sort/TradeItemSortByCount.java,0\d\0d6be9ce76b74d22ea2a9761cadbd79fcbf4342c
 X
 (src/main/java/auctionData/TradeItem.java,4\1\418ab1a0f843f0c77ce7fd8fb8abbacf339ff77f
+e
+5src/main/java/user/userprivacy/CreateItemCommand.java,e\9\e961a62382e51c309ad7206eac50a7d1f324550f
+e
+5src/main/java/user/userprivacy/DeleteItemCommand.java,c\d\cd5a51b84e2c01f00c9268c37cc0418920b146ae
+e
+5src/main/java/user/userprivacy/UpdateItemCommand.java,e\5\e56548406e61232eea22d7dce79a7f4afa4373fb
+X
+(src/main/java/user/userprivacy/Item.java,1\8\188507f74c65548f56cad9c1544e87786298eb18
+[
++src/main/java/auctionData/TradeHistory.java,f\9\f90edef9a5461cadb18cff003f14c9a3a5b12131

@@ -13,11 +13,11 @@ public class FileFacade {
     private TradeHistoryFileSystem tradeHistoryFileSystem;
 
     private FileFacade() {
-        //this.userFileSystem = new UserFileSystem();
-        this.tradeItemFileSystem = new TradeItemFileSystem();
+        this.userFileSystem = UserFileSystem.getUserFileSystem();
+        this.tradeItemFileSystem = TradeItemFileSystem.getTradeItemFileSystem();
         this.tradeHistoryFileSystem = new TradeHistoryFileSystem();
 
-        //userFileSystem.loadInfosFromFile();
+        userFileSystem.loadInfosFromFile();
         tradeItemFileSystem.loadInfosFromFile();
         tradeHistoryFileSystem.loadInfosFromFile();
     }
