@@ -112,6 +112,7 @@ public class Auction {
 
     public boolean buyItem(int tradeId){
         TradeItem tradeItem = FileFacade.getFacade().getTradeItemById(tradeId);
+
         if(tradeItem != null){
             if(user.getGold() >= tradeItem.getPrice()){
                 Item item = tradeItem.getItem();
