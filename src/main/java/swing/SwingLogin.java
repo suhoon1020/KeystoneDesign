@@ -6,9 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import CommandManage.CreateUserCommand;
+import CommandManage.Users.CreateUserCommand;
 import auction.Auction;
-import managers.FileFacade;
 import CommandManage.Invoker;
 import user.userprivacy.User;
 

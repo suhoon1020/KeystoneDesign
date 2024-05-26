@@ -13,7 +13,6 @@ public class TradeItem {
     private int price;
     private Item auctionItem;
 
-    private static List<TradeItem> tradeItems = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList();
 
     public TradeItem(String userName, int price, Item registerdItem) {
         this.tradeId = TRADE++;
@@ -79,7 +78,7 @@ public class TradeItem {
     }
 
     public TradeItem getTradeItemById(int id) {
-        for (TradeItem tradeItem : tradeItems) {
+        for (TradeItem tradeItem : TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList()) {
             if (tradeItem.getTradeId() == id)
                 return tradeItem;
         }
@@ -87,30 +86,4 @@ public class TradeItem {
         return null;
     }
 
-    public void putTradeItem(TradeItem newTradeItem) {
-        tradeItems.add(newTradeItem);
-        TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
-    }
-
-    public Boolean updateItem(int id, TradeItem tradeItem) {
-        for (int i = 0; i < tradeItems.size(); ++i) {
-            if (tradeItems.get(i).getTradeId() == id) {
-                tradeItems.set(i, tradeItem);
-                TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean deleteTradeItem(int id) {
-        for (int i = 0; i < tradeItems.size(); ++i) {
-            if (tradeItems.get(i).getTradeId() == id) {
-                tradeItems.remove(i);
-                TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
-                return true;
-            }
-        }
-        return false;
-    }
 }

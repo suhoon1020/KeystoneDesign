@@ -17,6 +17,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
 import CommandManage.*;
+import CommandManage.AuctionItems.CreateTItemCommand;
+import CommandManage.InvItem.CreateItemCommand;
+import CommandManage.InvItem.DeleteItemCommand;
+import CommandManage.InvItem.UpdateItemCommand;
+import CommandManage.Users.CreateUserCommand;
+import CommandManage.Users.DeleteUserCommand;
+import CommandManage.Users.UpdateUserCommand;
 import auctionData.TradeItem;
 import managers.FileFacade;
 import managers.TradeItemFileSystem;
@@ -252,6 +259,7 @@ public class SwingAdmin extends JFrame {
                                 .count(Integer.valueOf(In_tradeItemCount.getText().replace(",", "")))
                                 .option1(Integer.valueOf(In_tradeItemOp1.getText().replace(",", "")))
                                 .build();
+                        CreateTItemCommand createTItemCommand = new CreateTItemCommand("AUCTION")
 
                         TradeItem newitem = new TradeItem("AUCTION", Integer.valueOf(In_tradeItemPrice.getText().replace(",", "")), item);
                         TradeItemFileSystem.getTradeItemFileSystem().putTradeItem(newitem);

@@ -1,12 +1,12 @@
-package CommandManage;
+package CommandManage.InvItem;
 
-import managers.UserFileSystem;
+import CommandManage.Command;
 import user.inventoryItem.Item;
 import user.userprivacy.User;
 
 import javax.swing.*;
 
-public class CreateItemCommand implements Command{
+public class CreateItemCommand implements Command {
     Item item;
     User user;
     public CreateItemCommand(User user,Item Item) {

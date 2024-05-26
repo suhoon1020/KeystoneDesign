@@ -14,8 +14,6 @@ public class User {
     private int gold;
     private List<Item> itemList;
 
-    private static List<User> users = UserFileSystem.getUserFileSystem().getUserList();
-
 
     public List<Item> getItemList() {
         return itemList;

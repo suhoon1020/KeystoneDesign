@@ -1,11 +1,11 @@
-package CommandManage;
+package CommandManage.Users;
 
-import managers.UserFileSystem;
+import CommandManage.Command;
 import user.userprivacy.User;
 
 import javax.swing.*;
 
-public class DeleteUserCommand implements Command{
+public class DeleteUserCommand implements Command {
     User user;
 
     public DeleteUserCommand(User user) {
