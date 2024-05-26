@@ -18,7 +18,7 @@ public class DeleteItemCommand implements Command {
     @Override
     public void execute() {
         List<Item> items = ItemFileSystem.getItemFileSystem().getItemList();
-        for(int i = 0; i >items.size(); ++i){
+        for(int i = 0; i < items.size(); ++i){
             if(items.get(i).getName().equals(itemName)){
                 items.remove(i);
                 JOptionPane.showMessageDialog(null, itemName + " 아이템이 삭제되었습니다");

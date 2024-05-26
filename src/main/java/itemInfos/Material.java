@@ -9,8 +9,7 @@ public class Material extends Item{
     
     @Override
     public String[] getListData() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getListData'");
+        return new String[]{type, name, grade, desc, "0"};
     }
 
     @Override

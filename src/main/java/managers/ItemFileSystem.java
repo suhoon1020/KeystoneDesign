@@ -20,15 +20,19 @@ import itemInfos.Item;
 public class ItemFileSystem {
     public static final String ITEM_FILE = "items.json";
 
-    private static List<Item> Items;
+    private static List<Item> items;
 
     private static ItemFileSystem itemFileSystem;
 
     public static ItemFileSystem getItemFileSystem(){
         if(itemFileSystem == null)
-        itemFileSystem = new ItemFileSystem();
+            itemFileSystem = new ItemFileSystem();
 
         return itemFileSystem;
+    }
+
+    private ItemFileSystem(){
+        loadInfosFromFile();
     }
 
     public void saveInfosToFile() {
@@ -37,7 +41,8 @@ public class ItemFileSystem {
         try{
             FileWriter fw = new FileWriter(ITEM_FILE);
 
-            fw.write(gson.toJson(Items));
+            fw.write(gson.toJson(items));
+
             fw.close();
         } catch(IOException err){
             System.err.println(err);
@@ -46,7 +51,7 @@ public class ItemFileSystem {
 
     public void loadInfosFromFile() {
         if (!Files.exists(Paths.get(ITEM_FILE))) {
-            Items = new ArrayList<>();
+            items = new ArrayList<>();
         } else {
             try {
                 GsonBuilder gsonBuilder = new GsonBuilder();
@@ -56,7 +61,7 @@ public class ItemFileSystem {
                 Reader reader = new FileReader(ITEM_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                Items = gson.fromJson(jsonElement, new TypeToken<List<Item>>() {}.getType());
+                items = gson.fromJson(jsonElement, new TypeToken<List<Item>>() {}.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
@@ -64,7 +69,7 @@ public class ItemFileSystem {
     }
 
     public Item getItem(String name) {
-        for (Item i : Items) {
+        for (Item i : items) {
             if(i.getName().equals(name)) return i;
         }
 
@@ -72,6 +77,6 @@ public class ItemFileSystem {
     }
 
     public List<Item> getItemList(){
-        return Items;
+        return items;
     }
 }
