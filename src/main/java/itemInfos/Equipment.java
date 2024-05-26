@@ -1,16 +1,16 @@
-package item;
+package itemInfos;
 
-public class Weapon extends Item {
-    protected int damage;
+public class Equipment extends Item{
+    protected int defence;
 
     @Override
     protected void setSpecificAttributes(ItemBuilder itemBuilder) {
-        this.damage = itemBuilder.option1;
+        this.defence=itemBuilder.option1;
     }
-    
+
     @Override
     public int getOption1() {
-        return damage;
+        return defence;
     }
 
     @Override
@@ -20,7 +20,8 @@ public class Weapon extends Item {
             .name(name)
             .grade(grade)
             .desc(desc)
-            .option1(damage)
+            .option1(defence)
             .build();
     }
+
 }

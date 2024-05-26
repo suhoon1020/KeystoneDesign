@@ -1,4 +1,4 @@
-package item;
+package itemInfos;
 
 public abstract class Item {
     protected String type;
