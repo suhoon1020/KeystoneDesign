@@ -1,16 +1,14 @@
-package Item;
+package ItemManager;
 
-public class Equipment extends Item{
-    protected int defence;
-
+public class Material extends Item{
     @Override
-    protected void setSpecificAttributes(ItemBuilder itemBuilder) {
-        this.defence=itemBuilder.option1;
+    public void setSpecificAttributes(ItemBuilder itemBuilder){
+
     }
 
     @Override
     public int getOption1() {
-        return defence;
+        return 0;
     }
 
     @Override
@@ -20,8 +18,7 @@ public class Equipment extends Item{
             .name(name)
             .grade(grade)
             .desc(desc)
-            .option1(defence)
+            .option1(0)
             .build();
     }
-
 }

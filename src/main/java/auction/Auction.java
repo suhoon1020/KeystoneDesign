@@ -3,8 +3,6 @@ package auction;
 import java.util.List;
 
 import CommandManage.Invoker;
-import CommandManage.InventoryItems.ItemInvToTradeCommend;
-import CommandManage.TradeItems.ItemTradeToInvCommend;
 import auctionData.TradeItem;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;

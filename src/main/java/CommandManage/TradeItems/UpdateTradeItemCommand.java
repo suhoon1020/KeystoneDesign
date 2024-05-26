@@ -13,7 +13,6 @@ public class UpdateTradeItemCommand implements Command {
     public UpdateTradeItemCommand(int tradeId, TradeItem tradeItem) {
         this.tradeId = tradeId;
         this.tradeItem = tradeItem;
-        
     }
 
     @Override

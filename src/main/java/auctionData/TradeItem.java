@@ -1,6 +1,6 @@
 package auctionData;
 
-import Item.Item;
+import ItemManager.Item;
 
 public class TradeItem {
     private static int TRADE = 0;
@@ -61,4 +61,6 @@ public class TradeItem {
                 Integer.toString(count), 
                 Integer.toString(price)};
     }
+
+
 }

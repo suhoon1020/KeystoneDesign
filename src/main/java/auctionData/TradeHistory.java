@@ -1,6 +1,6 @@
 package auctionData;
 
-public class TradeHistory {
-
+public interface TradeHistory {
+    public void checkHistory();
     
 }

@@ -1,5 +1,7 @@
 package ItemObserver;
 
+import ItemManager.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +20,13 @@ public class ConcreteSubject implements ISubject{
     }
 
     @Override
-    public void notifyObserver(IObserver o) {
+    public void notifyObserver() {
         for(IObserver o : observers){
-            o.update();
+            o.update(this);
         }
+    }
+
+    void itemInfoChanged(){
+
     }
 }

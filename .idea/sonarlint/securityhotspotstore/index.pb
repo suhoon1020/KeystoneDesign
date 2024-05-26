@@ -409,3 +409,15 @@ _
 /src/main/java/ItemObserver/ConcreteSubject.java,6\1\61efca2d5e9618cd1660a2d20d4ee8609fced2fb
 L
 src/main/java/Item/Item.java,6\c\6c2b68e58b244bdb22b633eaf0932597ead658a1
+S
+#src/main/java/ItemManager/Item.java,4\6\463c112a353fb9fc59194b51e2894331b087b20e
+X
+(src/main/java/ItemManager/Equipment.java,0\2\0252daf1ba51c6e946ea775a674484fc6047d935
+U
+%src/main/java/ItemManager/Weapon.java,e\1\e192f82d02b8d4f408e8c97437fc8b6090b0bd9c
+U
+%src/main/java/ItemManager/Potion.java,f\f\fffa620768a0811aa78ef7727f2980e6d08d5778
+W
+'src/main/java/ItemManager/Material.java,9\5\955a9031797931128eb819965dc367e760556a77
+Z
+*src/main/java/ItemManager/ItemBuilder.java,9\a\9a21bfbc386041d232b46739b1e2584c0603b22b

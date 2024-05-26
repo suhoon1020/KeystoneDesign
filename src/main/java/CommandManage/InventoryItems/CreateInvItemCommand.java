@@ -3,7 +3,7 @@ package CommandManage.InventoryItems;
 import CommandManage.Command;
 import CommandManage.Invoker;
 import CommandManage.Users.UpdateUserCommand;
-import Item.Item;
+import ItemManager.Item;
 import user.InventoryItem;
 import user.User;
 

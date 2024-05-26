@@ -6,8 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import Item.Item;
-import Item.ItemBuilder;
+import ItemManager.Item;
+import ItemManager.ItemBuilder;
 import auctionData.TradeItem;
 
 public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {

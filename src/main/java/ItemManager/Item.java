@@ -1,6 +1,12 @@
-package Item;
+package ItemManager;
 
-public abstract class Item {
+import ItemObserver.IObserver;
+import ItemObserver.ISubject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Item{
     protected String type;
     protected String name;
     protected String grade;
@@ -36,4 +42,8 @@ public abstract class Item {
     protected abstract void setSpecificAttributes(ItemBuilder itemBuilder);
     public abstract int getOption1();
     public abstract Item clone();
+
+
+
+
 }

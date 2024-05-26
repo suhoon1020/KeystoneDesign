@@ -1,7 +1,7 @@
 package CommandManage.TradeItems;
 
 import CommandManage.Command;
-import Item.Item;
+import ItemManager.Item;
 import auctionData.TradeItem;
 import managers.TradeItemFileSystem;
 

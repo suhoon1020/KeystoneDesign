@@ -1,14 +1,16 @@
-package Item;
+package ItemManager;
 
-public class Material extends Item{
+public class Potion extends Item {
+    protected int effect;
+
     @Override
-    public void setSpecificAttributes(ItemBuilder itemBuilder){
-
+    protected void setSpecificAttributes(ItemBuilder itemBuilder) {
+        effect = itemBuilder.option1;
     }
 
     @Override
     public int getOption1() {
-        return 0;
+        return effect;
     }
 
     @Override
@@ -18,7 +20,8 @@ public class Material extends Item{
             .name(name)
             .grade(grade)
             .desc(desc)
-            .option1(0)
+            .option1(effect)
             .build();
     }
+
 }
