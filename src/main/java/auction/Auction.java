@@ -2,8 +2,8 @@ package auction;
 
 import java.util.List;
 
-import item.Item;
 import auctionData.TradeItem;
+import itemInfos.Item;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;
 import swing.SwingLogin;

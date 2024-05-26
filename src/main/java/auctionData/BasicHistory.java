@@ -1,6 +1,5 @@
 package auctionData;
 
-import ItemManager.Item;
 
 import java.util.List;
 

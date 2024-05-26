@@ -1,4 +1,4 @@
-package Item;
+package itemInfos;
 
 public class ItemBuilder {
     public String type;

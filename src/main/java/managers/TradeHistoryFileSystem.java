@@ -6,6 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import auctionData.TradeHistory;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,18 +16,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
 public class TradeHistoryFileSystem {
     private static final String TRAGE_HISTORY_FILE = "tradeHistory.json";
 
     private static List<BasicHistory> TradeHistories;
 
-    public static List<BasicHistory> getTradeHistoris(){
-        return TradeHistories;
-    }
-
     private static TradeHistoryFileSystem tradeHistoryFileSystem;
 
-    public static TradeHistoryFileSystem getTradeHistoryFileSystem(){
+    public static TradeHistoryFileSystem getTradeHistoryItemFileSystem(){
         if(tradeHistoryFileSystem == null)
             tradeHistoryFileSystem = new TradeHistoryFileSystem();
 
@@ -54,7 +53,7 @@ public class TradeHistoryFileSystem {
                 Reader reader = new FileReader(TRAGE_HISTORY_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                TradeHistories = gson.fromJson(jsonElement, new TypeToken<List<BasicHistory>>() {}.getType());
+                TradeHistories = gson.fromJson(jsonElement, new TypeToken<List<TradeHistory>>() {}.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }

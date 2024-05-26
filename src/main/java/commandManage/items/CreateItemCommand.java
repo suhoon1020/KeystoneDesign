@@ -3,7 +3,7 @@ package commandManage.items;
 import javax.swing.JOptionPane;
 
 import commandManage.Command;
-import item.Item;
+import itemInfos.Item;
 import managers.ItemFileSystem;
 
 public class CreateItemCommand implements Command {

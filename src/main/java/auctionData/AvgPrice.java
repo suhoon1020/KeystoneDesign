@@ -19,7 +19,8 @@ public class AvgPrice extends HistoryDecorator {
     }
 
     public void getAvgPrice(TradeItem tradeItem) {
-        List<BasicHistory> basicHistories = TradeHistoryFileSystem.getTradeHistoryFileSystem().getTradeHistories();
+        List<BasicHistory> basicHistories = TradeHistoryFileSystem.getTradeHistoryItemFileSystem().getTradeHistories();
+
         int avgPrice = 0;
 
         for (BasicHistory basicHistory : basicHistories) {
