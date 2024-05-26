@@ -14,7 +14,7 @@ public class OpenState implements AuctionState {
         if(loginUser != null){
             if(loginUser.getPassword().equals(password)){
                 Auction.getAuction().setUser(loginUser);
-                SwingAuction.getSwingAuction().setVisible(true);
+                SwingAdmin.getSwingAdmin().setVisible(true);
                 return true;
             }
             else{

@@ -1,6 +1,6 @@
 package user;
 
-import Item.Item;
+import item.Item;
 
 public class InventoryItem {
     Item item;

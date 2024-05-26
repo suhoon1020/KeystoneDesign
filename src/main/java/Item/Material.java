@@ -1,4 +1,4 @@
-package Item;
+package item;
 
 public class Material extends Item{
     @Override

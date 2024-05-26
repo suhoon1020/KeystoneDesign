@@ -1,6 +1,5 @@
 package auction;
 
-
 public class CloseState implements AuctionState {
 
     @Override
