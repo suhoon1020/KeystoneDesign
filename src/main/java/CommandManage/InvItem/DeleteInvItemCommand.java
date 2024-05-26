@@ -3,29 +3,27 @@ package CommandManage.InvItem;
 import CommandManage.Command;
 import CommandManage.Invoker;
 import CommandManage.Users.UpdateUserCommand;
-import user.InventoryItem;
 import user.User;
 
 import javax.swing.*;
 
-public class UpdateItemCommand implements Command {
-    InventoryItem item;
+public class DeleteInvItemCommand implements Command {
     User user;
+    String itemName;
 
-    public UpdateItemCommand(User user, InventoryItem item) {
-        this.item = item;
+    public DeleteInvItemCommand(User user, String itemName) {
         this.user = user;
+        this.itemName = itemName;
     }
 
-    @Override
+        @Override
     public void execute() {
-
-        if(user.updateItem(item)){
+        if(user.deleteItem(itemName)){
             UpdateUserCommand updateUserCommand = new UpdateUserCommand(user);
             Invoker invoker = new Invoker();
             invoker.setCommand(updateUserCommand);
             invoker.buttonPressed();
-            JOptionPane.showMessageDialog(null,"아이템 정보가 수정되었습니다");
+            JOptionPane.showMessageDialog(null,"아이템이 삭제되었습니다");
         }
         else{
             JOptionPane.showMessageDialog(null,"해당 아이템을 찾을 수 없습니다");

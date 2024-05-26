@@ -27,7 +27,7 @@ public class DeleteTradeItemCommand implements Command {
             }
         }
         
-        JOptionPane.showMessageDialog(null, "해당 아이템을 삭제 할 수 없습니다");
+        JOptionPane.showMessageDialog(null, "해당 아이템을 찾을 수 없습니다");
     }
 }
 

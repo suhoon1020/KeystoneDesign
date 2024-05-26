@@ -16,14 +16,12 @@ public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {
         JsonObject jsonObject = json.getAsJsonObject();
         
         String userID = jsonObject.get("userName").getAsString();
+
         JsonObject Item = jsonObject.getAsJsonObject("item");
         String type = Item.getAsJsonObject().get("type").getAsString();
         String name = Item.getAsJsonObject().get("name").getAsString();
         String grade = Item.getAsJsonObject().get("grade").getAsString();
         String desc = Item.getAsJsonObject().get("desc").getAsString();
-        int count = Item.getAsJsonObject().get("count").getAsInt();
-        int price = jsonObject.get("price").getAsInt();
-
         int op1 = 0;
 
         switch (type) {
@@ -50,6 +48,9 @@ public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {
                 .grade(grade)
                 .option1(op1)
                 .build();
+
+        int count = Item.getAsJsonObject().get("count").getAsInt();
+        int price = jsonObject.get("price").getAsInt();
 
         return new TradeItem(userID, item, count, price);
     }

@@ -8,26 +8,27 @@ import user.User;
 
 import javax.swing.*;
 
-public class CreateItemCommand implements Command {
-    User user;
+public class UpdateInvItemCommand implements Command {
     InventoryItem item;
+    User user;
 
-    public CreateItemCommand(User user, InventoryItem Item) {
-        this.item = Item;
+    public UpdateInvItemCommand(User user, InventoryItem item) {
+        this.item = item;
         this.user = user;
     }
 
     @Override
     public void execute() {
-        if(user.addItem(item)){
+
+        if(user.updateItem(item)){
             UpdateUserCommand updateUserCommand = new UpdateUserCommand(user);
             Invoker invoker = new Invoker();
             invoker.setCommand(updateUserCommand);
             invoker.buttonPressed();
-            JOptionPane.showMessageDialog(null,"아이템 생성이 완료되었습니다");
+            JOptionPane.showMessageDialog(null,"아이템 정보가 수정되었습니다");
         }
         else{
-            JOptionPane.showMessageDialog(null,"이미 존재하는 아이템입니다");
+            JOptionPane.showMessageDialog(null,"해당 아이템을 찾을 수 없습니다");
         }
     }
 }

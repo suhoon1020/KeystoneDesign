@@ -20,9 +20,9 @@ import CommandManage.*;
 import CommandManage.AuctionItems.CreateTradeItemCommand;
 import CommandManage.AuctionItems.DeleteTradeItemCommand;
 import CommandManage.AuctionItems.UpdateTradeItemCommand;
-import CommandManage.InvItem.CreateItemCommand;
-import CommandManage.InvItem.DeleteItemCommand;
-import CommandManage.InvItem.UpdateItemCommand;
+import CommandManage.InvItem.CreateInvItemCommand;
+import CommandManage.InvItem.DeleteInvItemCommand;
+import CommandManage.InvItem.UpdateInvItemCommand;
 import CommandManage.Users.CreateUserCommand;
 import CommandManage.Users.DeleteUserCommand;
 import CommandManage.Users.UpdateUserCommand;
@@ -475,9 +475,9 @@ public class SwingAdmin extends JFrame {
                         .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                         .build();
 
-                UpdateUserCommand command = new UpdateUserCommand(user);
-                invoker.setCommand(command);
-                invoker.buttonPressed();
+                //UpdateUserCommand command = new UpdateUserCommand(user);
+                // invoker.setCommand(command);
+                // invoker.buttonPressed();
                 refreshUserTable();
 
             }
@@ -651,9 +651,10 @@ public class SwingAdmin extends JFrame {
                                 .build();
 
                         InventoryItem newItem = new InventoryItem(item, count);
-                        CreateItemCommand createItemCommand = new CreateItemCommand(currentUser, newItem);
+                        CreateInvItemCommand createItemCommand = new CreateInvItemCommand(currentUser, newItem);
                         invoker.setCommand(createItemCommand);
                         invoker.buttonPressed();
+
                         refreshUserInventoryTable();
                     } catch (NumberFormatException err) {
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
@@ -687,7 +688,7 @@ public class SwingAdmin extends JFrame {
                                 .build();
 
                         InventoryItem newItem = new InventoryItem(item, count);
-                        UpdateItemCommand updateItemCommand = new UpdateItemCommand(currentUser, newItem);
+                        UpdateInvItemCommand updateItemCommand = new UpdateInvItemCommand(currentUser, newItem);
                         invoker.setCommand(updateItemCommand);
                         invoker.buttonPressed();
 
@@ -706,7 +707,7 @@ public class SwingAdmin extends JFrame {
                 if (In_userItemName.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
-                    DeleteItemCommand deleteItemCommand = new DeleteItemCommand(currentUser, In_userItemName.getText());
+                    DeleteInvItemCommand deleteItemCommand = new DeleteInvItemCommand(currentUser, In_userItemName.getText());
                     invoker.setCommand(deleteItemCommand);
                     invoker.buttonPressed();
                     refreshUserInventoryTable();

@@ -2,7 +2,6 @@ package CommandManage.InvItem;
 
 import CommandManage.Command;
 import CommandManage.Invoker;
-import Item.Item;
 import auctionData.TradeItem;
 import user.InventoryItem;
 import user.User;
@@ -29,6 +28,7 @@ public class ExtractItemToTItemCommend implements Command {
         if(item != null){
             TradeItem tradeItem = new TradeItem(user.getName(), item.getItem(), count, price);
             // 아이템 창에서 아이템 삭제
+            
             // 거래품목 등록
         }
 

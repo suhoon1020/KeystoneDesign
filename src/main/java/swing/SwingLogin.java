@@ -208,6 +208,7 @@ public class SwingLogin extends JFrame {
                     invoker.setCommand(command);
                     invoker.buttonPressed();
 
+                    cardLayout.show(getContentPane(), "LoginPage");
                 }
             }
         });

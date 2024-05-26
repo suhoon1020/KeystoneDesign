@@ -31,25 +31,25 @@ public class UserDeserializer implements JsonDeserializer<User> {
         List<InventoryItem> useriItemList = new ArrayList<InventoryItem>();
 
         for (JsonElement jsonItem : jsonItemList) {
-            String type = jsonItem.getAsJsonObject().get("type").getAsString();
-            String name = jsonItem.getAsJsonObject().get("name").getAsString();
-            String grade = jsonItem.getAsJsonObject().get("grade").getAsString();
-            String desc = jsonItem.getAsJsonObject().get("desc").getAsString();
-            int count = jsonItem.getAsJsonObject().get("count").getAsInt();
+            JsonObject inventoryItemInfo = jsonObject.getAsJsonObject("item");
+            String type = inventoryItemInfo.getAsJsonObject().get("type").getAsString();
+            String name = inventoryItemInfo.getAsJsonObject().get("name").getAsString();
+            String grade = inventoryItemInfo.getAsJsonObject().get("grade").getAsString();
+            String desc = inventoryItemInfo.getAsJsonObject().get("desc").getAsString();
             int op1 = 0;
     
             switch (type) {
                 case "Equipment":
-                    op1 = jsonItem.getAsJsonObject().get("defence").getAsInt();
+                    op1 = inventoryItemInfo.getAsJsonObject().get("defence").getAsInt();
                     break;
                 case "Material":
                     // 아이템 옵션 없음
                     break;
                 case "Potion":
-                    op1 = jsonItem.getAsJsonObject().get("effect").getAsInt();
+                    op1 = inventoryItemInfo.getAsJsonObject().get("effect").getAsInt();
                     break;
                 case "Weapon":
-                    op1 = jsonItem.getAsJsonObject().get("damage").getAsInt();
+                    op1 = inventoryItemInfo.getAsJsonObject().get("damage").getAsInt();
                     break;
                 default:
                     break;
@@ -62,6 +62,8 @@ public class UserDeserializer implements JsonDeserializer<User> {
                     .grade(grade)
                     .option1(op1)
                     .build();
+
+            int count = jsonItem.getAsJsonObject().get("count").getAsInt();
 
             InventoryItem inventoryItem = new InventoryItem(item, count);
 
