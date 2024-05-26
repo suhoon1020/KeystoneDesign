@@ -10,8 +10,6 @@ import auctionData.TradeItem;
 import user.inventoryItem.Item;
 import user.inventoryItem.ItemBuilder;
 
-
-
 public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {
     @Override
     public TradeItem deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -56,6 +54,6 @@ public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {
                 .option1(op1)
                 .build();
 
-        return new TradeItem(userID, price, item);
+        return new TradeItem(userID, item, price);
     }
 }

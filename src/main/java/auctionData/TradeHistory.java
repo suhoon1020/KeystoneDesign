@@ -1,6 +1,6 @@
 package auctionData;
 
-public class TradeHistory {
+public abstract class TradeHistory {
     String buyer;
     String seller;
     String itemName;

@@ -4,8 +4,7 @@ package managers;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
-import user.inventoryItem.Item;
-import user.userprivacy.User;
+import user.User;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -20,7 +19,6 @@ public class UserFileSystem {
     private static List<User> users;
 
     private static UserFileSystem userFileSystem;
-
 
     public static UserFileSystem getUserFileSystem() {
         if(userFileSystem == null)
@@ -48,7 +46,6 @@ public class UserFileSystem {
         }
     }
 
-
     public void loadInfosFromFile() {
         if (!Files.exists(Paths.get(USER_FILE))) {
             users = new ArrayList<>();
@@ -72,5 +69,19 @@ public class UserFileSystem {
         return users;
     }
 
+    public User getUserById(String id) {
+        for (User user : users) {
+            if (user.getId().equals(id))
+                return user;
+        }
+        return null;
+    }
 
+    public User getUserByName(String name) {
+        for (User user : users) {
+            if (user.getId().equals(name))
+                return user;
+        }
+        return null;
+    }
 }

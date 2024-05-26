@@ -1,6 +1,8 @@
 package CommandManage.InvItem;
 
 import CommandManage.Command;
+import CommandManage.Invoker;
+import CommandManage.Users.UpdateUserCommand;
 import user.inventoryItem.Item;
 import user.userprivacy.User;
 
@@ -17,8 +19,12 @@ public class UpdateItemCommand implements Command {
 
     @Override
     public void execute() {
-        if(user.updateItem(user,item)){
-            user.updateUser(user.getId(),user);
+
+        if(user.updateItem(item)){
+            UpdateUserCommand updateUserCommand = new UpdateUserCommand(user);
+            Invoker invoker = new Invoker();
+            invoker.setCommand(updateUserCommand);
+            invoker.buttonPressed();
             JOptionPane.showMessageDialog(null,"아이템 정보가 수정되었습니다");
         }
         else{

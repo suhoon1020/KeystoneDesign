@@ -27,12 +27,11 @@ import CommandManage.Users.CreateUserCommand;
 import CommandManage.Users.DeleteUserCommand;
 import CommandManage.Users.UpdateUserCommand;
 import auctionData.TradeItem;
-import managers.FileFacade;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;
+import user.User;
 import user.inventoryItem.Item;
 import user.inventoryItem.ItemBuilder;
-import user.userprivacy.*;
 
 
 public class SwingAdmin extends JFrame {
@@ -86,7 +85,6 @@ public class SwingAdmin extends JFrame {
 
     Invoker invoker = new Invoker();
 
-
     public static SwingAdmin getSwingAdmin() {
         return swingAdmin;
     }
@@ -98,10 +96,6 @@ public class SwingAdmin extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Invoker invoker1= new Invoker();
-                    LoadCommand loadCommand = new LoadCommand();
-                    invoker1.setCommand(loadCommand);
-                    invoker1.buttonPressed();
                     SwingAdmin.getSwingAdmin().setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -298,8 +292,10 @@ public class SwingAdmin extends JFrame {
                                 .option1(Integer.valueOf(In_tradeItemOp1.getText().replace(",", "")))
                                 .build();
 
-                        TradeItem newitem = new TradeItem("AUCTION", Integer.valueOf(In_tradeItemPrice.getText().replace(",", "")), item);
+                        TradeItem newitem = new TradeItem("AUCTION", item, Integer.valueOf(In_tradeItemPrice.getText().replace(",", "")));
                         UpdateTItemCommand updateTItemCommand = new UpdateTItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
+                        invoker.setCommand(updateTItemCommand);
+                        invoker.buttonPressed();
                         refreshTradeItemTable();
 
                     } catch (NumberFormatException err) {
@@ -482,19 +478,10 @@ public class SwingAdmin extends JFrame {
                 if (In_userID.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
                 else {
-                    User user = new User.UserBuilder()
-                            .ID(In_userID.getText())
-                            .password(In_userPassword.getText())
-                            .name(In_userName.getText())
-                            .phoneNumber(In_userPhoneNumber.getText())
-                            .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
-                            .build();
-
-                    DeleteUserCommand command = new DeleteUserCommand(user);
+                    DeleteUserCommand command = new DeleteUserCommand(In_userID.getText());
                     invoker.setCommand(command);
                     invoker.buttonPressed();
                     refreshUserTable();
-
                 }
             }
         });
@@ -773,7 +760,7 @@ public class SwingAdmin extends JFrame {
         JButton Btt_userInventory = new JButton("유저 인벤토리");
         Btt_userInventory.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                currentUser = User.getUserById(In_userID.getText());
+                currentUser = UserFileSystem.getUserFileSystem().getUserById(In_userID.getText());
 
                 if (currentUser != null) {
                     In_inventoryUserName.setText(In_userID.getText());

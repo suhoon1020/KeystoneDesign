@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 import auction.Auction;
 import auctionData.TradeItem;
-import managers.FileFacade;
+import managers.TradeItemFileSystem;
 import sort.TradeItemSort;
 import sort.TradeItemSortByName;
 import sort.TradeItemSortByNameRev;
@@ -40,7 +40,7 @@ import java.awt.event.ActionEvent;
 public class SwingAuction extends JFrame {
     private String[] tradeItemTypes = {"ALL", "Equipment", "Material", "Potion", "Weapon"};
     private String[] tradeItemGrades = {"ALL", "Common", "Uncommon", "Eqic", "Legendary"};
-    private String[] tradeItemHeader = {"TRADEID", "USER", "TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1", "PRICE"};
+    private String[] tradeItemHeader = {"USER", "TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1", "PRICE"};
     
     private String[] inventoryItemHeader = {"TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1"};
     
@@ -68,6 +68,7 @@ public class SwingAuction extends JFrame {
     private JTextField In_userItemName;
     private JTextField In_userItemCount;
     private JTextField In_userItemOp1;
+    private JTextField In_userGold;
 
     public static SwingAuction getSwingAuction() {
         return swingAuction;
@@ -235,11 +236,6 @@ public class SwingAuction extends JFrame {
         search.add(ItemSearch);
 
         JButton B_goSearch = new JButton("검색");
-        B_goSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                refreshFilterTradeItemTable();
-            }
-        });
         B_goSearch.setBounds(772, -1, 100, 56);
         search.add(B_goSearch);
         
@@ -415,8 +411,7 @@ public class SwingAuction extends JFrame {
                     // 판매 등록 실패
                     JOptionPane.showMessageDialog(null, "실패.");
                 }
-
-                refreshInventoryTable();
+                
             }
         });
 
@@ -453,7 +448,7 @@ public class SwingAuction extends JFrame {
         UserInfoPage.add(tradingHistory);
 
         JPanel manu = new JPanel();
-        manu.setBounds(12, 21, 1162, 63);
+        manu.setBounds(285, 21, 889, 63);
         contentPane.add(manu);
         manu.setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -485,6 +480,22 @@ public class SwingAuction extends JFrame {
         });
         Btt_goUserInfo.setFont(new Font("굴림", Font.PLAIN, 25));
         manu.add(Btt_goUserInfo);
+        
+        JPanel panel = new JPanel();
+        panel.setBounds(12, 10, 262, 74);
+        contentPane.add(panel);
+        panel.setLayout(new GridLayout(1, 0, 0, 0));
+        
+        JLabel L_userGold = new JLabel("골드 :");
+        L_userGold.setHorizontalAlignment(SwingConstants.CENTER);
+        L_userGold.setFont(new Font("굴림", Font.PLAIN, 25));
+        panel.add(L_userGold);
+        
+        In_userGold = new JTextField();
+        In_userGold.setEditable(false);
+        panel.add(In_userGold);
+        In_userGold.setColumns(10);
+        In_userGold.setText(Integer.toString(Auction.getAuction().getGold()));
     }
 
 
@@ -497,7 +508,7 @@ public class SwingAuction extends JFrame {
     public void refreshTradeItemTable() {
         TradeItemTableModel.setRowCount(0);
 
-        List<TradeItem> L = itemSort.sort(FileFacade.getFacade().getTradeItemList());
+        List<TradeItem> L = itemSort.sort(TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList());
 
         for(TradeItem i : L){
             Object[] rowData = i.getListData();
@@ -505,24 +516,27 @@ public class SwingAuction extends JFrame {
         }
 
         S_itemList.setViewportView(T_TradeItemList);
+
+        if(In_userGold != null)
+            In_userGold.setText(Integer.toString(Auction.getAuction().getGold()));
     }
 
     public void refreshFilterTradeItemTable(){
         TradeItemTableModel.setRowCount(0);
 
-        List<TradeItem> L = itemSort.sort(FileFacade.getFacade().getTradeItemList());
+        List<TradeItem> L = itemSort.sort(TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList());
 
-        String filterGrade = C_filterItemGrades.getSelectedItem().toString();
-        String filterType = C_filterItemType.getSelectedItem().toString();
+        String filterString1 = C_filterItemGrades.getSelectedItem().toString();
+        String filterString2 = C_filterItemType.getSelectedItem().toString();
         String searchString = ItemSearch.getText();
 
         for(TradeItem i : L){
-            if(!filterGrade.equals("ALL"))
-                if(!i.getGrade().equals(filterGrade))
+            if(!filterString1.equals("All"))
+                if(i.getGrade().equals(filterString1))
                     continue;
 
-            if(!filterType.equals("ALL"))
-                if(!i.getType().equals(filterType))
+            if(!filterString2.equals("All"))
+                if(i.getType().equals(filterString2))
                     continue;
 
             if(!searchString.isEmpty())
@@ -534,6 +548,9 @@ public class SwingAuction extends JFrame {
         }
 
         S_itemList.setViewportView(T_TradeItemList);
+
+        if(In_userGold != null)
+            In_userGold.setText(Integer.toString(Auction.getAuction().getGold()));
     }
 
 
@@ -548,5 +565,8 @@ public class SwingAuction extends JFrame {
         }
 
         S_inventory.setViewportView(T_InventoryTable);
+
+        if(In_userGold != null)
+            In_userGold.setText(Integer.toString(Auction.getAuction().getGold()));
     }
 }

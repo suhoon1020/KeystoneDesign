@@ -1,25 +1,32 @@
 package CommandManage.Users;
 
 import CommandManage.Command;
+import managers.UserFileSystem;
 import user.userprivacy.User;
+
+import java.util.List;
 
 import javax.swing.*;
 
 public class DeleteUserCommand implements Command {
-    User user;
+    String userId;
 
-    public DeleteUserCommand(User user) {
-        this.user = user;
+    public DeleteUserCommand(String userId) {
+        this.userId = userId;
 
     }
 
     @Override
     public void execute() {
-        if(user.deleteUser(user.getId())){
-            JOptionPane.showMessageDialog(null,user.getId()+"회원님의 정보가 삭제되었습니다");
+        List<User> users = UserFileSystem.getUserFileSystem().getUserList();
+        
+        for (int i = 0; i < users.size(); ++i) {
+            if (users.get(i).getId().equals(userId)) {
+                users.remove(i);
+                UserFileSystem.getUserFileSystem().saveInfosToFile();
+                JOptionPane.showMessageDialog(null, userId + "회원님의 정보가 삭제되었습니다");
+            }
         }
-        else{
-            JOptionPane.showMessageDialog(null,"해당 유저를 찾을 수 없습니다");
-        }
+        JOptionPane.showMessageDialog(null,"해당 유저를 찾을 수 없습니다");
     }
 }

@@ -36,12 +36,8 @@ public abstract class Item {
         return desc;
     }
 
-    public int getCount() {
+    public int getCount(){
         return count;
-    }
-
-    public void setCount(int count){
-        this.count = count;
     }
 
     //하위 클래스에서 구현
@@ -50,7 +46,4 @@ public abstract class Item {
     public abstract int getOption1();
 
     public abstract String[] getListData();
-
-    public abstract TradeItem getTradeItem(String userName, int count, int price);
-
 }

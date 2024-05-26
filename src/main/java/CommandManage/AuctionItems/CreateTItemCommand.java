@@ -20,7 +20,7 @@ public class CreateTItemCommand implements Command {
 
     @Override
     public void execute() {
-        TradeItem newitem = new TradeItem(userName, price, item);
+        TradeItem newitem = new TradeItem(userName, item, item.getCount(), price);
         TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList().add(newitem);
         TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
         JOptionPane.showMessageDialog(null,"아이템이 등록 되었습니다");

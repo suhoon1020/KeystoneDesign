@@ -1,6 +1,7 @@
 package CommandManage.Users;
 
 import CommandManage.Command;
+import managers.UserFileSystem;
 import user.userprivacy.User;
 
 import javax.swing.*;
@@ -15,11 +16,13 @@ public class CreateUserCommand implements Command {
 
     @Override
     public void execute() {
-        if(user.putUser(user)){
+        if (UserFileSystem.getUserFileSystem().getUserById(user.getId()) == null){
+            UserFileSystem.getUserFileSystem().getUserList().add(user);
+            UserFileSystem.getUserFileSystem().saveInfosToFile();
             JOptionPane.showMessageDialog(null,"유저 생성에 성공하였습니다");
+            return;
         }
-        else{
-            JOptionPane.showMessageDialog(null,"중복된 ID가 있습니다");
-        }
+
+        JOptionPane.showMessageDialog(null,"중복된 ID가 있습니다");
     }
 }
