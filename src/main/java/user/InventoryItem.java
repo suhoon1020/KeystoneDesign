@@ -12,7 +12,7 @@ public class InventoryItem {
     }
 
     public Item getItem(){
-        return item;
+        return item.clone();
     }
 
     public String getType(){

@@ -71,5 +71,11 @@ public class TradeItemFileSystem {
         }
     }
 
-
+    public TradeItem getTradeItemByTradeId(int tradeId){
+        for (TradeItem tradeItem : tradeItems) {
+            if (tradeItem.getTradeId() == tradeId)
+                return tradeItem;
+        }
+        return null;
+    }
 }

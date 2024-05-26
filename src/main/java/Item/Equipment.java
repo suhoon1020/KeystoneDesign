@@ -13,4 +13,15 @@ public class Equipment extends Item{
         return defence;
     }
 
+    @Override
+    public Item clone() {
+        return new ItemBuilder()
+            .type(type)
+            .name(name)
+            .grade(grade)
+            .desc(desc)
+            .option1(defence)
+            .build();
+    }
+
 }

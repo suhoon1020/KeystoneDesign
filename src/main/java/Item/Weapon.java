@@ -12,4 +12,15 @@ public class Weapon extends Item {
     public int getOption1() {
         return damage;
     }
+
+    @Override
+    public Item clone() {
+        return new ItemBuilder()
+            .type(type)
+            .name(name)
+            .grade(grade)
+            .desc(desc)
+            .option1(damage)
+            .build();
+    }
 }

@@ -206,7 +206,7 @@ public class SwingLogin extends JFrame {
 
                     CreateUserCommand command = new CreateUserCommand(user);
                     invoker.setCommand(command);
-                    invoker.buttonPressed();
+                    invoker.run();
 
                     cardLayout.show(getContentPane(), "LoginPage");
                 }

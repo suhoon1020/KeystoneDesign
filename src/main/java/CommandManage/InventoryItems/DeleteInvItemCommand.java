@@ -1,4 +1,4 @@
-package CommandManage.InvItem;
+package CommandManage.InventoryItems;
 
 import CommandManage.Command;
 import CommandManage.Invoker;
@@ -22,7 +22,7 @@ public class DeleteInvItemCommand implements Command {
             UpdateUserCommand updateUserCommand = new UpdateUserCommand(user);
             Invoker invoker = new Invoker();
             invoker.setCommand(updateUserCommand);
-            invoker.buttonPressed();
+            invoker.run();
             JOptionPane.showMessageDialog(null,"아이템이 삭제되었습니다");
         }
         else{

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 
 import auction.Auction;
 import auctionData.TradeItem;
@@ -25,6 +26,7 @@ import javax.swing.JTextField;
 import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -50,6 +52,7 @@ public class SwingAuction extends JFrame {
 
     private JComboBox<String> C_filterItemType;
     private JComboBox<String> C_filterItemGrades;
+    private JFormattedTextField In_itemBuyCount;
 
     private JTable T_TradeItemList;
     private JTable T_InventoryTable;
@@ -99,6 +102,11 @@ public class SwingAuction extends JFrame {
 
         setContentPane(contentPane);
         contentPane.setLayout(null);
+
+        NumberFormatter F_NumberFormet = new NumberFormatter();
+        F_NumberFormet.setValueClass(Integer.class);
+        F_NumberFormet.setMinimum(Integer.valueOf(1));
+        F_NumberFormet.setMaximum(Integer.valueOf(100000));
 
         JPanel contents = new JPanel();
         CardLayout cardLayout = new CardLayout(0, 0);
@@ -238,6 +246,11 @@ public class SwingAuction extends JFrame {
         JButton B_goSearch = new JButton("검색");
         B_goSearch.setBounds(772, -1, 100, 56);
         search.add(B_goSearch);
+
+        In_itemBuyCount = new JFormattedTextField(F_NumberFormet);
+        In_itemBuyCount.setBounds(12, 518, 123, 63);
+        AuctionPage.add(In_itemBuyCount);
+        In_itemBuyCount.setColumns(10);
         
         JButton Btt_buyItem = new JButton("구매");
         Btt_buyItem.setFont(new Font("굴림", Font.PLAIN, 25));
@@ -245,8 +258,9 @@ public class SwingAuction extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = T_TradeItemList.getSelectedRow();
                 int tradeId = Integer.parseInt(T_TradeItemList.getValueAt(selectedRow, 0).toString());
+                int buyItemCount = Integer.valueOf(In_itemBuyCount.getText().replace(",", ""));
 
-                if(Auction.getAuction().buyItem(tradeId)){
+                if(Auction.getAuction().buyItem(tradeId, buyItemCount)){
                     // 구매 성공
                     JOptionPane.showMessageDialog(null, "성공.");
                 }
@@ -258,7 +272,7 @@ public class SwingAuction extends JFrame {
                 refreshFilterTradeItemTable();
             }
         });
-        Btt_buyItem.setBounds(12, 518, 254, 63);
+        Btt_buyItem.setBounds(141, 518, 125, 63);
         AuctionPage.add(Btt_buyItem);
 
         JPanel inventoryPage = new JPanel();

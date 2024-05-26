@@ -1,4 +1,4 @@
-package CommandManage.AuctionItems;
+package CommandManage.TradeItems;
 
 import CommandManage.Command;
 import auctionData.TradeItem;

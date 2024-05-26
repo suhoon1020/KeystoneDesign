@@ -7,7 +7,7 @@ public class Invoker {
         this.command = command;
     }
 
-    public void buttonPressed(){
+    public void run(){
         command.execute();
     }
 

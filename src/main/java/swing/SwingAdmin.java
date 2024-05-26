@@ -17,12 +17,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
 import CommandManage.*;
-import CommandManage.AuctionItems.CreateTradeItemCommand;
-import CommandManage.AuctionItems.DeleteTradeItemCommand;
-import CommandManage.AuctionItems.UpdateTradeItemCommand;
-import CommandManage.InvItem.CreateInvItemCommand;
-import CommandManage.InvItem.DeleteInvItemCommand;
-import CommandManage.InvItem.UpdateInvItemCommand;
+import CommandManage.InventoryItems.CreateInvItemCommand;
+import CommandManage.InventoryItems.DeleteInvItemCommand;
+import CommandManage.InventoryItems.UpdateInvItemCommand;
+import CommandManage.TradeItems.CreateTradeItemCommand;
+import CommandManage.TradeItems.DeleteTradeItemCommand;
+import CommandManage.TradeItems.UpdateTradeItemCommand;
 import CommandManage.Users.CreateUserCommand;
 import CommandManage.Users.DeleteUserCommand;
 import CommandManage.Users.UpdateUserCommand;
@@ -270,7 +270,7 @@ public class SwingAdmin extends JFrame {
 
                         CreateTradeItemCommand createTItemCommand = new CreateTradeItemCommand("AUCTION", item,  price, count);
                         invoker.setCommand(createTItemCommand);
-                        invoker.buttonPressed();
+                        invoker.run();
                         refreshTradeItemTable();
 
                     } catch (NumberFormatException err) {
@@ -308,7 +308,7 @@ public class SwingAdmin extends JFrame {
                         TradeItem newitem = new TradeItem("AUCTION", item, count, price);
                         UpdateTradeItemCommand updateTItemCommand = new UpdateTradeItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
                         invoker.setCommand(updateTItemCommand);
-                        invoker.buttonPressed();
+                        invoker.run();
                         refreshTradeItemTable();
 
                     } catch (NumberFormatException err) {
@@ -329,7 +329,7 @@ public class SwingAdmin extends JFrame {
                     DeleteTradeItemCommand deleteTItemCommand = new DeleteTradeItemCommand(Integer.parseInt(In_tradeItemId.getText()));
 
                     invoker.setCommand(deleteTItemCommand);
-                    invoker.buttonPressed();
+                    invoker.run();
                     refreshTradeItemTable();
 
                 }
@@ -456,7 +456,7 @@ public class SwingAdmin extends JFrame {
 
                 CreateUserCommand command = new CreateUserCommand(user);
                 invoker.setCommand(command);
-                invoker.buttonPressed();
+                invoker.run();
                 refreshUserTable();
 
             }
@@ -475,9 +475,9 @@ public class SwingAdmin extends JFrame {
                         .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                         .build();
 
-                //UpdateUserCommand command = new UpdateUserCommand(user);
-                // invoker.setCommand(command);
-                // invoker.buttonPressed();
+                UpdateUserCommand command = new UpdateUserCommand(user);
+                invoker.setCommand(command);
+                invoker.run();
                 refreshUserTable();
 
             }
@@ -493,7 +493,7 @@ public class SwingAdmin extends JFrame {
                 else {
                     DeleteUserCommand command = new DeleteUserCommand(In_userID.getText());
                     invoker.setCommand(command);
-                    invoker.buttonPressed();
+                    invoker.run();
                     refreshUserTable();
                 }
             }
@@ -650,10 +650,9 @@ public class SwingAdmin extends JFrame {
                                 .option1(option1)
                                 .build();
 
-                        InventoryItem newItem = new InventoryItem(item, count);
-                        CreateInvItemCommand createItemCommand = new CreateInvItemCommand(currentUser, newItem);
+                        CreateInvItemCommand createItemCommand = new CreateInvItemCommand(currentUser, item, count);
                         invoker.setCommand(createItemCommand);
-                        invoker.buttonPressed();
+                        invoker.run();
 
                         refreshUserInventoryTable();
                     } catch (NumberFormatException err) {
@@ -690,7 +689,7 @@ public class SwingAdmin extends JFrame {
                         InventoryItem newItem = new InventoryItem(item, count);
                         UpdateInvItemCommand updateItemCommand = new UpdateInvItemCommand(currentUser, newItem);
                         invoker.setCommand(updateItemCommand);
-                        invoker.buttonPressed();
+                        invoker.run();
 
                     } catch (NumberFormatException err) {
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
@@ -709,7 +708,7 @@ public class SwingAdmin extends JFrame {
                 else {
                     DeleteInvItemCommand deleteItemCommand = new DeleteInvItemCommand(currentUser, In_userItemName.getText());
                     invoker.setCommand(deleteItemCommand);
-                    invoker.buttonPressed();
+                    invoker.run();
                     refreshUserInventoryTable();
                 }
             }

@@ -39,6 +39,10 @@ public class User {
         return new String[]{id, password, name, phoneNumber, Integer.toString(gold)};
     }
 
+    public void setGold(int gold){
+        this.gold = gold;
+    }
+
     //Product
     private User(UserBuilder builder) {
         this.id = builder.ID;

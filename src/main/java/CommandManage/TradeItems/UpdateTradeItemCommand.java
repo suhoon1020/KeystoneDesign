@@ -1,4 +1,4 @@
-package CommandManage.AuctionItems;
+package CommandManage.TradeItems;
 
 import CommandManage.Command;
 import auctionData.TradeItem;
@@ -13,6 +13,7 @@ public class UpdateTradeItemCommand implements Command {
     public UpdateTradeItemCommand(int tradeId, TradeItem tradeItem) {
         this.tradeId = tradeId;
         this.tradeItem = tradeItem;
+        
     }
 
     @Override
