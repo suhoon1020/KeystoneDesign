@@ -68,99 +68,9 @@ public class UserFileSystem {
         }
     }
 
-    public User getUserById(String id) {
-        for (User user : users) {
-            if (user.getId().equals(id)) 
-                return user;
-        }
-
-        return null;
-    }
-
-    public User getUserByName(String name) {
-        for (User user : users) {
-            if (user.getName().equals(name)) 
-                return user;
-        }
-
-        return null;
-    }
-
     public List<User> getUserList() {
         return users;
     }
 
-    public Boolean putUser(User newUser) {
-        if (getUserById(newUser.getId()) == null){
-            users.add(newUser);
-            saveInfosToFile();
-            return true;
-        }
-            return false;
-    }
 
-
-    public Boolean updateUser(String id, User user) {
-        for (int i = 0; i < users.size(); ++i) {
-            if (users.get(i).getId().equals(id)) {
-                users.set(i, user);
-                saveInfosToFile();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean deleteUser(String id) {
-        for (int i = 0; i < users.size(); ++i) {
-            if (users.get(i).getId().equals(id)) {
-                users.remove(i);
-                saveInfosToFile();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void addItem(User user, Item addItem){
-        List<Item> userItemList = user.getItemList();
-        String addItemName = addItem.getName();
-
-        for(int i = 0; i < userItemList.size(); ++i){
-            if(userItemList.get(i).getName().equals(addItemName)){
-                addItem.setCount(addItem.getCount() + userItemList.get(i).getCount());
-                userItemList.set(i, addItem);
-                return;
-            }
-        }
-
-        userItemList.add(addItem);
-        return;
-    }
-
-    public boolean updateItem(User user, Item updateItem){
-        List<Item> userItemList = user.getItemList();
-        String updateItemName = updateItem.getName();
-
-        for(int i = 0; i < userItemList.size(); ++i){
-            if(userItemList.get(i).getName().equals(updateItemName)){
-                userItemList.set(i, updateItem);
-            }
-        }
-
-        return false;
-    }
-
-    public boolean deleteItem(User user, String deleteItemnName){
-        List<Item> userItemList = user.getItemList();
-
-        for(int i = 0; i < userItemList.size(); ++i){
-            if(userItemList.get(i).getName().equals(deleteItemnName)){
-                userItemList.remove(i);
-                return true;
-            }
-        }
-
-        return false;
-    }
 }

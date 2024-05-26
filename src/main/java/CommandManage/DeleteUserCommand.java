@@ -1,21 +1,21 @@
-package user.userprivacy;
+package CommandManage;
 
 import managers.UserFileSystem;
+import user.userprivacy.User;
 
 import javax.swing.*;
 
 public class DeleteUserCommand implements Command{
     User user;
-    UserFileSystem userFileSystem;
 
-    public DeleteUserCommand(User user,UserFileSystem userFileSystem) {
+    public DeleteUserCommand(User user) {
         this.user = user;
-        this.userFileSystem = userFileSystem;
+
     }
 
     @Override
     public void execute() {
-        if(userFileSystem.deleteUser(user.getId())){
+        if(user.deleteUser(user.getId())){
             JOptionPane.showMessageDialog(null,user.getId()+"회원님의 정보가 삭제되었습니다");
         }
         else{

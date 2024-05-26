@@ -1,4 +1,4 @@
-package user.userprivacy;
+package CommandManage;
 
 public class Invoker {
     Command command;

@@ -1,21 +1,21 @@
-package user.userprivacy;
+package CommandManage;
 
 import managers.UserFileSystem;
+import user.userprivacy.User;
 
 import javax.swing.*;
 
 public class CreateUserCommand implements Command {
     User user;
-    UserFileSystem userFileSystem;
 
-    public CreateUserCommand(User user,UserFileSystem userFileSystem) {
+
+    public CreateUserCommand(User user) {
         this.user = user;
-        this.userFileSystem = userFileSystem;
     }
 
     @Override
     public void execute() {
-        if(userFileSystem.putUser(user)){
+        if(user.putUser(user)){
             JOptionPane.showMessageDialog(null,"유저 생성에 성공하였습니다");
         }
         else{

@@ -67,44 +67,8 @@ public class TradeItemFileSystem {
         }
     }
 
-    public TradeItem getTradeItemById(int id) {
-        for (TradeItem item : tradeItems) {
-            if (item.getTradeId() == id) 
-                return item;
-        }
-
-        return null;
-    }
-
     public List<TradeItem> getTradeItemList(){
         return tradeItems;
     }
 
-
-    public void putTradeItem(TradeItem newTradeItem) {
-        tradeItems.add(newTradeItem);
-        saveInfosToFile();
-    }
-
-    public Boolean updateItem(int id, TradeItem tradeItem) {
-        for (int i = 0; i < tradeItems.size(); ++i) {
-            if (tradeItems.get(i).getTradeId() == id) {
-                tradeItems.set(i, tradeItem);
-                saveInfosToFile();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean deleteTradeItem(int id) {
-        for (int i = 0; i < tradeItems.size(); ++i) {
-            if (tradeItems.get(i).getTradeId() == id) {
-                tradeItems.remove(i);
-                saveInfosToFile();
-                return true;
-            }
-        }
-        return false;
-    }
 }

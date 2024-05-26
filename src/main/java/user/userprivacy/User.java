@@ -3,6 +3,7 @@ package user.userprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
+import managers.UserFileSystem;
 import user.inventoryItem.Item;
 
 public class User {
@@ -12,6 +13,9 @@ public class User {
     private String phoneNumber;
     private int gold;
     private List<Item> itemList;
+
+    private static List<User> users = UserFileSystem.getUserFileSystem().getUserList();
+
 
     public List<Item> getItemList() {
         return itemList;
@@ -101,5 +105,124 @@ public class User {
         public User build() {
             return new User(this);
         }
+    }
+
+    public static User getUserById(String id) {
+        for (User user : users) {
+            if (user.getId().equals(id))
+                return user;
+        }
+        return null;
+    }
+
+
+    public User getUserByName(String name) {
+        for (User user : users) {
+            if (user.getName().equals(name))
+                return user;
+        }
+
+        return null;
+    }
+
+    public List<User> getUserList() {
+        return users;
+    }
+
+    public Boolean putUser(User newUser) {
+        if (getUserById(newUser.getId()) == null){
+            users.add(newUser);
+            UserFileSystem.getUserFileSystem().saveInfosToFile();
+            return true;
+        }
+        return false;
+    }
+
+
+    public Boolean updateUser(String id, User user) {
+        for (int i = 0; i < users.size(); ++i) {
+            if (users.get(i).getId().equals(id)) {
+                users.set(i, user);
+                UserFileSystem.getUserFileSystem().saveInfosToFile();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean deleteUser(String id) {
+        for (int i = 0; i < users.size(); ++i) {
+            if (users.get(i).getId().equals(id)) {
+                users.remove(i);
+                UserFileSystem.getUserFileSystem().saveInfosToFile();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+             User InvItem 관리 시스템
+     */
+
+    public boolean addItem(User user, Item addItem){
+        List<Item> userItemList = user.getItemList();
+        String addItemName = addItem.getName();
+        /*
+        유저의 아이템 이름이 중복이 되면 추가 x
+         */
+        for(int i = 0; i < userItemList.size(); ++i){
+            if(userItemList.get(i).getName().equals(addItemName)){
+                return false;
+            }
+        }
+        /*
+        그게아니면 그냥 add
+         */
+        userItemList.add(addItem);
+        return true;
+    }
+
+    public void updateCount(User user, Item item, int count){
+        List<Item> userItemList = user.getItemList();
+        String addItemName = item.getName();
+        /*
+        additem이 이미 있으면
+         */
+        for(int i = 0; i < userItemList.size(); ++i){
+            if(userItemList.get(i).getName().equals(addItemName)){
+                item.setCount(count);
+                userItemList.set(i, item);
+                return;
+            }
+        }
+
+    }
+
+    public boolean updateItem(User user, Item updateItem){
+        List<Item> userItemList = user.getItemList();
+        String updateItemName = updateItem.getName();
+
+        for(int i = 0; i < userItemList.size(); ++i){
+            if(userItemList.get(i).getName().equals(updateItemName)){
+                userItemList.set(i, updateItem);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean deleteItem(User user, String deleteItemName){
+        List<Item> userItemList = user.getItemList();
+
+        for(int i = 0; i < userItemList.size(); ++i){
+            if(userItemList.get(i).getName().equals(deleteItemName)){
+                userItemList.remove(i);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

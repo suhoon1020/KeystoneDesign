@@ -16,8 +16,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
+import CommandManage.*;
 import auctionData.TradeItem;
 import managers.FileFacade;
+import managers.TradeItemFileSystem;
 import managers.UserFileSystem;
 import user.inventoryItem.Item;
 import user.inventoryItem.ItemBuilder;
@@ -79,6 +81,7 @@ public class SwingAdmin extends JFrame {
     public static SwingAdmin getSwingAdmin() {
         return swingAdmin;
     }
+
     /**
      * Launch the application.
      */
@@ -227,12 +230,12 @@ public class SwingAdmin extends JFrame {
         In_tradeItemPrice = new JFormattedTextField(F_NumberFormet);
         tradeItemIn.add(In_tradeItemPrice);
         In_tradeItemPrice.setColumns(10);
-        
+
         JPanel tradeItemButtons = new JPanel();
         tradeItemButtons.setBounds(0, 391, 275, 135);
         tradeItemManageContent.add(tradeItemButtons);
         tradeItemButtons.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         JButton Btt_createTradeItem = new JButton("아이템 생성");
         tradeItemButtons.add(Btt_createTradeItem);
         Btt_createTradeItem.addActionListener(new ActionListener() {
@@ -251,7 +254,7 @@ public class SwingAdmin extends JFrame {
                                 .build();
 
                         TradeItem newitem = new TradeItem("AUCTION", Integer.valueOf(In_tradeItemPrice.getText().replace(",", "")), item);
-                        FileFacade.getFacade().putTradeItem(newitem);
+                        TradeItemFileSystem.getTradeItemFileSystem().putTradeItem(newitem);
                         JOptionPane.showMessageDialog(null, "아이템 생성이 완료 되었습니다");
                         refreshTradeItemTable();
 
@@ -262,7 +265,7 @@ public class SwingAdmin extends JFrame {
             }
         });
         Btt_createTradeItem.setFont(new Font("굴림", Font.PLAIN, 15));
-        
+
         JButton Btt_updateTradeItem = new JButton("아이템 수정");
         tradeItemButtons.add(Btt_updateTradeItem);
         Btt_updateTradeItem.addActionListener(new ActionListener() {
@@ -295,7 +298,7 @@ public class SwingAdmin extends JFrame {
             }
         });
         Btt_updateTradeItem.setFont(new Font("굴림", Font.PLAIN, 15));
-                
+
         JButton Btt_deleteTradeItem = new JButton("아이템 삭제");
         tradeItemButtons.add(Btt_deleteTradeItem);
         Btt_deleteTradeItem.addActionListener(new ActionListener() {
@@ -330,7 +333,7 @@ public class SwingAdmin extends JFrame {
                 }
             }
         });
-        
+
         /*
          * UserManage Page
          */
@@ -358,70 +361,70 @@ public class SwingAdmin extends JFrame {
         userManageContent.setBounds(782, 10, 268, 526);
         userInfoPage.add(userManageContent);
         userManageContent.setLayout(null);
-        
+
         JPanel userIn = new JPanel();
         userIn.setBounds(143, 0, 125, 324);
         userManageContent.add(userIn);
         userIn.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         In_userID = new JTextField();
         In_userID.setColumns(10);
         userIn.add(In_userID);
-        
+
         In_userPassword = new JTextField();
         In_userPassword.setColumns(10);
         userIn.add(In_userPassword);
-        
+
         In_userName = new JTextField();
         In_userName.setColumns(10);
         userIn.add(In_userName);
-        
+
         In_userPhoneNumber = new JTextField();
         In_userPhoneNumber.setColumns(10);
         userIn.add(In_userPhoneNumber);
-        
+
         In_userGold = new JFormattedTextField(F_NumberFormet);
         In_userGold.setColumns(10);
         userIn.add(In_userGold);
-        
+
         JPanel userLab = new JPanel();
         userLab.setBounds(0, 0, 141, 324);
         userManageContent.add(userLab);
         userLab.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         JLabel L_userID = new JLabel("아이디 :");
         L_userID.setHorizontalAlignment(SwingConstants.CENTER);
         L_userID.setFont(new Font("굴림", Font.PLAIN, 20));
         userLab.add(L_userID);
-        
+
         JLabel L_userPassword = new JLabel("비밀번호 :");
         L_userPassword.setHorizontalAlignment(SwingConstants.CENTER);
         L_userPassword.setFont(new Font("굴림", Font.PLAIN, 20));
         userLab.add(L_userPassword);
-        
+
         JLabel L_userName = new JLabel("이름 :");
         L_userName.setHorizontalAlignment(SwingConstants.CENTER);
         L_userName.setFont(new Font("굴림", Font.PLAIN, 20));
         userLab.add(L_userName);
-        
+
         JLabel L_userPhoneNumber = new JLabel("전화번호 :");
         L_userPhoneNumber.setHorizontalAlignment(SwingConstants.CENTER);
         L_userPhoneNumber.setFont(new Font("굴림", Font.PLAIN, 20));
         userLab.add(L_userPhoneNumber);
-        
+
         JLabel L_userGold = new JLabel("골드 :");
         L_userGold.setHorizontalAlignment(SwingConstants.CENTER);
         L_userGold.setFont(new Font("굴림", Font.PLAIN, 20));
         userLab.add(L_userGold);
-        
+
         JPanel userButtons = new JPanel();
         userButtons.setBounds(0, 322, 268, 204);
         userManageContent.add(userButtons);
         userButtons.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         JButton Btt_createUser = new JButton("유저 생성");
         Btt_createUser.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 User user = new User.UserBuilder()
                         .ID(In_userID.getText())
                         .password(In_userPassword.getText())
@@ -430,29 +433,19 @@ public class SwingAdmin extends JFrame {
                         .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                         .build();
 
-                CreateUserCommand command = new CreateUserCommand(user,UserFileSystem.getUserFileSystem());
+                CreateUserCommand command = new CreateUserCommand(user);
                 invoker.setCommand(command);
                 invoker.buttonPressed();
                 refreshUserTable();
 
-                /*
-                if (FileFacade.getFacade().putUser(user)) {
-                    JOptionPane.showMessageDialog(null, "유저 생성이 완료 되었습니다");
-                    refreshUserTable();
-                } else {
-                    JOptionPane.showMessageDialog(null, "중복된 ID가 있습니다");
-                }
-
-
-                 */
-        	}
+            }
         });
         Btt_createUser.setFont(new Font("굴림", Font.PLAIN, 15));
         userButtons.add(Btt_createUser);
-        
+
         JButton Btt_updateUser = new JButton("유저 수정");
         Btt_updateUser.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 User user = new User.UserBuilder()
                         .ID(In_userID.getText())
                         .password(In_userPassword.getText())
@@ -461,28 +454,19 @@ public class SwingAdmin extends JFrame {
                         .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                         .build();
 
-                UpdateUserCommand command = new UpdateUserCommand(user,UserFileSystem.getUserFileSystem());
+                UpdateUserCommand command = new UpdateUserCommand(user);
                 invoker.setCommand(command);
                 invoker.buttonPressed();
                 refreshUserTable();
 
-                /*
-                if (FileFacade.getFacade().updateUser(In_userID.getText(), user)) {
-                    JOptionPane.showMessageDialog(null, "유저 수정이 완료 되었습니다");
-                    refreshUserTable();
-                } else {
-                    JOptionPane.showMessageDialog(null, "존재하지 않는 ID입니다");
-                }
-
-                 */
-        	}
+            }
         });
         Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));
         userButtons.add(Btt_updateUser);
-        
+
         JButton Btt_deleteUser = new JButton("유저 삭제");
         Btt_deleteUser.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 if (In_userID.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
                 else {
@@ -494,20 +478,13 @@ public class SwingAdmin extends JFrame {
                             .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                             .build();
 
-                    DeleteUserCommand command = new DeleteUserCommand(user,UserFileSystem.getUserFileSystem());
+                    DeleteUserCommand command = new DeleteUserCommand(user);
                     invoker.setCommand(command);
                     invoker.buttonPressed();
                     refreshUserTable();
-                    /*
-                    if (FileFacade.getFacade().deleteUser(In_userID.getText())) {
-                        JOptionPane.showMessageDialog(null, "유저 삭제가 완료 되었습니다");
-                        refreshUserTable();
-                    } else
-                        JOptionPane.showMessageDialog(null, "존재하지 않는 ID입니다");
 
-                     */
                 }
-        	}
+            }
         });
         Btt_deleteUser.setFont(new Font("굴림", Font.PLAIN, 15));
         userButtons.add(Btt_deleteUser);
@@ -530,7 +507,7 @@ public class SwingAdmin extends JFrame {
         /*
          *      HISTORY PAGE
          */
-        
+
         JPanel tradeHistoryPage = new JPanel();
         tradeHistoryPage.setLayout(null);
         contents.add(tradeHistoryPage, "TradeHistoryPage");
@@ -538,11 +515,11 @@ public class SwingAdmin extends JFrame {
         /*
          *      USER INVENTORY PAGE
          */
-        
+
         JPanel userInventoryPage = new JPanel();
         userInventoryPage.setLayout(null);
         contents.add(userInventoryPage, "UserInventoryPage");
-        
+
         JPanel userItemList = new JPanel();
         userItemList.setBorder(new LineBorder(new Color(0, 0, 0)));
         userItemList.setBounds(10, 10, 751, 526);
@@ -555,90 +532,90 @@ public class SwingAdmin extends JFrame {
         T_userItemList.getTableHeader().setResizingAllowed(false);
         S_userItemList = new JScrollPane();
         userItemList.add(S_userItemList);
-        
+
         JPanel useItemManageContent = new JPanel();
         useItemManageContent.setLayout(null);
         useItemManageContent.setBorder(new LineBorder(new Color(0, 0, 0)));
         useItemManageContent.setBounds(773, 10, 275, 526);
         userInventoryPage.add(useItemManageContent);
-        
+
         JPanel userItemLab = new JPanel();
         userItemLab.setBounds(0, 0, 109, 393);
         useItemManageContent.add(userItemLab);
         userItemLab.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         JLabel L_inventoryUserName = new JLabel("유저 이름 :");
         L_inventoryUserName.setHorizontalAlignment(SwingConstants.CENTER);
         L_inventoryUserName.setFont(new Font("굴림", Font.PLAIN, 15));
         userItemLab.add(L_inventoryUserName);
-        
+
         JLabel L_userItemType = new JLabel("타입 :");
         L_userItemType.setHorizontalAlignment(SwingConstants.CENTER);
         L_userItemType.setFont(new Font("굴림", Font.PLAIN, 15));
         userItemLab.add(L_userItemType);
-        
+
         JLabel L_userItemName = new JLabel("이름 :");
         L_userItemName.setHorizontalAlignment(SwingConstants.CENTER);
         L_userItemName.setFont(new Font("굴림", Font.PLAIN, 15));
         userItemLab.add(L_userItemName);
-        
+
         JLabel L_userItemGrade = new JLabel("등급 :");
         L_userItemGrade.setHorizontalAlignment(SwingConstants.CENTER);
         L_userItemGrade.setFont(new Font("굴림", Font.PLAIN, 15));
         userItemLab.add(L_userItemGrade);
-        
+
         JLabel L_userItemDesc = new JLabel("설명 :");
         L_userItemDesc.setHorizontalAlignment(SwingConstants.CENTER);
         L_userItemDesc.setFont(new Font("굴림", Font.PLAIN, 15));
         userItemLab.add(L_userItemDesc);
-        
+
         JLabel L_userItemCount = new JLabel("개수 :");
         L_userItemCount.setHorizontalAlignment(SwingConstants.CENTER);
         L_userItemCount.setFont(new Font("굴림", Font.PLAIN, 15));
         userItemLab.add(L_userItemCount);
-        
+
         JLabel L_userItemOp1 = new JLabel("옵션 1 :");
         L_userItemOp1.setHorizontalAlignment(SwingConstants.CENTER);
         L_userItemOp1.setFont(new Font("굴림", Font.PLAIN, 15));
         userItemLab.add(L_userItemOp1);
-        
+
         JPanel tradeItemIn_1 = new JPanel();
         tradeItemIn_1.setBounds(110, 0, 165, 393);
         useItemManageContent.add(tradeItemIn_1);
         tradeItemIn_1.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         In_inventoryUserName = new JTextField();
         In_inventoryUserName.setEditable(false);
         In_inventoryUserName.setColumns(10);
         tradeItemIn_1.add(In_inventoryUserName);
-        
+
         C_userItemType = new JComboBox<String>(itemTypes);
         tradeItemIn_1.add(C_userItemType);
-        
+
         In_userItemName = new JTextField();
         In_userItemName.setColumns(10);
         tradeItemIn_1.add(In_userItemName);
-        
+
         C_userItemGrade = new JComboBox<String>(itemGrades);
         tradeItemIn_1.add(C_userItemGrade);
-        
+
         In_userItemDesc = new JTextField();
         In_userItemDesc.setColumns(10);
         tradeItemIn_1.add(In_userItemDesc);
-        
+
         In_userItemCount = new JFormattedTextField(F_NumberFormet);
         In_userItemCount.setColumns(10);
         tradeItemIn_1.add(In_userItemCount);
-        
+
         In_userItemOp1 = new JFormattedTextField(F_NumberFormet);
         In_userItemOp1.setColumns(10);
         tradeItemIn_1.add(In_userItemOp1);
-        
+
         JPanel tradeItemButtons_1 = new JPanel();
         tradeItemButtons_1.setBounds(0, 391, 275, 135);
         useItemManageContent.add(tradeItemButtons_1);
         tradeItemButtons_1.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         JButton Btt_createUserItem = new JButton("아이템 생성");
         Btt_createUserItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -655,14 +632,21 @@ public class SwingAdmin extends JFrame {
                                 .option1(Integer.valueOf(In_userItemOp1.getText().replace(",", "")))
                                 .build();
 
+                        CreateItemCommand createItemCommand = new CreateItemCommand(currentUser, item);
+                        invoker.setCommand(createItemCommand);
+                        invoker.buttonPressed();
+                        refreshUserInventoryTable();
+                        /*
                         UserFileSystem.getUserFileSystem().addItem(currentUser, item);
                         if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
                             JOptionPane.showMessageDialog(null, "아이템 생성이 완료 되었습니다");
-                            refreshUserInventoryTable();
+
                         }
                         else{
                             JOptionPane.showMessageDialog(null, "유저가 존재하지 않습니다");
                         }
+
+                         */
                     } catch (NumberFormatException err) {
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
                     }
@@ -671,10 +655,10 @@ public class SwingAdmin extends JFrame {
         });
         Btt_createUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
         tradeItemButtons_1.add(Btt_createUserItem);
-        
+
         JButton Btt_updateUserItem = new JButton("아이템 수정");
         Btt_updateUserItem.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 if (In_userItemName.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
@@ -688,50 +672,35 @@ public class SwingAdmin extends JFrame {
                                 .option1(Integer.valueOf(In_userItemOp1.getText().replace(",", "")))
                                 .build();
 
-                        if(UserFileSystem.getUserFileSystem().updateItem(currentUser, item)){
-                            if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
-                                JOptionPane.showMessageDialog(null, "아이템 수정이 완료되었습니다");
-                                refreshUserInventoryTable();
-                            }
-                            else{
-                                JOptionPane.showMessageDialog(null, "유저가 존재하지 않습니다");
-                            }
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(null, "아이템이 없습니다");
-                        }
+                        UpdateItemCommand updateItemCommand = new UpdateItemCommand(currentUser,item);
+                        invoker.setCommand(updateItemCommand);
+                        invoker.buttonPressed();
+
                     } catch (NumberFormatException err) {
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
                     }
                 }
-        	}
+            }
         });
         Btt_updateUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
         tradeItemButtons_1.add(Btt_updateUserItem);
-        
+
         JButton Btt_deleteUserItem = new JButton("아이템 삭제");
         Btt_deleteUserItem.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 if (In_userItemName.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
-                    if (UserFileSystem.getUserFileSystem().deleteItem(currentUser, (In_userItemName.getText()))) {
-                        if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
-                            JOptionPane.showMessageDialog(null, "아이템 삭제가 완료되었습니다");
-                            refreshUserInventoryTable();
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(null, "유저가 존재하지 않습니다");
-                        }
-                    } 
-                    else
-                        JOptionPane.showMessageDialog(null, "존재하지 않는 아이템입니다");
+                    DeleteItemCommand deleteItemCommand = new DeleteItemCommand(currentUser,In_userItemName.getText());
+                    invoker.setCommand(deleteItemCommand);
+                    invoker.buttonPressed();
+                    refreshUserInventoryTable();
                 }
-        	}
+            }
         });
         Btt_deleteUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
         tradeItemButtons_1.add(Btt_deleteUserItem);
-        
+
         T_userItemList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting() && T_userItemList.getSelectedRow() != -1) {
@@ -750,66 +719,65 @@ public class SwingAdmin extends JFrame {
         /*
          * 		SUB MANU
          */
-        
+
         JPanel subManu = new JPanel();
         CardLayout subCardLayout = new CardLayout(0, 0);
         subManu.setBounds(382, 33, 692, 55);
         subManu.setLayout(subCardLayout);
         contentPane.add(subManu);
-        
+
         JPanel auctionSubMnau = new JPanel();
         subManu.add(auctionSubMnau, "AuctionSubManu");
         auctionSubMnau.setLayout(new GridLayout(1, 0, 0, 0));
-        
+
         JButton Btt_auctionItemList = new JButton("경매장 물품 관리");
         Btt_auctionItemList.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 mainCardLayout.show(contents, "AuctionManagePage");
-        	}
+            }
         });
         auctionSubMnau.add(Btt_auctionItemList);
-        
+
         JButton Btt_autionManage = new JButton("경매장 기록");
         Btt_autionManage.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 mainCardLayout.show(contents, "TradeHistoryPage");
-        	}
+            }
         });
         auctionSubMnau.add(Btt_autionManage);
-        
+
         JPanel userSubManu = new JPanel();
         subManu.add(userSubManu, "UserSubManu");
         userSubManu.setLayout(new GridLayout(1, 0, 0, 0));
-        
+
         JButton Btt_userList = new JButton("유저 리스트");
         Btt_userList.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 mainCardLayout.show(contents, "UserManagePage");
-        	}
+            }
         });
         userSubManu.add(Btt_userList);
-        
+
         JButton Btt_userInventory = new JButton("유저 인벤토리");
         Btt_userInventory.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-                currentUser = UserFileSystem.getUserFileSystem().getUserById(In_userID.getText());
+            public void actionPerformed(ActionEvent e) {
+                currentUser = User.getUserById(In_userID.getText());
 
-                if(currentUser != null){
+                if (currentUser != null) {
                     In_inventoryUserName.setText(In_userID.getText());
                     refreshUserInventoryTable();
                     mainCardLayout.show(contents, "UserInventoryPage");
 
-                }
-                else
+                } else
                     JOptionPane.showMessageDialog(null, "유저 정보가 없습니다.");
-        	}
+            }
         });
         userSubManu.add(Btt_userInventory);
-        
+
         /*
          * 		MAIN MANU
          */
-        
+
         JPanel manu = new JPanel();
         manu.setBounds(12, 10, 365, 78);
         contentPane.add(manu);
@@ -841,7 +809,7 @@ public class SwingAdmin extends JFrame {
     public void refreshTradeItemTable() {
         tradeItemTableModel.setRowCount(0);
 
-        for (TradeItem item : FileFacade.getFacade().getTradeItemList()) {
+        for (TradeItem item : TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList()) {
             Object[] rowData = item.getListData();
             tradeItemTableModel.addRow(rowData);
         }
@@ -860,7 +828,7 @@ public class SwingAdmin extends JFrame {
         S_userList.setViewportView(T_userList);
     }
 
-    public void refreshUserInventoryTable(){
+    public void refreshUserInventoryTable() {
         userItemTableModel.setRowCount(0);
 
         for (Item item : currentUser.getItemList()) {
