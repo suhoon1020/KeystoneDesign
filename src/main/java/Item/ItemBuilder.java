@@ -1,11 +1,10 @@
-package user.inventoryItem;
+package Item;
 
 public class ItemBuilder {
     public String type;
     public String name;
     public String grade;
     public String desc;
-    public int count;
     public int option1;
         
     public ItemBuilder type(String type){
@@ -25,11 +24,6 @@ public class ItemBuilder {
 
     public ItemBuilder desc(String desc){
         this.desc = desc;
-        return this;
-    }
-
-    public ItemBuilder count(int count){
-        this.count = count;
         return this;
     }
 

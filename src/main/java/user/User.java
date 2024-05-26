@@ -3,15 +3,13 @@ package user;
 import java.util.ArrayList;
 import java.util.List;
 
-import user.inventoryItem.Item;
-
 public class User {
     private String id;
     private String password;
     private String name;
     private String phoneNumber;
     private int gold;
-    private List<Item> itemList;
+    private List<InventoryItem> itemList;
 
     public String getId() {
         return id;
@@ -33,7 +31,7 @@ public class User {
         return gold;
     }
 
-    public List<Item> getItemList() {
+    public List<InventoryItem> getItemList() {
         return itemList;
     }
 
@@ -50,7 +48,7 @@ public class User {
         this.gold = builder.gold;
         
         if(builder.itemList == null)
-            this.itemList = new ArrayList<Item>();
+            this.itemList = new ArrayList<InventoryItem>();
         else
             this.itemList = builder.itemList;
     }
@@ -59,8 +57,8 @@ public class User {
      *      유저 인벤토리 관리
      */
 
-    public Item getItemByName(String itemName){
-        for(Item item : itemList){
+    public InventoryItem getItemByName(String itemName){
+        for(InventoryItem item : itemList){
             if(item.getName().equals(itemName)){
                 return item;
             }
@@ -69,7 +67,7 @@ public class User {
         return null;
     }
 
-    public boolean addItem(Item addItem){
+    public boolean addItem(InventoryItem addItem){
         String addItemName = addItem.getName();
 
         // 유저의 아이템 이름이 중복이 되면 추가 x
@@ -84,7 +82,7 @@ public class User {
         return true;
     }
 
-    public boolean updateItem(Item updateItem){
+    public boolean updateItem(InventoryItem updateItem){
         String updateItemName = updateItem.getName();
 
         for(int i = 0; i < itemList.size(); ++i){
@@ -115,7 +113,7 @@ public class User {
         private String name;
         private String phoneNumber;
         private int gold;
-        private List<Item> itemList;
+        private List<InventoryItem> itemList;
 
         public UserBuilder ID(String ID) {
             this.ID = ID;
@@ -142,7 +140,7 @@ public class User {
             return this;
         }
 
-        public UserBuilder itemList(List<Item> itemList){
+        public UserBuilder itemList(List<InventoryItem> itemList){
             this.itemList = itemList;
             return this;
         }

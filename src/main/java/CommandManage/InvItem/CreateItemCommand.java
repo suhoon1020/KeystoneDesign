@@ -3,16 +3,16 @@ package CommandManage.InvItem;
 import CommandManage.Command;
 import CommandManage.Invoker;
 import CommandManage.Users.UpdateUserCommand;
+import user.InventoryItem;
 import user.User;
-import user.inventoryItem.Item;
 
 import javax.swing.*;
 
 public class CreateItemCommand implements Command {
-    Item item;
     User user;
+    InventoryItem item;
 
-    public CreateItemCommand(User user,Item Item) {
+    public CreateItemCommand(User user, InventoryItem Item) {
         this.item = Item;
         this.user = user;
     }

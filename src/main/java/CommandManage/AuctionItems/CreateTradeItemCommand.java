@@ -1,26 +1,27 @@
 package CommandManage.AuctionItems;
 
 import CommandManage.Command;
+import Item.Item;
 import auctionData.TradeItem;
 import managers.TradeItemFileSystem;
-import user.inventoryItem.Item;
 
 import javax.swing.*;
 
-public class CreateTItemCommand implements Command {
+public class CreateTradeItemCommand implements Command {
     String userName;
-    int price;
     Item item;
+    int count;
+    int price;
 
-    public CreateTItemCommand(String userName, int price, Item item) {
+    public CreateTradeItemCommand(String userName, Item item, int count, int price) {
         this.userName = userName;
-        this.price = price;
         this.item = item;
+        this.price = price;
     }
 
     @Override
     public void execute() {
-        TradeItem newitem = new TradeItem(userName, item, item.getCount(), price);
+        TradeItem newitem = new TradeItem(userName, item, count, price);
         TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList().add(newitem);
         TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
         JOptionPane.showMessageDialog(null,"아이템이 등록 되었습니다");

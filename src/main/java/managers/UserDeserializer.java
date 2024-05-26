@@ -10,9 +10,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import Item.Item;
+import Item.ItemBuilder;
+import user.InventoryItem;
 import user.User;
-import user.inventoryItem.Item;
-import user.inventoryItem.ItemBuilder;
 
 
 public class UserDeserializer implements JsonDeserializer<User> {
@@ -27,7 +28,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
         int userGold = jsonObject.get("gold").getAsInt();
 
         JsonArray jsonItemList = jsonObject.getAsJsonArray("itemList");
-        List<Item> useriItemList = new ArrayList<Item>();
+        List<InventoryItem> useriItemList = new ArrayList<InventoryItem>();
 
         for (JsonElement jsonItem : jsonItemList) {
             String type = jsonItem.getAsJsonObject().get("type").getAsString();
@@ -35,9 +36,8 @@ public class UserDeserializer implements JsonDeserializer<User> {
             String grade = jsonItem.getAsJsonObject().get("grade").getAsString();
             String desc = jsonItem.getAsJsonObject().get("desc").getAsString();
             int count = jsonItem.getAsJsonObject().get("count").getAsInt();
-
             int op1 = 0;
-
+    
             switch (type) {
                 case "Equipment":
                     op1 = jsonItem.getAsJsonObject().get("defence").getAsInt();
@@ -54,17 +54,18 @@ public class UserDeserializer implements JsonDeserializer<User> {
                 default:
                     break;
             }
+    
             Item item = new ItemBuilder()
                     .type(type)
                     .name(name)
                     .desc(desc)
                     .grade(grade)
-                    .count(count)
                     .option1(op1)
                     .build();
 
+            InventoryItem inventoryItem = new InventoryItem(item, count);
 
-            useriItemList.add(item);
+            useriItemList.add(inventoryItem);
         }
 
         return new User.UserBuilder()

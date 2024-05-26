@@ -17,30 +17,31 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
 import CommandManage.*;
-import CommandManage.AuctionItems.CreateTItemCommand;
-import CommandManage.AuctionItems.DeleteTItemCommand;
-import CommandManage.AuctionItems.UpdateTItemCommand;
+import CommandManage.AuctionItems.CreateTradeItemCommand;
+import CommandManage.AuctionItems.DeleteTradeItemCommand;
+import CommandManage.AuctionItems.UpdateTradeItemCommand;
 import CommandManage.InvItem.CreateItemCommand;
 import CommandManage.InvItem.DeleteItemCommand;
 import CommandManage.InvItem.UpdateItemCommand;
 import CommandManage.Users.CreateUserCommand;
 import CommandManage.Users.DeleteUserCommand;
 import CommandManage.Users.UpdateUserCommand;
+import Item.Item;
+import Item.ItemBuilder;
 import auctionData.TradeItem;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;
+import user.InventoryItem;
 import user.User;
-import user.inventoryItem.Item;
-import user.inventoryItem.ItemBuilder;
 
 
 public class SwingAdmin extends JFrame {
     private String[] itemTypes = {"Equipment", "Material", "Potion", "Weapon"};
     private String[] itemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
 
-    private String[] tradeItemHeader = {"TRADEID", "USERID", "TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1", "PRICE"};
+    private String[] tradeItemHeader = {"TRADEID", "USERID", "TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT", "PRICE"};
     private String[] userHeader = {"ID", "PW", "NAME", "PHONE", "GOLD"};
-    private String[] userItemHeader = {"TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1"};
+    private String[] userItemHeader = {"TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT"};
 
     private User currentUser;
     private JPanel contentPane;
@@ -251,18 +252,23 @@ public class SwingAdmin extends JFrame {
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
                     try {
+                        String type = C_tradeItemType.getSelectedItem().toString();
+                        String name = In_tradeItemName.getText().toString();
+                        String grade = C_tradeItemGrade.getSelectedItem().toString();
+                        String desc = In_tradeItemDesc.getText();
+                        int option1 = Integer.valueOf(In_tradeItemOp1.getText().replace(",", ""));
+                        int count = Integer.valueOf(In_tradeItemCount.getText().replace(",", ""));
+                        int price = Integer.valueOf(In_tradeItemPrice.getText().replace(",", ""));
+
                         Item item = new ItemBuilder()
-                                .type(C_tradeItemType.getSelectedItem().toString())
-                                .name(In_tradeItemName.getText())
-                                .grade(C_tradeItemGrade.getSelectedItem().toString())
-                                .desc(In_tradeItemDesc.getText())
-                                .count(Integer.valueOf(In_tradeItemCount.getText().replace(",", "")))
-                                .option1(Integer.valueOf(In_tradeItemOp1.getText().replace(",", "")))
+                                .type(type)
+                                .name(name)
+                                .grade(grade)
+                                .desc(desc)
+                                .option1(option1)
                                 .build();
 
-                        CreateTItemCommand createTItemCommand = new CreateTItemCommand("AUCTION",
-                                Integer.valueOf(In_tradeItemPrice.getText().replace(",", "")),
-                                item);
+                        CreateTradeItemCommand createTItemCommand = new CreateTradeItemCommand("AUCTION", item,  price, count);
                         invoker.setCommand(createTItemCommand);
                         invoker.buttonPressed();
                         refreshTradeItemTable();
@@ -283,17 +289,24 @@ public class SwingAdmin extends JFrame {
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
                     try {
+                        String type = C_tradeItemType.getSelectedItem().toString();
+                        String name = In_tradeItemName.getText().toString();
+                        String grade = C_tradeItemGrade.getSelectedItem().toString();
+                        String desc = In_tradeItemDesc.getText();
+                        int option1 = Integer.valueOf(In_tradeItemOp1.getText().replace(",", ""));
+                        int count = Integer.valueOf(In_tradeItemCount.getText().replace(",", ""));
+                        int price = Integer.valueOf(In_tradeItemPrice.getText().replace(",", ""));
+
                         Item item = new ItemBuilder()
-                                .type(C_tradeItemType.getSelectedItem().toString())
-                                .name(In_tradeItemName.getText())
-                                .grade(C_tradeItemGrade.getSelectedItem().toString())
-                                .desc(In_tradeItemDesc.getText())
-                                .count(Integer.valueOf(In_tradeItemCount.getText().replace(",", "")))
-                                .option1(Integer.valueOf(In_tradeItemOp1.getText().replace(",", "")))
+                                .type(type)
+                                .name(name)
+                                .grade(grade)
+                                .desc(desc)
+                                .option1(option1)
                                 .build();
 
-                        TradeItem newitem = new TradeItem("AUCTION", item, Integer.valueOf(In_tradeItemPrice.getText().replace(",", "")));
-                        UpdateTItemCommand updateTItemCommand = new UpdateTItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
+                        TradeItem newitem = new TradeItem("AUCTION", item, count, price);
+                        UpdateTradeItemCommand updateTItemCommand = new UpdateTradeItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
                         invoker.setCommand(updateTItemCommand);
                         invoker.buttonPressed();
                         refreshTradeItemTable();
@@ -313,7 +326,7 @@ public class SwingAdmin extends JFrame {
                 if (In_tradeItemId.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "아이템을 선택해주세요.");
                 else {
-                    DeleteTItemCommand deleteTItemCommand = new DeleteTItemCommand(Integer.parseInt(In_tradeItemId.getText()));
+                    DeleteTradeItemCommand deleteTItemCommand = new DeleteTradeItemCommand(Integer.parseInt(In_tradeItemId.getText()));
 
                     invoker.setCommand(deleteTItemCommand);
                     invoker.buttonPressed();
@@ -622,30 +635,26 @@ public class SwingAdmin extends JFrame {
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
                     try {
+                        String type = C_userItemType.getSelectedItem().toString();
+                        String name = In_userItemName.getText().toString();
+                        String grade = C_userItemGrade.getSelectedItem().toString();
+                        String desc = In_tradeItemDesc.getText();
+                        int option1 = Integer.valueOf(In_userItemOp1.getText().replace(",", ""));
+                        int count = Integer.valueOf(In_userItemCount.getText().replace(",", ""));
+
                         Item item = new ItemBuilder()
-                                .type(C_userItemType.getSelectedItem().toString())
-                                .name(In_userItemName.getText())
-                                .grade(C_userItemGrade.getSelectedItem().toString())
-                                .desc(In_userItemDesc.getText())
-                                .count(Integer.valueOf(In_userItemCount.getText().replace(",", "")))
-                                .option1(Integer.valueOf(In_userItemOp1.getText().replace(",", "")))
+                                .type(type)
+                                .name(name)
+                                .grade(grade)
+                                .desc(desc)
+                                .option1(option1)
                                 .build();
 
-                        CreateItemCommand createItemCommand = new CreateItemCommand(currentUser, item);
+                        InventoryItem newItem = new InventoryItem(item, count);
+                        CreateItemCommand createItemCommand = new CreateItemCommand(currentUser, newItem);
                         invoker.setCommand(createItemCommand);
                         invoker.buttonPressed();
                         refreshUserInventoryTable();
-                        /*
-                        UserFileSystem.getUserFileSystem().addItem(currentUser, item);
-                        if(UserFileSystem.getUserFileSystem().updateUser(currentUser.getId(), currentUser)){
-                            JOptionPane.showMessageDialog(null, "아이템 생성이 완료 되었습니다");
-
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(null, "유저가 존재하지 않습니다");
-                        }
-
-                         */
                     } catch (NumberFormatException err) {
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
                     }
@@ -662,16 +671,23 @@ public class SwingAdmin extends JFrame {
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
                     try {
+                        String type = C_userItemType.getSelectedItem().toString();
+                        String name = In_userItemName.getText().toString();
+                        String grade = C_userItemGrade.getSelectedItem().toString();
+                        String desc = In_tradeItemDesc.getText();
+                        int option1 = Integer.valueOf(In_userItemOp1.getText().replace(",", ""));
+                        int count = Integer.valueOf(In_userItemCount.getText().replace(",", ""));
+
                         Item item = new ItemBuilder()
-                                .type(C_userItemType.getSelectedItem().toString())
-                                .name(In_userItemName.getText())
-                                .grade(C_userItemGrade.getSelectedItem().toString())
-                                .desc(In_userItemDesc.getText())
-                                .count(Integer.valueOf(In_userItemCount.getText().replace(",", "")))
-                                .option1(Integer.valueOf(In_userItemOp1.getText().replace(",", "")))
+                                .type(type)
+                                .name(name)
+                                .grade(grade)
+                                .desc(desc)
+                                .option1(option1)
                                 .build();
 
-                        UpdateItemCommand updateItemCommand = new UpdateItemCommand(currentUser, item);
+                        InventoryItem newItem = new InventoryItem(item, count);
+                        UpdateItemCommand updateItemCommand = new UpdateItemCommand(currentUser, newItem);
                         invoker.setCommand(updateItemCommand);
                         invoker.buttonPressed();
 
@@ -830,7 +846,7 @@ public class SwingAdmin extends JFrame {
     public void refreshUserInventoryTable() {
         userItemTableModel.setRowCount(0);
 
-        for (Item item : currentUser.getItemList()) {
+        for (InventoryItem item : currentUser.getItemList()) {
             Object[] rowData = item.getListData();
             userItemTableModel.addRow(rowData);
         }

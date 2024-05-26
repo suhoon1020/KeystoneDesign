@@ -1,4 +1,4 @@
-package user.inventoryItem;
+package Item;
 
 public class Equipment extends Item{
     protected int defence;
@@ -13,8 +13,4 @@ public class Equipment extends Item{
         return defence;
     }
 
-    @Override
-    public String[] getListData() {
-        return new String[]{type, name, grade, desc, Integer.toString(count), Integer.toString(defence)};
-    }
 }

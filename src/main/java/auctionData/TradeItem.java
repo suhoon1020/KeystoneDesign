@@ -1,7 +1,6 @@
 package auctionData;
 
-import user.inventoryItem.Item;
-import user.inventoryItem.ItemBuilder;
+import Item.Item;
 
 public class TradeItem {
     private static int TRADE = 0;
@@ -9,26 +8,14 @@ public class TradeItem {
     private String userName;
     private Item item;
     private int price;
-
-    public TradeItem(String userName, Item item, int price) {
-        this.tradeId = TRADE++;
-        this.userName = userName;
-        this.item = item;
-        this.price = price;
-    }
+    private int count;
 
     public TradeItem(String userName, Item item, int count, int price) {
         this.tradeId = TRADE++;
         this.userName = userName;
-        this.item = new ItemBuilder()
-                .type(item.getType())
-                .name(item.getName())
-                .desc(item.getDesc())
-                .grade(item.getGrade())
-                .count(count)
-                .option1(item.getOption1())
-                .build();
+        this.item = item;
         this.price = price;
+        this.count = count;
     }
 
     public int getTradeId(){
@@ -39,11 +26,7 @@ public class TradeItem {
         return userName;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public Item getItem() {
+    public Item getItem(){
         return item;
     }
 
@@ -59,8 +42,12 @@ public class TradeItem {
         return item.getName();
     }
 
+    public int getPrice() {
+        return price;
+    }
+
     public int getCount(){
-        return item.getCount();
+        return count;
     }
 
     public String[] getListData(){
@@ -70,8 +57,8 @@ public class TradeItem {
                 item.getName(), 
                 item.getGrade(), 
                 item.getDesc(),
-                Integer.toString(item.getCount()), 
                 Integer.toString(item.getOption1()),
+                Integer.toString(count), 
                 Integer.toString(price)};
     }
 }

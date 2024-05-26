@@ -2,13 +2,10 @@ package auction;
 
 import java.util.List;
 
-import auctionData.TradeHistory;
-import auctionData.TradeItem;
-import managers.FileFacade;
 import managers.UserFileSystem;
 import swing.SwingLogin;
+import user.InventoryItem;
 import user.User;
-import user.inventoryItem.Item;
 
 public class Auction {
     private static Auction auction;
@@ -18,7 +15,6 @@ public class Auction {
 
     private Auction() {
         auctionState = new OpenState();
-
     }
 
     public static Auction getAuction() {
@@ -35,7 +31,7 @@ public class Auction {
         return user.getGold();
     }
 
-    public List<Item> getInventory() {
+    public List<InventoryItem> getInventory() {
         return user.getItemList();
     }
 

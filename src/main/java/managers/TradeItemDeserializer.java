@@ -6,9 +6,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import Item.Item;
+import Item.ItemBuilder;
 import auctionData.TradeItem;
-import user.inventoryItem.Item;
-import user.inventoryItem.ItemBuilder;
 
 public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {
     @Override
@@ -16,30 +16,28 @@ public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {
         JsonObject jsonObject = json.getAsJsonObject();
         
         String userID = jsonObject.get("userName").getAsString();
+        JsonObject Item = jsonObject.getAsJsonObject("item");
+        String type = Item.getAsJsonObject().get("type").getAsString();
+        String name = Item.getAsJsonObject().get("name").getAsString();
+        String grade = Item.getAsJsonObject().get("grade").getAsString();
+        String desc = Item.getAsJsonObject().get("desc").getAsString();
+        int count = Item.getAsJsonObject().get("count").getAsInt();
         int price = jsonObject.get("price").getAsInt();
-
-        JsonObject jsonItem = jsonObject.getAsJsonObject("auctionItem");
-
-        String type = jsonItem.getAsJsonObject().get("type").getAsString();
-        String name = jsonItem.getAsJsonObject().get("name").getAsString();
-        String grade = jsonItem.getAsJsonObject().get("grade").getAsString();
-        String desc = jsonItem.getAsJsonObject().get("desc").getAsString();
-        int count = jsonItem.getAsJsonObject().get("count").getAsInt();
 
         int op1 = 0;
 
         switch (type) {
             case "Equipment":
-                op1 = jsonItem.getAsJsonObject().get("defence").getAsInt();
+                op1 = Item.getAsJsonObject().get("defence").getAsInt();
                 break;
             case "Material":
                 // 아이템 옵션 없음
                 break;
             case "Potion":
-                op1 = jsonItem.getAsJsonObject().get("effect").getAsInt();
+                op1 = Item.getAsJsonObject().get("effect").getAsInt();
                 break;
             case "Weapon":
-                op1 = jsonItem.getAsJsonObject().get("damage").getAsInt();
+                op1 = Item.getAsJsonObject().get("damage").getAsInt();
                 break;
             default:
                 break;
@@ -50,10 +48,9 @@ public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {
                 .name(name)
                 .desc(desc)
                 .grade(grade)
-                .count(count)
                 .option1(op1)
                 .build();
 
-        return new TradeItem(userID, item, price);
+        return new TradeItem(userID, item, count, price);
     }
 }

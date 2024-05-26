@@ -15,7 +15,7 @@ import sort.TradeItemSortByName;
 import sort.TradeItemSortByNameRev;
 import sort.TradeItemSortByPrice;
 import sort.TradeItemSortByPriceRev;
-import user.inventoryItem.Item;
+import user.InventoryItem;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -40,9 +40,9 @@ import java.awt.event.ActionEvent;
 public class SwingAuction extends JFrame {
     private String[] tradeItemTypes = {"ALL", "Equipment", "Material", "Potion", "Weapon"};
     private String[] tradeItemGrades = {"ALL", "Common", "Uncommon", "Eqic", "Legendary"};
-    private String[] tradeItemHeader = {"USER", "TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1", "PRICE"};
+    private String[] tradeItemHeader = {"USER", "TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT", "PRICE"};
     
-    private String[] inventoryItemHeader = {"TYPE", "NAME", "GRADE", "DESC", "COUNT", "OPTION1"};
+    private String[] inventoryItemHeader = {"TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT"};
     
     private JPanel contentPane;
     private JTextField ItemSearch;
@@ -557,9 +557,9 @@ public class SwingAuction extends JFrame {
     public void refreshInventoryTable() {
         inventoryTableModel.setRowCount(0);
 
-        List<Item> L = Auction.getAuction().getInventory();
+        List<InventoryItem> L = Auction.getAuction().getInventory();
         
-        for(Item i : L){
+        for(InventoryItem i : L){
             Object[] rowData = i.getListData();
             inventoryTableModel.addRow(rowData);
         }

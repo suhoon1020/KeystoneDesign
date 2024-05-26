@@ -1,4 +1,4 @@
-package user.inventoryItem;
+package Item;
 
 public class Potion extends Item {
     protected int effect;
@@ -10,11 +10,6 @@ public class Potion extends Item {
     @Override
     public int getOption1() {
         return effect;
-    }
-
-    @Override
-    public String[] getListData() {
-        return new String[]{type, name, grade, desc, Integer.toString(count), Integer.toString(effect)};
     }
 
 }

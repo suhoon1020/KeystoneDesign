@@ -11,7 +11,7 @@ public class DeleteItemCommand implements Command {
     User user;
     String itemName;
 
-    public DeleteItemCommand(User user,String itemName) {
+    public DeleteItemCommand(User user, String itemName) {
         this.user = user;
         this.itemName = itemName;
     }

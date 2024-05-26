@@ -1,4 +1,4 @@
-package user.inventoryItem;
+package Item;
 
 public class Material extends Item{
 
@@ -11,10 +11,4 @@ public class Material extends Item{
     public int getOption1() {
         return 0;
     }
-
-    @Override
-    public String[] getListData() {
-        return new String[]{type, name, grade, desc, Integer.toString(count), "0"};
-    }
-
 }
