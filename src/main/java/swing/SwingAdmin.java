@@ -18,6 +18,8 @@ import javax.swing.text.NumberFormatter;
 
 import CommandManage.*;
 import CommandManage.AuctionItems.CreateTItemCommand;
+import CommandManage.AuctionItems.DeleteTItemCommand;
+import CommandManage.AuctionItems.UpdateTItemCommand;
 import CommandManage.InvItem.CreateItemCommand;
 import CommandManage.InvItem.DeleteItemCommand;
 import CommandManage.InvItem.UpdateItemCommand;
@@ -96,6 +98,10 @@ public class SwingAdmin extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+                    Invoker invoker1= new Invoker();
+                    LoadCommand loadCommand = new LoadCommand();
+                    invoker1.setCommand(loadCommand);
+                    invoker1.buttonPressed();
                     SwingAdmin.getSwingAdmin().setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -259,11 +265,12 @@ public class SwingAdmin extends JFrame {
                                 .count(Integer.valueOf(In_tradeItemCount.getText().replace(",", "")))
                                 .option1(Integer.valueOf(In_tradeItemOp1.getText().replace(",", "")))
                                 .build();
-                        CreateTItemCommand createTItemCommand = new CreateTItemCommand("AUCTION")
 
-                        TradeItem newitem = new TradeItem("AUCTION", Integer.valueOf(In_tradeItemPrice.getText().replace(",", "")), item);
-                        TradeItemFileSystem.getTradeItemFileSystem().putTradeItem(newitem);
-                        JOptionPane.showMessageDialog(null, "아이템 생성이 완료 되었습니다");
+                        CreateTItemCommand createTItemCommand = new CreateTItemCommand("AUCTION",
+                                Integer.valueOf(In_tradeItemPrice.getText().replace(",", "")),
+                                item);
+                        invoker.setCommand(createTItemCommand);
+                        invoker.buttonPressed();
                         refreshTradeItemTable();
 
                     } catch (NumberFormatException err) {
@@ -292,13 +299,9 @@ public class SwingAdmin extends JFrame {
                                 .build();
 
                         TradeItem newitem = new TradeItem("AUCTION", Integer.valueOf(In_tradeItemPrice.getText().replace(",", "")), item);
+                        UpdateTItemCommand updateTItemCommand = new UpdateTItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
+                        refreshTradeItemTable();
 
-                        if (FileFacade.getFacade().updateTradeItem(Integer.parseInt(In_tradeItemId.getText()), newitem)) {
-                            JOptionPane.showMessageDialog(null, "아이템 수정이 완료 되었습니다");
-                            refreshTradeItemTable();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "존재하지 않는 아이템입니다");
-                        }
                     } catch (NumberFormatException err) {
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
                     }
@@ -314,11 +317,12 @@ public class SwingAdmin extends JFrame {
                 if (In_tradeItemId.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "아이템을 선택해주세요.");
                 else {
-                    if (FileFacade.getFacade().deleteTradeItem(Integer.parseInt(In_tradeItemId.getText()))) {
-                        JOptionPane.showMessageDialog(null, "아이템 삭제가 완료 되었습니다");
-                        refreshTradeItemTable();
-                    } else
-                        JOptionPane.showMessageDialog(null, "존재하지 않는 아이템입니다");
+                    DeleteTItemCommand deleteTItemCommand = new DeleteTItemCommand(Integer.parseInt(In_tradeItemId.getText()));
+
+                    invoker.setCommand(deleteTItemCommand);
+                    invoker.buttonPressed();
+                    refreshTradeItemTable();
+
                 }
             }
         });
@@ -680,7 +684,7 @@ public class SwingAdmin extends JFrame {
                                 .option1(Integer.valueOf(In_userItemOp1.getText().replace(",", "")))
                                 .build();
 
-                        UpdateItemCommand updateItemCommand = new UpdateItemCommand(currentUser,item);
+                        UpdateItemCommand updateItemCommand = new UpdateItemCommand(currentUser, item);
                         invoker.setCommand(updateItemCommand);
                         invoker.buttonPressed();
 
@@ -699,7 +703,7 @@ public class SwingAdmin extends JFrame {
                 if (In_userItemName.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
-                    DeleteItemCommand deleteItemCommand = new DeleteItemCommand(currentUser,In_userItemName.getText());
+                    DeleteItemCommand deleteItemCommand = new DeleteItemCommand(currentUser, In_userItemName.getText());
                     invoker.setCommand(deleteItemCommand);
                     invoker.buttonPressed();
                     refreshUserInventoryTable();

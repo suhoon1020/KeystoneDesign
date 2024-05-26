@@ -106,7 +106,7 @@ public class User {
     }
 
     public static User getUserById(String id) {
-        for (User user : users) {
+        for (User user : UserFileSystem.getUserFileSystem().getUserList()) {
             if (user.getId().equals(id))
                 return user;
         }
@@ -115,7 +115,7 @@ public class User {
 
 
     public User getUserByName(String name) {
-        for (User user : users) {
+        for (User user : UserFileSystem.getUserFileSystem().getUserList()) {
             if (user.getName().equals(name))
                 return user;
         }
@@ -123,13 +123,10 @@ public class User {
         return null;
     }
 
-    public List<User> getUserList() {
-        return users;
-    }
 
     public Boolean putUser(User newUser) {
         if (getUserById(newUser.getId()) == null){
-            users.add(newUser);
+            UserFileSystem.getUserFileSystem().getUserList().add(newUser);
             UserFileSystem.getUserFileSystem().saveInfosToFile();
             return true;
         }
@@ -138,9 +135,9 @@ public class User {
 
 
     public Boolean updateUser(String id, User user) {
-        for (int i = 0; i < users.size(); ++i) {
-            if (users.get(i).getId().equals(id)) {
-                users.set(i, user);
+        for (int i = 0; i < UserFileSystem.getUserFileSystem().getUserList().size(); ++i) {
+            if (UserFileSystem.getUserFileSystem().getUserList().get(i).getId().equals(id)) {
+                UserFileSystem.getUserFileSystem().getUserList().set(i, user);
                 UserFileSystem.getUserFileSystem().saveInfosToFile();
                 return true;
             }
@@ -149,9 +146,9 @@ public class User {
     }
 
     public Boolean deleteUser(String id) {
-        for (int i = 0; i < users.size(); ++i) {
-            if (users.get(i).getId().equals(id)) {
-                users.remove(i);
+        for (int i = 0; i < UserFileSystem.getUserFileSystem().getUserList().size(); ++i) {
+            if (UserFileSystem.getUserFileSystem().getUserList().get(i).getId().equals(id)) {
+                UserFileSystem.getUserFileSystem().getUserList().remove(i);
                 UserFileSystem.getUserFileSystem().saveInfosToFile();
                 return true;
             }

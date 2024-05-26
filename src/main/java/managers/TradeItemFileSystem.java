@@ -21,12 +21,16 @@ public class TradeItemFileSystem {
     private static final String TRADE_ITEM_FILE = "TradeItems.json";
     private static List<TradeItem> tradeItems;
 
-    private static TradeItemFileSystem tradeItemFileSystem;
+    public List<TradeItem> getTradeItemList(){
+        return tradeItems;
+    }
+
+    private static TradeItemFileSystem tradeHistoryFileSystem;
 
     public static TradeItemFileSystem getTradeItemFileSystem() {
-        if(tradeItemFileSystem == null)
-            tradeItemFileSystem = new TradeItemFileSystem();
-        return tradeItemFileSystem;
+        if(tradeHistoryFileSystem == null)
+            tradeHistoryFileSystem = new TradeItemFileSystem();
+        return tradeHistoryFileSystem;
     }
 
     private TradeItemFileSystem(){
@@ -67,8 +71,5 @@ public class TradeItemFileSystem {
         }
     }
 
-    public List<TradeItem> getTradeItemList(){
-        return tradeItems;
-    }
 
 }

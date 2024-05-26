@@ -23,7 +23,6 @@ public class OpenState implements AuctionState {
         }
         return false;
     }
-
     @Override
     public AuctionState changeState() {
         return new CloseState();

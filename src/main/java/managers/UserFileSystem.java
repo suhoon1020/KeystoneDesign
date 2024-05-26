@@ -19,7 +19,7 @@ public class UserFileSystem {
 
     private static List<User> users;
 
-    private static UserFileSystem userFileSystem = new UserFileSystem();
+    private static UserFileSystem userFileSystem;
 
 
     public static UserFileSystem getUserFileSystem() {

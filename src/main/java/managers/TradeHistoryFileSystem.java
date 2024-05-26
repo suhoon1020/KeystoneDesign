@@ -1,5 +1,6 @@
 package managers;
 
+import auctionData.TradeItem;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -15,11 +16,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 public class TradeHistoryFileSystem {
     private static final String TRAGE_HISTORY_FILE = "tradeHistory.json";
 
     private static List<TradeHistory> TradeHistories;
+
+    private static TradeHistoryFileSystem tradeHistoryFileSystem;
+
+    public static TradeHistoryFileSystem getTradeItemFileSystem(){
+        if(tradeHistoryFileSystem == null)
+            tradeHistoryFileSystem = new TradeHistoryFileSystem();
+
+        return tradeHistoryFileSystem;
+    }
 
     public void saveInfosToFile(){
         Gson gson = new Gson();
