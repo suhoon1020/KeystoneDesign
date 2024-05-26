@@ -1,4 +1,4 @@
-package ItemManager;
+package Item;
 
 public class Material extends Item{
     @Override

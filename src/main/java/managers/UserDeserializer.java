@@ -10,8 +10,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import ItemManager.Item;
-import ItemManager.ItemBuilder;
+import item.Item;
+import item.ItemBuilder;
 import user.InventoryItem;
 import user.User;
 

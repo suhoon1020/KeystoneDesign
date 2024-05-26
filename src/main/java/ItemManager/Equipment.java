@@ -1,4 +1,4 @@
-package ItemManager;
+package Item;
 
 public class Equipment extends Item{
     protected int defence;

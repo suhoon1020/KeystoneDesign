@@ -1,4 +1,4 @@
-package ItemManager;
+package Item;
 
 public class Potion extends Item {
     protected int effect;

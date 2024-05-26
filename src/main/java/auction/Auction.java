@@ -2,7 +2,7 @@ package auction;
 
 import java.util.List;
 
-import Item.Item;
+import item.Item;
 import auctionData.TradeItem;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;

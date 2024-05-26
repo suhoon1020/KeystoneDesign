@@ -1,6 +1,6 @@
-package CommandManage.Users;
+package commandManage.users;
 
-import CommandManage.Command;
+import commandManage.Command;
 import managers.UserFileSystem;
 import user.User;
 

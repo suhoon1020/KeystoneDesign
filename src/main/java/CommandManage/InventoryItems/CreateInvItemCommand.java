@@ -1,7 +1,7 @@
-package CommandManage.InventoryItems;
+package commandManage.inventoryItems;
 
-import CommandManage.Command;
-import Item.Item;
+import commandManage.Command;
+import item.Item;
 import managers.UserFileSystem;
 import user.InventoryItem;
 import user.User;

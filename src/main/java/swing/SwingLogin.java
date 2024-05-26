@@ -6,10 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import CommandManage.Users.CreateUserCommand;
 import auction.Auction;
 import user.User;
-import CommandManage.Invoker;
+import commandManage.Invoker;
+import commandManage.users.CreateUserCommand;
 
 import java.awt.CardLayout;
 import java.awt.Font;

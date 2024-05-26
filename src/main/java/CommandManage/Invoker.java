@@ -1,4 +1,4 @@
-package CommandManage;
+package commandManage;
 
 public class Invoker {
     Command command;
