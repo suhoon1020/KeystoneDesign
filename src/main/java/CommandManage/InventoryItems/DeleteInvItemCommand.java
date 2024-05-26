@@ -1,8 +1,7 @@
 package CommandManage.InventoryItems;
 
 import CommandManage.Command;
-import CommandManage.Invoker;
-import CommandManage.Users.UpdateUserCommand;
+import managers.UserFileSystem;
 import user.User;
 
 import javax.swing.*;
@@ -16,13 +15,10 @@ public class DeleteInvItemCommand implements Command {
         this.itemName = itemName;
     }
 
-        @Override
+    @Override
     public void execute() {
         if(user.deleteItem(itemName)){
-            UpdateUserCommand updateUserCommand = new UpdateUserCommand(user);
-            Invoker invoker = new Invoker();
-            invoker.setCommand(updateUserCommand);
-            invoker.run();
+            UserFileSystem.getUserFileSystem().saveInfosToFile();
             JOptionPane.showMessageDialog(null,"아이템이 삭제되었습니다");
         }
         else{

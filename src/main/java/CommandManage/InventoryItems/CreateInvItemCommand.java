@@ -1,9 +1,8 @@
 package CommandManage.InventoryItems;
 
 import CommandManage.Command;
-import CommandManage.Invoker;
-import CommandManage.Users.UpdateUserCommand;
 import Item.Item;
+import managers.UserFileSystem;
 import user.InventoryItem;
 import user.User;
 
@@ -25,10 +24,7 @@ public class CreateInvItemCommand implements Command {
         InventoryItem inventoryItem = new InventoryItem(item, count);
 
         if(user.addItem(inventoryItem)){
-            UpdateUserCommand updateUserCommand = new UpdateUserCommand(user);
-            Invoker invoker = new Invoker();
-            invoker.setCommand(updateUserCommand);
-            invoker.run();
+            UserFileSystem.getUserFileSystem().saveInfosToFile();
             JOptionPane.showMessageDialog(null,"아이템 생성이 완료되었습니다");
         }
         else{

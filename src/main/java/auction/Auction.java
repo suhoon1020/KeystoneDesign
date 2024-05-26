@@ -2,9 +2,7 @@ package auction;
 
 import java.util.List;
 
-import CommandManage.Invoker;
-import CommandManage.InventoryItems.ItemInvToTradeCommend;
-import CommandManage.TradeItems.ItemTradeToInvCommend;
+import Item.Item;
 import auctionData.TradeItem;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;
@@ -18,11 +16,9 @@ public class Auction {
 
     private AuctionState auctionState;
     private User user;
-    private Invoker invoker;
 
     private Auction() {
         auctionState = new OpenState();
-        invoker = new Invoker();
     }
 
     public static Auction getAuction() {
@@ -33,6 +29,10 @@ public class Auction {
 
     public void changeState() {
         auctionState = auctionState.changeState();
+    }
+
+    public String getName(){
+        return user.getName();
     }
 
     public int getGold(){
@@ -92,36 +92,89 @@ public class Auction {
 
 
     public boolean sellItem(String sellItemName, int sellCount, int price){
+        InventoryItem inventoryItem = user.getItemByName(sellItemName);
+
         //유저 인벤토리에서 아이템 개수 만큼 있는지 확인
-        if(user.getItemByName(sellItemName).getCount() >= sellCount){
-            //인벤토리 아이템에서 거래 아이템으로 옮기기
-            ItemInvToTradeCommend itemInvToTradeCommend = new ItemInvToTradeCommend(user, sellItemName, price, sellCount);
-            invoker.setCommand(itemInvToTradeCommend);
-            invoker.run();
+        if(inventoryItem.getCount() >= sellCount){
+            Item item = inventoryItem.getItem();
+
+            // 판매 후 아이템 정보
+            InventoryItem newInventoryItem = new InventoryItem(item.clone(), inventoryItem.getCount() - sellCount);
+
+            // 인벤토리 아이템 정보 수정 / 삭제
+            if(newInventoryItem.getCount() > 0){
+                // 아이템 갯수가 많음 >> 아이템 수량 수정
+                user.updateItem(newInventoryItem);
+
+            }
+            else if(newInventoryItem.getCount() == 0){
+                // 아이템 갯수가 같음 >> 아이템 삭제
+                user.deleteItem(inventoryItem.getName());
+            }
+
+            // 경매장 아이템 등록
+            TradeItem tradeItem = new TradeItem(user.getName(), item.clone(), sellCount, price);
+            TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList().add(tradeItem);
+
+            // 저장
+            UserFileSystem.getUserFileSystem().saveInfosToFile();
+            TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
             return true;
         }
 
         return false;
     }
 
-    public boolean buyItem(int tradeId, int count){
-        TradeItem tradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(tradeId);
-        //구매할 아이템 개수 * 금액 만큼 돈이 있는지 확인
-        if(user.getGold() >= tradeItem.getPrice() * count){
-            // 거래 기록 남기기
+    public boolean buyItem(int tradeId, int buyCount){
+        TradeItem auctionTradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(tradeId);
+        //구매할 아이템 개수 * 금액 만큼 돈이 있는지 && 아이템 구매 개수가 사는 개수보다 많은지 확인
+        if(auctionTradeItem.getCount() >= buyCount && user.getGold() >= auctionTradeItem.getPrice() * buyCount){
+            Item item = auctionTradeItem.getItem();
+            // TODO 거래 기록 남기기
+
             // 돈 차감
-            user.setGold(user.getGold() - tradeItem.getPrice() * count);
-            UserFileSystem.getUserFileSystem().saveInfosToFile();
-            // 구매자 돈 증가
-            User sellUser = UserFileSystem.getUserFileSystem().getUserByName(tradeItem.getUserName());
-            if(sellUser != null)
-                sellUser.setGold(sellUser.getGold() + count);
+            user.setGold(user.getGold() - auctionTradeItem.getPrice() * buyCount);
+
+            // 판매자 돈 증가
+            User seller = UserFileSystem.getUserFileSystem().getUserByName(auctionTradeItem.getUserName());
+            if(seller != null)
+                seller.setGold(seller.getGold() + auctionTradeItem.getPrice() * buyCount);
 
             // 거래 아이템에서 인벤토리 아이템으로 옮기기
-            ItemTradeToInvCommend itemTradeToInvCommend = new ItemTradeToInvCommend(user, tradeId, count);
-            invoker.setCommand(itemTradeToInvCommend);
-            invoker.run();
+
+            // 거래 후 거래 아이템 정보
+            List<TradeItem> tradeItems = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList();
+            TradeItem tradeItem = new TradeItem(auctionTradeItem.getUserName(), item.clone(), auctionTradeItem.getCount() - buyCount, auctionTradeItem.getPrice());
+            
+            // 거래 아이템 정보 수정 / 삭제
+            if(tradeItem.getCount() > 0){
+                // 아이템 갯수가 많음 >> 아이템 수량 수정
+                for (int i = 0; i < tradeItems.size(); ++i) {
+                    if (tradeItems.get(i).getTradeId() == tradeId) {
+                        tradeItems.set(i, tradeItem);
+                    }
+                }
+            }
+            else if(tradeItem.getCount() == 0){
+                // 아이템 갯수가 같음 >> 아이템 삭제
+                for (int i = 0; i < tradeItems.size(); ++i) {
+                    if (tradeItems.get(i).getTradeId() == tradeId) {
+                        tradeItems.remove(i);
+                    }
+                }
+            }
+
+            // 유저 아이템 등록
+            InventoryItem inventoryItem = new InventoryItem(item.clone(), buyCount);
+            user.addItemCount(inventoryItem);
+
+            // 저장
+            UserFileSystem.getUserFileSystem().saveInfosToFile();
+            TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
+
+            return true;
         }
+
         return false;
     }
 }
