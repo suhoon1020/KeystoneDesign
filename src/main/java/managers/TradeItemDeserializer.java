@@ -17,31 +17,31 @@ public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {
         
         String userID = jsonObject.get("userName").getAsString();
 
-        JsonObject Item = jsonObject.getAsJsonObject("item");
-        String type = Item.getAsJsonObject().get("type").getAsString();
-        String name = Item.getAsJsonObject().get("name").getAsString();
-        String grade = Item.getAsJsonObject().get("grade").getAsString();
-        String desc = Item.getAsJsonObject().get("desc").getAsString();
+        JsonObject item = jsonObject.getAsJsonObject("item");
+        String type = item.getAsJsonObject().get("type").getAsString();
+        String name = item.getAsJsonObject().get("name").getAsString();
+        String grade = item.getAsJsonObject().get("grade").getAsString();
+        String desc = item.getAsJsonObject().get("desc").getAsString();
         int op1 = 0;
 
         switch (type) {
             case "Equipment":
-                op1 = Item.getAsJsonObject().get("defence").getAsInt();
+                op1 = item.getAsJsonObject().get("defence").getAsInt();
                 break;
             case "Material":
                 // 아이템 옵션 없음
                 break;
             case "Potion":
-                op1 = Item.getAsJsonObject().get("effect").getAsInt();
+                op1 = item.getAsJsonObject().get("effect").getAsInt();
                 break;
             case "Weapon":
-                op1 = Item.getAsJsonObject().get("damage").getAsInt();
+                op1 = item.getAsJsonObject().get("damage").getAsInt();
                 break;
             default:
                 break;
         }
 
-        Item item = new ItemBuilder()
+        Item i = new ItemBuilder()
                 .type(type)
                 .name(name)
                 .desc(desc)
@@ -49,9 +49,9 @@ public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {
                 .option1(op1)
                 .build();
 
-        int count = Item.getAsJsonObject().get("count").getAsInt();
+        int count = jsonObject.getAsJsonObject().get("count").getAsInt();
         int price = jsonObject.get("price").getAsInt();
 
-        return new TradeItem(userID, item, count, price);
+        return new TradeItem(userID, i, count, price);
     }
 }

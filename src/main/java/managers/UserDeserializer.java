@@ -31,31 +31,33 @@ public class UserDeserializer implements JsonDeserializer<User> {
         List<InventoryItem> useriItemList = new ArrayList<InventoryItem>();
 
         for (JsonElement jsonItem : jsonItemList) {
-            JsonObject inventoryItemInfo = jsonObject.getAsJsonObject("item");
-            String type = inventoryItemInfo.getAsJsonObject().get("type").getAsString();
-            String name = inventoryItemInfo.getAsJsonObject().get("name").getAsString();
-            String grade = inventoryItemInfo.getAsJsonObject().get("grade").getAsString();
-            String desc = inventoryItemInfo.getAsJsonObject().get("desc").getAsString();
+            JsonObject inventoryItemJson = jsonItem.getAsJsonObject();
+            
+            JsonObject item = inventoryItemJson.getAsJsonObject("item");
+            String type = item.getAsJsonObject().get("type").getAsString();
+            String name = item.getAsJsonObject().get("name").getAsString();
+            String grade = item.getAsJsonObject().get("grade").getAsString();
+            String desc = item.getAsJsonObject().get("desc").getAsString();
             int op1 = 0;
-    
+
             switch (type) {
                 case "Equipment":
-                    op1 = inventoryItemInfo.getAsJsonObject().get("defence").getAsInt();
+                    op1 = item.getAsJsonObject().get("defence").getAsInt();
                     break;
                 case "Material":
                     // 아이템 옵션 없음
                     break;
                 case "Potion":
-                    op1 = inventoryItemInfo.getAsJsonObject().get("effect").getAsInt();
+                    op1 = item.getAsJsonObject().get("effect").getAsInt();
                     break;
                 case "Weapon":
-                    op1 = inventoryItemInfo.getAsJsonObject().get("damage").getAsInt();
+                    op1 = item.getAsJsonObject().get("damage").getAsInt();
                     break;
                 default:
                     break;
             }
-    
-            Item item = new ItemBuilder()
+
+            Item i = new ItemBuilder()
                     .type(type)
                     .name(name)
                     .desc(desc)
@@ -63,9 +65,9 @@ public class UserDeserializer implements JsonDeserializer<User> {
                     .option1(op1)
                     .build();
 
-            int count = jsonItem.getAsJsonObject().get("count").getAsInt();
+            int count = inventoryItemJson.getAsJsonObject().get("count").getAsInt();
 
-            InventoryItem inventoryItem = new InventoryItem(item, count);
+            InventoryItem inventoryItem = new InventoryItem(i, count);
 
             useriItemList.add(inventoryItem);
         }
