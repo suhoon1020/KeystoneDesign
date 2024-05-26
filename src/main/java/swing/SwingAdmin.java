@@ -23,9 +23,10 @@ import commandManage.tradeItems.UpdateTradeItemCommand;
 import commandManage.users.CreateUserCommand;
 import commandManage.users.DeleteUserCommand;
 import commandManage.users.UpdateUserCommand;
-import item.Item;
-import item.ItemBuilder;
+import itemInfos.Item;
+import itemInfos.ItemBuilder;
 import auctionData.TradeItem;
+import managers.ItemFileSystem;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;
 import user.InventoryItem;
@@ -945,7 +946,7 @@ public class SwingAdmin extends JFrame {
     public void refreshUserItemInfoTable() {
         userItemInfoTableModel.setRowCount(0);
 
-        for (InventoryItem item : currentUser.getItemList()) {
+        for (Item item : ItemFileSystem.getItemFileSystem().getItemList()) {
             Object[] rowData = item.getListData();
             userItemInfoTableModel.addRow(rowData);
         }

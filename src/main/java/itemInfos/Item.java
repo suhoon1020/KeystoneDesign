@@ -33,7 +33,8 @@ public abstract class Item {
     }
 
     //하위 클래스에서 구현
-    protected abstract void setSpecificAttributes(ItemBuilder itemBuilder);
     public abstract int getOption1();
+    public abstract String[] getListData();
+    protected abstract void setSpecificAttributes(ItemBuilder itemBuilder);
     public abstract Item clone();
 }

@@ -6,8 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import item.Item;
-import item.ItemBuilder;
+import itemInfos.Item;
+import itemInfos.ItemBuilder;
 
 public class ItemDeserializer implements JsonDeserializer<Item> {
     @Override

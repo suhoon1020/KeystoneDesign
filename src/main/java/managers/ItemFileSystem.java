@@ -15,7 +15,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import item.Item;
+import itemInfos.Item;
 
 public class ItemFileSystem {
     public static final String ITEM_FILE = "items.json";

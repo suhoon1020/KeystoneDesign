@@ -1,6 +1,6 @@
 package auctionData;
 
-import item.Item;
+import itemInfos.Item;
 
 public class TradeItem {
     private static int TRADE = 0;
