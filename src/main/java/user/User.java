@@ -71,6 +71,22 @@ public class User {
         return null;
     }
 
+    public void addItemCount(InventoryItem item){
+        String addItemName = item.getName();
+
+        // 유저의 아이템 이름이 중복이 되면 카운트 추가
+        for(int i = 0; i < itemList.size(); ++i){
+            if(itemList.get(i).getName().equals(addItemName)){
+                itemList.get(i).setCount(itemList.get(i).getCount() + item.getCount());
+                return;
+            }
+        }
+
+        // 그게아니면 그냥 add
+        itemList.add(item);
+        return;
+    }
+
     public boolean addItem(InventoryItem addItem){
         String addItemName = addItem.getName();
 

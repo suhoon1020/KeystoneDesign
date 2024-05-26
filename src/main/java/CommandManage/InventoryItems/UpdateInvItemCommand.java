@@ -1,8 +1,7 @@
 package CommandManage.InventoryItems;
 
 import CommandManage.Command;
-import CommandManage.Invoker;
-import CommandManage.Users.UpdateUserCommand;
+import managers.UserFileSystem;
 import user.InventoryItem;
 import user.User;
 
@@ -19,12 +18,8 @@ public class UpdateInvItemCommand implements Command {
 
     @Override
     public void execute() {
-
         if(user.updateItem(item)){
-            UpdateUserCommand updateUserCommand = new UpdateUserCommand(user);
-            Invoker invoker = new Invoker();
-            invoker.setCommand(updateUserCommand);
-            invoker.run();
+            UserFileSystem.getUserFileSystem().saveInfosToFile();
             JOptionPane.showMessageDialog(null,"아이템 정보가 수정되었습니다");
         }
         else{

@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import auctionData.TradeHistory;
+import auctionData.SellHistory;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,7 +18,7 @@ import java.util.List;
 public class TradeHistoryFileSystem {
     private static final String TRAGE_HISTORY_FILE = "tradeHistory.json";
 
-    private static List<TradeHistory> TradeHistories;
+    private static List<SellHistory> TradeHistories;
 
     private static TradeHistoryFileSystem tradeHistoryFileSystem;
 
@@ -51,18 +51,18 @@ public class TradeHistoryFileSystem {
                 Reader reader = new FileReader(TRAGE_HISTORY_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                TradeHistories = gson.fromJson(jsonElement, new TypeToken<List<TradeHistory>>() {}.getType());
+                TradeHistories = gson.fromJson(jsonElement, new TypeToken<List<SellHistory>>() {}.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
         }
     }
 
-    public List<TradeHistory> getTradeHistories(){
+    public List<SellHistory> getTradeHistories(){
         return TradeHistories;
     }
 
-    public Boolean putTradeHistory(TradeHistory newHistory) {
+    public Boolean putTradeHistory(SellHistory newHistory) {
         TradeHistories.add(newHistory);
 
         return true;
