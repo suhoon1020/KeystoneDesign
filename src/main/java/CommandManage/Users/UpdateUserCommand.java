@@ -2,7 +2,7 @@ package CommandManage.Users;
 
 import CommandManage.Command;
 import managers.UserFileSystem;
-import user.userprivacy.User;
+import user.User;
 
 import java.util.List;
 

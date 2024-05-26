@@ -3,8 +3,6 @@ package CommandManage.AuctionItems;
 import CommandManage.Command;
 import auctionData.TradeItem;
 import managers.TradeItemFileSystem;
-import user.inventoryItem.Item;
-
 import javax.swing.*;
 import java.util.List;
 

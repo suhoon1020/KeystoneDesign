@@ -3,7 +3,7 @@ package auction;
 import managers.UserFileSystem;
 import swing.SwingAdmin;
 import swing.SwingAuction;
-import user.userprivacy.User;
+import user.User;
 
 public class OpenState implements AuctionState {
 

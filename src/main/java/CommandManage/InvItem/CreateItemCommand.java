@@ -3,8 +3,8 @@ package CommandManage.InvItem;
 import CommandManage.Command;
 import CommandManage.Invoker;
 import CommandManage.Users.UpdateUserCommand;
+import user.User;
 import user.inventoryItem.Item;
-import user.userprivacy.User;
 
 import javax.swing.*;
 

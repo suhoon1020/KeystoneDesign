@@ -1,9 +1,6 @@
 package managers;
 
-import java.util.List;
-
 import auctionData.TradeItem;
-import user.userprivacy.User;
 
 public class FileFacade {
     private static FileFacade fileFacade;

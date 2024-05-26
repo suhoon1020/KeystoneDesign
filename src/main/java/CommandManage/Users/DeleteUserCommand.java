@@ -2,7 +2,7 @@ package CommandManage.Users;
 
 import CommandManage.Command;
 import managers.UserFileSystem;
-import user.userprivacy.User;
+import user.User;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class DeleteUserCommand implements Command {
                 users.remove(i);
                 UserFileSystem.getUserFileSystem().saveInfosToFile();
                 JOptionPane.showMessageDialog(null, userId + "회원님의 정보가 삭제되었습니다");
+                return;
             }
         }
         JOptionPane.showMessageDialog(null,"해당 유저를 찾을 수 없습니다");

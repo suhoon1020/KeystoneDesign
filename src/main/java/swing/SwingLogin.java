@@ -8,8 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 import CommandManage.Users.CreateUserCommand;
 import auction.Auction;
+import user.User;
 import CommandManage.Invoker;
-import user.userprivacy.User;
 
 import java.awt.CardLayout;
 import java.awt.Font;

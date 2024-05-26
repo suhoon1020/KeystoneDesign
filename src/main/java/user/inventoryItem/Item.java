@@ -1,7 +1,5 @@
 package user.inventoryItem;
 
-import auctionData.TradeItem;
-
 public abstract class Item {
     protected String type;
     protected String name;

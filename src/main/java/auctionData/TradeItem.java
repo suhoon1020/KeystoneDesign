@@ -10,6 +10,13 @@ public class TradeItem {
     private Item item;
     private int price;
 
+    public TradeItem(String userName, Item item, int price) {
+        this.tradeId = TRADE++;
+        this.userName = userName;
+        this.item = item;
+        this.price = price;
+    }
+
     public TradeItem(String userName, Item item, int count, int price) {
         this.tradeId = TRADE++;
         this.userName = userName;

@@ -10,9 +10,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import user.User;
 import user.inventoryItem.Item;
 import user.inventoryItem.ItemBuilder;
-import user.userprivacy.User;
 
 
 public class UserDeserializer implements JsonDeserializer<User> {

@@ -3,7 +3,7 @@ package CommandManage.InvItem;
 import CommandManage.Command;
 import CommandManage.Invoker;
 import CommandManage.Users.UpdateUserCommand;
-import user.userprivacy.User;
+import user.User;
 
 import javax.swing.*;
 
@@ -19,7 +19,7 @@ public class DeleteItemCommand implements Command {
         @Override
     public void execute() {
         if(user.deleteItem(itemName)){
-            UpdateUserCommand updateUserCommand = new UpdateUserCommand(user)
+            UpdateUserCommand updateUserCommand = new UpdateUserCommand(user);
             Invoker invoker = new Invoker();
             invoker.setCommand(updateUserCommand);
             invoker.buttonPressed();
