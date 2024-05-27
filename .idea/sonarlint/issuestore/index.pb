@@ -509,3 +509,7 @@ _
 -src/main/java/itemInfos/ItemDeserializer.java,f\0\f0bce866a2861d39b8a8511fdb225ce109148f9d
 [
 +src/main/java/itemInfos/ItemFileSystem.java,1\2\121386d178352bf0468d5a3387790883f5cc8de0
+e
+5src/main/java/auctionData/TradeHistoryFileSystem.java,4\c\4c73cfd9da57acc6682d7084e9521e0d5a3cfb43
+U
+%src/main/java/auctionData/String.java,7\a\7ae5d52c7b7562096b89645c95f2352a96e25a14

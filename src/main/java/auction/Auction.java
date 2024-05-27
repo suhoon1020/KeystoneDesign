@@ -139,7 +139,8 @@ public class Auction {
             charge = new DiscountCharge(charge);
             double fianlcharge = charge.checkCharge(auctionTradeItem);
             // 거래 기록 남기기
-            TradeHistory tradeHistory = new TradeHistory(user.getName(), auctionTradeItem.getName(), auctionTradeItem, fianlcharge);
+            TradeHistory tradeHistory = new TradeHistory(user.getName(), auctionTradeItem.getUserName(), auctionTradeItem.getName(),
+                    auctionTradeItem.getPrice(), fianlcharge);
             TradeHistoryFileSystem.getTradeItemFileSystem().putTradeHistory(tradeHistory);
             // 돈 차감
             user.setGold(user.getGold() - auctionTradeItem.getPrice() * buyCount);

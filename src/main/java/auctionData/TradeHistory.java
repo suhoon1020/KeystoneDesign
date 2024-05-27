@@ -1,19 +1,19 @@
 package auctionData;
 
 
-import java.util.List;
-
 public class TradeHistory {
-    String buyerID;
-    String sellerID;
-    TradeItem tradeItems;
+    String buyerName;
+    String sellerName;
+    String itemName;
+    int price;
     double charge;
 
 
-    public TradeHistory(String buyerID, String sellerID, TradeItem tradeItems, double charge) {
-        this.buyerID = buyerID;
-        this.sellerID = sellerID;
-        this.tradeItems = tradeItems;
+    public TradeHistory(String buyerID, String sellerID, String itemName,int price, double charge) {
+        this.buyerName = buyerID;
+        this.sellerName = sellerID;
+        this.itemName = itemName;
+        this.price = price;
         this.charge = charge;
     }
 

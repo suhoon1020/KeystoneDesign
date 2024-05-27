@@ -1,4 +1,4 @@
-package commandManage.users;
+package commandManage.Users;
 
 import commandManage.Command;
 import user.User;
