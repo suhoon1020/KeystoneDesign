@@ -10,11 +10,11 @@ public class EquipMentHistory extends HistoryDecorator {
         super(tradeHistory);
     }
 
-    List<BasicHistory> currentHistory = TradeHistoryFileSystem.getTradeHistoryItemFileSystem().getFilterTradeHistories();
+    List<BasicHistory> currentHistory = TradeHistoryFileSystem.getTradeItemFileSystem().getFilterHistory();
 
     @Override
-    public void setHistory() {
-        super.setHistory();
+    public void showHistory() {
+        super.showHistory();
         for(BasicHistory currentHistory : currentHistory){
             if(currentHistory.getTradeItem().getType().equals())
         }

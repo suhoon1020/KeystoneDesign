@@ -7,9 +7,9 @@ public class MaterialHistory extends HistoryDecorator{
     }
 
     @Override
-    public void setHistory() {
+    public void showHistory() {
         if(item.getType().equals("Material")) {
-            super.setHistory(buyerID, sellerID, item);
+            super.showHistory(buyerID, sellerID, item);
         }
     }
 }

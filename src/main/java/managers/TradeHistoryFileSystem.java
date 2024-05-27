@@ -1,5 +1,6 @@
 package managers;
 
+import auctionData.BasicHistory;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -19,52 +20,65 @@ import java.util.List;
 public class TradeHistoryFileSystem {
     private static final String TRAGE_HISTORY_FILE = "tradeHistory.json";
 
-    private static List<TradeHistory> TradeHistories;
+
+
+    private static List<BasicHistory> tradeHistories;
+
+    private static List<BasicHistory> filterHistory;
+
+    public static void setFilterHistory(List<BasicHistory> filterHistory) {
+        TradeHistoryFileSystem.filterHistory = filterHistory;
+    }
+
+    public List<BasicHistory> getFilterHistory() {
+        return filterHistory;
+    }
 
     private static TradeHistoryFileSystem tradeHistoryFileSystem;
 
-    public static TradeHistoryFileSystem getTradeItemFileSystem(){
-        if(tradeHistoryFileSystem == null)
+    public static TradeHistoryFileSystem getTradeItemFileSystem() {
+        if (tradeHistoryFileSystem == null)
             tradeHistoryFileSystem = new TradeHistoryFileSystem();
 
         return tradeHistoryFileSystem;
     }
 
-    public void saveInfosToFile(){
+    public void saveInfosToFile() {
         Gson gson = new Gson();
 
-        try{
+        try {
             FileWriter fw = new FileWriter(TRAGE_HISTORY_FILE);
 
-            fw.write(gson.toJson(TradeHistories));
+            fw.write(gson.toJson(tradeHistories));
             fw.close();
-        } catch(IOException err){
+        } catch (IOException err) {
             System.err.println(err);
         }
     }
 
-    public void loadInfosFromFile(){
+    public void loadInfosFromFile() {
         if (!Files.exists(Paths.get(TRAGE_HISTORY_FILE))) {
-            TradeHistories = new ArrayList<>();
+            tradeHistories = new ArrayList<>();
         } else {
             try {
                 Gson gson = new Gson();
                 Reader reader = new FileReader(TRAGE_HISTORY_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                TradeHistories = gson.fromJson(jsonElement, new TypeToken<List<TradeHistory>>() {}.getType());
+                tradeHistories = gson.fromJson(jsonElement, new TypeToken<List<TradeHistory>>() {
+                }.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
         }
     }
 
-    public List<TradeHistory> getTradeHistories(){
-        return TradeHistories;
+    public List<BasicHistory> getTradeHistories() {
+        return tradeHistories;
     }
 
-    public Boolean putTradeHistory(TradeHistory newHistory) {
-        TradeHistories.add(newHistory);
+    public Boolean putTradeHistory(BasicHistory newHistory) {
+        tradeHistories.add(newHistory);
 
         return true;
     }

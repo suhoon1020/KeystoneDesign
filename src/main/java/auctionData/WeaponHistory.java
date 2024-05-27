@@ -6,9 +6,9 @@ public class WeaponHistory extends HistoryDecorator{
     }
 
     @Override
-    public void setHistory() {
+    public void showHistory() {
         if(item.getType().equals("Weapon")) {
-            super.setHistory();
+            super.showHistory();
         }
     }
 }

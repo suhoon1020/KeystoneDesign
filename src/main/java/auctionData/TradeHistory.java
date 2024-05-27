@@ -1,8 +1,8 @@
 package auctionData;
 
 
-public interface TradeHistory {
-    public void showHistory(String buyerID, String sellerID, TradeItem item);
+import java.util.List;
 
-    //
+public interface TradeHistory {
+    public List<BasicHistory> showHistory();
 }

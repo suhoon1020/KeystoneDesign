@@ -6,7 +6,7 @@ import managers.TradeHistoryFileSystem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicHistory implements TradeHistory{
+public class BasicHistory implements TradeHistory {
 
     String buyerID;
     String sellerID;
@@ -31,9 +31,9 @@ public class BasicHistory implements TradeHistory{
     }
 
     @Override
-    public void setHistory() {
+    public List<BasicHistory> showHistory() {
         //todo 거래내역 전부 조회
-        List<BasicHistory> loadFiles = TradeHistoryFileSystem.getTradeHistoryItemFileSystem().getTradeHistories();
+        List<BasicHistory> loadFiles = TradeHistoryFileSystem.getTradeItemFileSystem().getTradeHistories();
         TradeHistoryFileSystem.setFilterTradeHistories(loadFiles);
     }
 
