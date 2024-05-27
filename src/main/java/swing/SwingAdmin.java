@@ -19,6 +19,9 @@ import javax.swing.text.NumberFormatter;
 import auctionData.TradeItem;
 import auctionData.TradeItemFileSystem;
 import commandManage.*;
+import commandManage.Users.CreateUserCommand;
+import commandManage.Users.DeleteUserCommand;
+import commandManage.Users.UpdateUserCommand;
 import commandManage.inventoryItems.CreateInvItemCommand;
 import commandManage.inventoryItems.DeleteInvItemCommand;
 import commandManage.inventoryItems.UpdateInvItemCommand;
@@ -28,9 +31,6 @@ import commandManage.items.UpdateItemCommand;
 import commandManage.tradeItems.CreateTradeItemCommand;
 import commandManage.tradeItems.DeleteTradeItemCommand;
 import commandManage.tradeItems.UpdateTradeItemCommand;
-import commandManage.users.CreateUserCommand;
-import commandManage.users.DeleteUserCommand;
-import commandManage.users.UpdateUserCommand;
 import itemInfos.Item;
 import itemInfos.ItemBuilder;
 import itemInfos.ItemFileSystem;
@@ -309,27 +309,32 @@ public class SwingAdmin extends JFrame {
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
                     try {
-                        String type = C_tradeItemType.getSelectedItem().toString();
-                        String name = In_tradeItemName.getText().toString();
-                        String grade = C_tradeItemGrade.getSelectedItem().toString();
-                        String desc = In_tradeItemDesc.getText();
-                        int option1 = Integer.valueOf(In_tradeItemOp1.getText().replace(",", ""));
-                        int count = Integer.valueOf(In_tradeItemCount.getText().replace(",", ""));
-                        int price = Integer.valueOf(In_tradeItemPrice.getText().replace(",", ""));
+                        if(isRightCount(Integer.valueOf(In_tradeItemCount.getText().replace(",", "")))) {
+                            String type = C_tradeItemType.getSelectedItem().toString();
+                            String name = In_tradeItemName.getText().toString();
+                            String grade = C_tradeItemGrade.getSelectedItem().toString();
+                            String desc = In_tradeItemDesc.getText();
+                            int option1 = Integer.valueOf(In_tradeItemOp1.getText().replace(",", ""));
+                            int count = Integer.valueOf(In_tradeItemCount.getText().replace(",", ""));
+                            int price = Integer.valueOf(In_tradeItemPrice.getText().replace(",", ""));
 
-                        Item item = new ItemBuilder()
-                                .type(type)
-                                .name(name)
-                                .grade(grade)
-                                .desc(desc)
-                                .option1(option1)
-                                .build();
+                            Item item = new ItemBuilder()
+                                    .type(type)
+                                    .name(name)
+                                    .grade(grade)
+                                    .desc(desc)
+                                    .option1(option1)
+                                    .build();
 
-                        TradeItem newitem = new TradeItem("AUCTION", item, count, price);
-                        UpdateTradeItemCommand updateTItemCommand = new UpdateTradeItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
-                        invoker.setCommand(updateTItemCommand);
-                        invoker.run();
-                        refreshTradeItemTable();
+                            TradeItem newitem = new TradeItem("AUCTION", item, count, price);
+                            UpdateTradeItemCommand updateTItemCommand = new UpdateTradeItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
+                            invoker.setCommand(updateTItemCommand);
+                            invoker.run();
+                            refreshTradeItemTable();
+                        }
+                        else
+                            JOptionPane.showMessageDialog(null, "올바른 개수가 아닙니다");
+
 
                     } catch (NumberFormatException err) {
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
@@ -861,26 +866,32 @@ public class SwingAdmin extends JFrame {
         Btt_createUserItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(!In_userItemCount.getText().isEmpty()){
-                    String type = In_userItemType.getText();
-                    String name = In_userItemName.getText();
-                    String grade = In_userItemGrade.getText();
-                    String desc = In_userItemDesc.getText();
-                    int option1 = Integer.valueOf(In_userItemOp1.getText().replace(",", ""));
-                    int count = Integer.valueOf(In_userItemCount.getText().replace(",", ""));
-    
-                    Item item = new ItemBuilder()
-                        .type(type)
-                        .name(name)
-                        .grade(grade)
-                        .desc(desc)
-                        .option1(option1)
-                        .build();
-    
-                    CreateInvItemCommand createInvItemCommand = new CreateInvItemCommand(currentUser, item, count);
-                    invoker.setCommand(createInvItemCommand);
-                    invoker.run();
-                        
-                    refreshUserItemTable();
+                    if(Integer.valueOf(In_userItemCount.getText())>=0) {
+                        String type = In_userItemType.getText();
+                        String name = In_userItemName.getText();
+                        String grade = In_userItemGrade.getText();
+                        String desc = In_userItemDesc.getText();
+                        int option1 = Integer.valueOf(In_userItemOp1.getText().replace(",", ""));
+                        int count = Integer.valueOf(In_userItemCount.getText().replace(",", ""));
+
+                        Item item = new ItemBuilder()
+                                .type(type)
+                                .name(name)
+                                .grade(grade)
+                                .desc(desc)
+                                .option1(option1)
+                                .build();
+
+                        CreateInvItemCommand createInvItemCommand = new CreateInvItemCommand(currentUser, item, count);
+                        invoker.setCommand(createInvItemCommand);
+                        invoker.run();
+
+                        refreshUserItemTable();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "개수 설정이 잘못되었습니다");
+
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "아이템 개수를 입력해주세요");
@@ -894,6 +905,7 @@ public class SwingAdmin extends JFrame {
         Btt_updateUserItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(!In_userItemCount.getText().isEmpty()){
+                    if(isRightCount(Integer.valueOf(In_userItemOp1.getText().replace(",", ""))))
                     String type = In_userItemType.getText();
                     String name = In_userItemName.getText();
                     String grade = In_userItemGrade.getText();
@@ -916,6 +928,10 @@ public class SwingAdmin extends JFrame {
                     invoker.run();
                         
                     refreshUserItemTable();
+                    else{
+                        JOptionPane.showMessageDialog(null, "올바른 개수가 아닙니다");
+
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "아이템 개수를 입력해주세요");
@@ -1148,5 +1164,12 @@ public class SwingAdmin extends JFrame {
         }
 
         S_itemInfoList.setViewportView(T_itemInfoList);
+    }
+
+    public boolean isRightCount(int count){
+        if(count<=0){
+            return false;
+        }
+        return true;
     }
 }
