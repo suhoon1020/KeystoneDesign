@@ -7,15 +7,16 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import auction.Auction;
+import commandManage.Users.CreateUserCommand;
 import user.User;
 import commandManage.Invoker;
-import commandManage.users.CreateUserCommand;
 
 import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.regex.Pattern;
 
 public class SwingLogin extends JFrame {
 
@@ -196,19 +197,25 @@ public class SwingLogin extends JFrame {
                         || In_register_PhoneNumber.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "정보를 모두 입력하여 주십시오");
                 } else {
-                    User user = new User.UserBuilder()
-                            .ID(In_register_ID.getText())
-                            .password(In_register_Password.getText())
-                            .name(In_regisiter_Name.getText())
-                            .phoneNumber(In_register_PhoneNumber.getText())
-                            .gold(10000)
-                            .build();
+                    if(Pattern.matches("010-\\d{3,4}-\\d{4}",In_register_PhoneNumber.getText())
+                    ||In_register_ID.getText().length() <=5
+                    ||In_register_Password.getText().length()<=8) {
+                        User user = new User.UserBuilder()
+                                .ID(In_register_ID.getText())
+                                .password(In_register_Password.getText())
+                                .name(In_regisiter_Name.getText())
+                                .phoneNumber(In_register_PhoneNumber.getText())
+                                .gold(10000)
+                                .build();
 
-                    CreateUserCommand command = new CreateUserCommand(user);
-                    invoker.setCommand(command);
-                    invoker.run();
+                        CreateUserCommand command = new CreateUserCommand(user);
+                        invoker.setCommand(command);
+                        invoker.run();
 
-                    cardLayout.show(getContentPane(), "LoginPage");
+                        cardLayout.show(getContentPane(), "LoginPage");
+                    }
+                    else
+                        JOptionPane.showMessageDialog(null,"올바른 입력 형식이 아닙니다");
                 }
             }
         });
