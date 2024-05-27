@@ -26,6 +26,10 @@ public class TradeHistoryFileSystem {
         return tradeHistoryFileSystem;
     }
 
+    private TradeHistoryFileSystem(){
+        loadInfosFromFile();
+    }
+
     public List<TradeHistory> getTradeHistories() {
         return tradeHistories;
     }
@@ -33,8 +37,6 @@ public class TradeHistoryFileSystem {
     public static TradeHistoryFileSystem getTradeHistoryFileSystem() {
         return tradeHistoryFileSystem;
     }
-
-
 
     public void saveInfosToFile() {
         Gson gson = new Gson();
@@ -65,8 +67,6 @@ public class TradeHistoryFileSystem {
             }
         }
     }
-
-
 
     public void putTradeHistory(TradeHistory newHistory) {
         tradeHistories.add(newHistory);
