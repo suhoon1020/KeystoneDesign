@@ -11,11 +11,12 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.regex.Pattern;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.NumberFormatter;
 
+import auction.Auction;
 import auctionData.TradeHistory;
 import auctionData.TradeHistoryFileSystem;
 import auctionData.TradeItem;
@@ -96,8 +97,8 @@ public class SwingAdmin extends JFrame {
     private JTextField In_tradeItemUserName;
     private JTextField In_tradeItemName;
     private JTextField In_tradeItemGrade;
-    private JFormattedTextField In_tradeItemCount;
-    private JFormattedTextField In_tradeItemPrice;
+    private JTextField In_tradeItemCount;
+    private JTextField In_tradeItemPrice;
 
     private JTextField In_tradeHistoryBuyer;
     private JTextField In_tradeHistorySeller;
@@ -109,7 +110,8 @@ public class SwingAdmin extends JFrame {
     private JTextField In_userPassword;
     private JTextField In_userName;
     private JTextField In_userPhoneNumber;
-    private JFormattedTextField In_userGold;
+    private JTextField In_userGold;
+
 
     private JTextField In_inventoryUser;
     private JTextField In_userItemType;
@@ -117,9 +119,11 @@ public class SwingAdmin extends JFrame {
     private JTextField In_userItemGrade;
     private JTextField In_userItemDesc;
     private JTextField In_userItemOp1;
+    private JTextField In_userItemCount;
 
     private JTextField In_itemInfoName;
     private JTextField In_itemInfoDesc;
+    private JTextField In_itemInfoOp1;
 
     private static SwingAdmin swingAdmin = new SwingAdmin();
 
@@ -161,13 +165,6 @@ public class SwingAdmin extends JFrame {
         contents.setBounds(12, 107, 1062, 546);
         contents.setLayout(mainCardLayout);
         contentPane.add(contents);
-
-        // 숫자 입력 포멧
-        NumberFormatter F_NumberFormet = new NumberFormatter();
-        F_NumberFormet.setValueClass(Integer.class);
-        F_NumberFormet.setMinimum(Integer.valueOf(1));
-        F_NumberFormet.setMaximum(Integer.valueOf(100000));
-
 
         /*
          *      AuctionManage Page
@@ -271,11 +268,11 @@ public class SwingAdmin extends JFrame {
         tradeItemIn.add(In_tradeItemGrade);
         In_tradeItemGrade.setColumns(10);
 
-        In_tradeItemCount = new JFormattedTextField(F_NumberFormet);
+        In_tradeItemCount = new JTextField();
         tradeItemIn.add(In_tradeItemCount);
         In_tradeItemCount.setColumns(10);
 
-        In_tradeItemPrice = new JFormattedTextField(F_NumberFormet);
+        In_tradeItemPrice = new JTextField();
         tradeItemIn.add(In_tradeItemPrice);
         In_tradeItemPrice.setColumns(10);
 
@@ -291,24 +288,20 @@ public class SwingAdmin extends JFrame {
                 if (In_tradeItemName.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
-                    if(isRightCount(Integer.valueOf(In_tradeItemCount.getText().replace(",", "")))
-                    &&isRightCount(Integer.valueOf(In_tradeItemCount.getText().replace(",", "")))) {
-                        try {
-                            TradeItem tradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(Integer.parseInt(In_tradeItemId.getText()));
-                            Item item = tradeItem.getItem();
-                            int count = Integer.valueOf(In_tradeItemCount.getText().replace(",", ""));
-                            int price = Integer.valueOf(In_tradeItemPrice.getText().replace(",", ""));
+                    if (Pattern.matches("^[1-9]+$", In_tradeItemCount.getText())
+                            && Pattern.matches("^[1-9]+$", In_tradeHistoryPrice.getText())) {
 
-                            CreateTradeItemCommand createTItemCommand = new CreateTradeItemCommand("AUCTION", item, price, count);
-                            invoker.setCommand(createTItemCommand);
-                            invoker.run();
+                        TradeItem tradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(Integer.parseInt(In_tradeItemId.getText()));
+                        Item item = tradeItem.getItem();
+                        int count = Integer.valueOf(In_tradeItemCount.getText().replace(",", ""));
+                        int price = Integer.valueOf(In_tradeItemPrice.getText().replace(",", ""));
 
-                            refreshTradeItemTable();
+                        CreateTradeItemCommand createTItemCommand = new CreateTradeItemCommand("AUCTION", item, price, count);
+                        invoker.setCommand(createTItemCommand);
+                        invoker.run();
 
-                        } catch (NumberFormatException err) {
-                            JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
-                        }
-                    }else{
+                        refreshTradeItemTable();
+                    } else {
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 올바른 숫자를 입력해주세요");
                     }
                 }
@@ -323,26 +316,21 @@ public class SwingAdmin extends JFrame {
                 if (In_tradeItemId.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
                 else {
-                    if(isRightCount(Integer.valueOf(In_tradeItemCount.getText().replace(",", "")))
-                            &&isRightCount(Integer.valueOf(In_tradeItemCount.getText().replace(",", "")))) {
-                        try {
-                            TradeItem tradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(Integer.parseInt(In_tradeItemId.getText()));
-                            Item item = tradeItem.getItem();
-                            String userName = In_tradeItemUserName.getText();
-                            int count = Integer.valueOf(In_tradeItemCount.getText().replace(",", ""));
-                            int price = Integer.valueOf(In_tradeItemPrice.getText().replace(",", ""));
+                    if (Pattern.matches("^[1-9]+$", In_tradeItemCount.getText())
+                            && Pattern.matches("^[1-9]+$", In_tradeHistoryPrice.getText())) {
+                        TradeItem tradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(Integer.parseInt(In_tradeItemId.getText()));
+                        Item item = tradeItem.getItem();
+                        String userName = In_tradeItemUserName.getText();
+                        int count = Integer.valueOf(In_tradeItemCount.getText().replace(",", ""));
+                        int price = Integer.valueOf(In_tradeItemPrice.getText().replace(",", ""));
 
-                            TradeItem newitem = new TradeItem(userName, item, count, price);
-                            UpdateTradeItemCommand updateTItemCommand = new UpdateTradeItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
-                            invoker.setCommand(updateTItemCommand);
-                            invoker.run();
+                        TradeItem newitem = new TradeItem(userName, item, count, price);
+                        UpdateTradeItemCommand updateTItemCommand = new UpdateTradeItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
+                        invoker.setCommand(updateTItemCommand);
+                        invoker.run();
 
-                            refreshTradeItemTable();
-
-                        } catch (NumberFormatException err) {
-                            JOptionPane.showMessageDialog(null, "가격과 옵션에 숫자를 입력하세요");
-                        }
-                    }else{
+                        refreshTradeItemTable();
+                    } else {
                         JOptionPane.showMessageDialog(null, "가격과 옵션에 올바른 숫자를 입력하세요");
                     }
                 }
@@ -575,7 +563,7 @@ public class SwingAdmin extends JFrame {
         In_itemInfoDesc.setColumns(10);
         itemInfoIn.add(In_itemInfoDesc);
 
-        JFormattedTextField In_itemInfoOp1 = new JFormattedTextField(F_NumberFormet);
+        In_itemInfoOp1 = new JTextField();
         In_itemInfoOp1.setColumns(10);
         itemInfoIn.add(In_itemInfoOp1);
 
@@ -587,7 +575,7 @@ public class SwingAdmin extends JFrame {
         JButton Btt_createItemInfo = new JButton("아이템 생성");
         Btt_createItemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!In_itemInfoName.getText().isEmpty() && !In_itemInfoDesc.getText().isEmpty() && !In_itemInfoOp1.getText().isEmpty()) {
+                if (!In_itemInfoName.getText().isEmpty() && !In_itemInfoDesc.getText().isEmpty() && Pattern.matches("^[0-9]+$", In_itemInfoOp1.getText())) {
                     String type = C_itemInfoType.getSelectedItem().toString();
                     String name = In_itemInfoName.getText();
                     String grade = C_itemInfoGrade.getSelectedItem().toString();
@@ -608,7 +596,7 @@ public class SwingAdmin extends JFrame {
 
                     refreshItemInfoTable();
                 } else {
-                    JOptionPane.showMessageDialog(null, "값을 입력하세요");
+                    JOptionPane.showMessageDialog(null, "올바른 값을 입력하세요");
                 }
 
             }
@@ -619,32 +607,29 @@ public class SwingAdmin extends JFrame {
         JButton Btt_updateItemInfo = new JButton("아이템 수정");
         Btt_updateItemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!In_itemInfoName.getText().isEmpty() && !In_itemInfoDesc.getText().isEmpty() && !In_itemInfoOp1.getText().isEmpty()
-                && isRightCount(Integer.valueOf(In_itemInfoOp1.getText().replace(",", "")))) {
-                    try {
-                        String type = C_itemInfoType.getSelectedItem().toString();
-                        String name = In_itemInfoName.getText();
-                        String grade = C_itemInfoGrade.getSelectedItem().toString();
-                        String desc = In_itemInfoDesc.getText();
-                        int option1 = Integer.valueOf(In_itemInfoOp1.getText().replace(",", ""));
+                if (!In_itemInfoName.getText().isEmpty()
+                        && !In_itemInfoDesc.getText().isEmpty()
+                        && Pattern.matches("^[0-9]+$", In_itemInfoOp1.getText())) {
 
-                        Item item = new ItemBuilder()
-                                .type(type)
-                                .name(name)
-                                .grade(grade)
-                                .desc(desc)
-                                .option1(option1)
-                                .build();
+                    String type = C_itemInfoType.getSelectedItem().toString();
+                    String name = In_itemInfoName.getText();
+                    String grade = C_itemInfoGrade.getSelectedItem().toString();
+                    String desc = In_itemInfoDesc.getText();
+                    int option1 = Integer.valueOf(In_itemInfoOp1.getText().replace(",", ""));
 
-                        UpdateItemCommand updateItemCommand = new UpdateItemCommand(item);
-                        invoker.setCommand(updateItemCommand);
-                        invoker.run();
+                    Item item = new ItemBuilder()
+                            .type(type)
+                            .name(name)
+                            .grade(grade)
+                            .desc(desc)
+                            .option1(option1)
+                            .build();
 
-                        refreshItemInfoTable();
-                    }catch (NumberFormatException ex){
-                        JOptionPane.showMessageDialog(null, "option이 숫자 형식이 아닙니다");
-                    }
+                    UpdateItemCommand updateItemCommand = new UpdateItemCommand(item);
+                    invoker.setCommand(updateItemCommand);
+                    invoker.run();
 
+                    refreshItemInfoTable();
                 } else {
                     JOptionPane.showMessageDialog(null, "올바른 값을 입력하세요");
                 }
@@ -735,7 +720,7 @@ public class SwingAdmin extends JFrame {
         In_userPhoneNumber.setColumns(10);
         userIn.add(In_userPhoneNumber);
 
-        In_userGold = new JFormattedTextField(F_NumberFormet);
+        In_userGold = new JTextField();
         In_userGold.setColumns(10);
         userIn.add(In_userGold);
 
@@ -792,6 +777,27 @@ public class SwingAdmin extends JFrame {
 
             }
         });
+
+        JButton Btt_modityAdmin = new JButton("유저 권한부여");
+        Btt_modityAdmin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (!Auction.getAuction().getName().equals(In_userID.getText())) {
+                    User user = UserFileSystem.getUserFileSystem().getUserById(In_userID.getText());
+
+                    user.setAdmin(!user.isAdmin());
+
+                    UpdateUserCommand command = new UpdateUserCommand(user);
+                    invoker.setCommand(command);
+                    invoker.run();
+                    refreshUserTable();
+                } else {
+                    JOptionPane.showMessageDialog(null, "자신의 권한은 수정할 수 없습니다.");
+                }
+            }
+        });
+
+        Btt_modityAdmin.setFont(new Font("굴림", Font.PLAIN, 15));
+        userButtons.add(Btt_modityAdmin);
         Btt_createUser.setFont(new Font("굴림", Font.PLAIN, 15));
         userButtons.add(Btt_createUser);
 
@@ -959,12 +965,12 @@ public class SwingAdmin extends JFrame {
         In_userItemDesc.setColumns(10);
         userItemIn.add(In_userItemDesc);
 
-        In_userItemOp1 = new JFormattedTextField(F_NumberFormet);
+        In_userItemOp1 = new JTextField();
         In_userItemOp1.setEditable(false);
         In_userItemOp1.setColumns(10);
         userItemIn.add(In_userItemOp1);
 
-        JFormattedTextField In_userItemCount = new JFormattedTextField(F_NumberFormet);
+        In_userItemCount = new JTextField();
         In_userItemCount.setColumns(10);
         userItemIn.add(In_userItemCount);
 
@@ -977,38 +983,32 @@ public class SwingAdmin extends JFrame {
         Btt_createUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
         Btt_createUserItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!In_userItemCount.getText().isEmpty()) {
-                    try {
+                if (Pattern.matches("^[1-9]+$", In_userItemCount.getText())
+                        && Pattern.matches("^[1-9]+$", In_userItemOp1.getText())) {
 
-                        if (isRightCount(Integer.valueOf(In_userItemOp1.getText().replace(",", "")))) {
-                            String type = In_userItemType.getText();
-                            String name = In_userItemName.getText();
-                            String grade = In_userItemGrade.getText();
-                            String desc = In_userItemDesc.getText();
-                            int option1 = Integer.valueOf(In_userItemOp1.getText().replace(",", ""));
-                            int count = Integer.valueOf(In_userItemCount.getText().replace(",", ""));
+                    String type = In_userItemType.getText();
+                    String name = In_userItemName.getText();
+                    String grade = In_userItemGrade.getText();
+                    String desc = In_userItemDesc.getText();
+                    int option1 = Integer.valueOf(In_userItemOp1.getText().replace(",", ""));
+                    int count = Integer.valueOf(In_userItemCount.getText().replace(",", ""));
 
-                            Item item = new ItemBuilder()
-                                    .type(type)
-                                    .name(name)
-                                    .grade(grade)
-                                    .desc(desc)
-                                    .option1(option1)
-                                    .build();
+                    Item item = new ItemBuilder()
+                            .type(type)
+                            .name(name)
+                            .grade(grade)
+                            .desc(desc)
+                            .option1(option1)
+                            .build();
 
-                            CreateInvItemCommand createInvItemCommand = new CreateInvItemCommand(currentUser, item, count);
-                            invoker.setCommand(createInvItemCommand);
-                            invoker.run();
+                    CreateInvItemCommand createInvItemCommand = new CreateInvItemCommand(currentUser, item, count);
+                    invoker.setCommand(createInvItemCommand);
+                    invoker.run();
 
-                            refreshUserItemTable();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "올바른 개수가 아닙니다");
-                        }
-                    } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(null, "아이템 개수와 옵션1은 숫자여야 합니다.");
-                    }
+                    refreshUserItemTable();
+
                 } else {
-                    JOptionPane.showMessageDialog(null, "아이템 개수를 입력해주세요");
+                    JOptionPane.showMessageDialog(null, "올바른 정보를 입력해주세요");
                 }
             }
         });
@@ -1018,10 +1018,9 @@ public class SwingAdmin extends JFrame {
         Btt_updateUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
         Btt_updateUserItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!In_userItemCount.getText().isEmpty()) {
+                if (Pattern.matches("^[1-9]+$", In_userItemCount.getText())
+                        && Pattern.matches("^[1-9]+$", In_userItemOp1.getText())) {
 
-                    try {
-                        if (isRightCount(Integer.valueOf(In_userItemCount.getText().replace(",", "")))) {
                             String type = In_userItemType.getText();
                             String name = In_userItemName.getText();
                             String grade = In_userItemGrade.getText();
@@ -1044,15 +1043,8 @@ public class SwingAdmin extends JFrame {
                             invoker.run();
 
                             refreshUserItemTable();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "올바른 개수가 아닙니다");
-
-                        }
-                    } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(null, "아이템 개수와 옵션1은 숫자여야 합니다.");
-                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "아이템 개수를 입력해주세요");
+                    JOptionPane.showMessageDialog(null, "올바른 정보가 아닙니다");
                 }
 
             }
@@ -1307,11 +1299,4 @@ public class SwingAdmin extends JFrame {
         S_userItemInfoList.setViewportView(T_userItemInfoList);
     }
 
-    public Boolean isRightCount(int count) {
-        if (count <= 0) {
-            return false;
-        }
-
-        return true;
-    }
 }
