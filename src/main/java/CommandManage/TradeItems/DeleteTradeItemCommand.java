@@ -1,10 +1,12 @@
-package commandManage.TradeItems;
+package commandManage.tradeItems;
 
 import commandManage.Command;
-import auctionData.TradeItem;
 import managers.TradeItemFileSystem;
 
 import javax.swing.*;
+
+import auctionData.TradeItem;
+
 import java.util.List;
 
 public class DeleteTradeItemCommand implements Command {

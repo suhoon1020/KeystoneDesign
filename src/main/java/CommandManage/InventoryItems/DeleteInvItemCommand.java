@@ -1,4 +1,4 @@
-package commandManage.InventoryItems;
+package commandManage.inventoryItems;
 
 import commandManage.Command;
 import managers.UserFileSystem;

@@ -9,7 +9,6 @@ import javax.swing.*;
 public class CreateUserCommand implements Command {
     User user;
 
-
     public CreateUserCommand(User user) {
         this.user = user;
     }

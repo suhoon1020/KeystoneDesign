@@ -16,7 +16,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
+import auctionData.TradeItem;
 import commandManage.*;
+import commandManage.inventoryItems.CreateInvItemCommand;
+import commandManage.inventoryItems.DeleteInvItemCommand;
+import commandManage.inventoryItems.UpdateInvItemCommand;
 import commandManage.items.CreateItemCommand;
 import commandManage.items.DeleteItemCommand;
 import commandManage.items.UpdateItemCommand;
@@ -28,7 +32,6 @@ import commandManage.users.DeleteUserCommand;
 import commandManage.users.UpdateUserCommand;
 import itemInfos.Item;
 import itemInfos.ItemBuilder;
-import auctionData.TradeItem;
 import managers.ItemFileSystem;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;
@@ -101,8 +104,6 @@ public class SwingAdmin extends JFrame {
     private DefaultTableModel itemInfoTableModel;
 
     private static SwingAdmin swingAdmin = new SwingAdmin();
-
-
 
     public static SwingAdmin getSwingAdmin() {
         return swingAdmin;
@@ -857,14 +858,91 @@ public class SwingAdmin extends JFrame {
         
         JButton Btt_createUserItem = new JButton("아이템 생성");
         Btt_createUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
+        Btt_createUserItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(!In_userItemCount.getText().isEmpty()){
+                    String type = In_userItemType.getText();
+                    String name = In_userItemName.getText();
+                    String grade = In_userItemGrade.getText();
+                    String desc = In_userItemDesc.getText();
+                    int option1 = Integer.valueOf(In_userItemOp1.getText().replace(",", ""));
+                    int count = Integer.valueOf(In_userItemCount.getText().replace(",", ""));
+    
+                    Item item = new ItemBuilder()
+                        .type(type)
+                        .name(name)
+                        .grade(grade)
+                        .desc(desc)
+                        .option1(option1)
+                        .build();
+    
+                    CreateInvItemCommand createInvItemCommand = new CreateInvItemCommand(currentUser, item, count);
+                    invoker.setCommand(createInvItemCommand);
+                    invoker.run();
+                        
+                    refreshUserItemTable();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "아이템 개수를 입력해주세요");
+                }
+            }
+        });
         userItemButtons.add(Btt_createUserItem);
         
         JButton Btt_updateUserItem = new JButton("아이템 수정");
         Btt_updateUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
+        Btt_updateUserItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(!In_userItemCount.getText().isEmpty()){
+                    String type = In_userItemType.getText();
+                    String name = In_userItemName.getText();
+                    String grade = In_userItemGrade.getText();
+                    String desc = In_userItemDesc.getText();
+                    int option1 = Integer.valueOf(In_userItemOp1.getText().replace(",", ""));
+                    int count = Integer.valueOf(In_userItemCount.getText().replace(",", ""));
+    
+    
+                    Item item = new ItemBuilder()
+                        .type(type)
+                        .name(name)
+                        .grade(grade)
+                        .desc(desc)
+                        .option1(option1)
+                        .build();
+
+                    InventoryItem inventoryItem = new InventoryItem(item, count);
+                    UpdateInvItemCommand updateInvItemCommand = new UpdateInvItemCommand(currentUser, inventoryItem);
+                    invoker.setCommand(updateInvItemCommand);
+                    invoker.run();
+                        
+                    refreshUserItemTable();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "아이템 개수를 입력해주세요");
+                }
+
+            }
+        });
         userItemButtons.add(Btt_updateUserItem);
         
         JButton Btt_deleteUserItem = new JButton("아이템 삭제");
         Btt_deleteUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
+        Btt_deleteUserItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(!In_userItemName.getText().isEmpty()){
+                    DeleteInvItemCommand deleteInvItemCommand = new DeleteInvItemCommand(currentUser, In_userItemName.getText());
+                    invoker.setCommand(deleteInvItemCommand);
+                    invoker.run();
+
+                    refreshUserItemTable();
+
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "아이템 개수를 입력해주세요");
+                }
+
+            }
+        });
         userItemButtons.add(Btt_deleteUserItem);
 
         T_userItemList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {

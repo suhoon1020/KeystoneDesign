@@ -1,11 +1,12 @@
-package commandManage.TradeItems;
+package commandManage.tradeItems;
 
 import commandManage.Command;
 import itemInfos.Item;
-import auctionData.TradeItem;
 import managers.TradeItemFileSystem;
 
 import javax.swing.*;
+
+import auctionData.TradeItem;
 
 public class CreateTradeItemCommand implements Command {
     String userName;

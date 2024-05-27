@@ -152,6 +152,7 @@ public class Auction {
                 for (int i = 0; i < tradeItems.size(); ++i) {
                     if (tradeItems.get(i).getTradeId() == tradeId) {
                         tradeItems.set(i, tradeItem);
+
                     }
                 }
             }

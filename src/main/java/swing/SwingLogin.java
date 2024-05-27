@@ -351,5 +351,3 @@ public class SwingLogin extends JFrame {
         findPasswordPage.add(Btt_tryFindPW);
     }
 }
-
-
