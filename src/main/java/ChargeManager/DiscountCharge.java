@@ -9,8 +9,8 @@ public class DiscountCharge extends ChargeDecorator {
     }
 
     @Override
-    public double checkCharge(TradeItem tradeItem) {
-        return super.checkCharge(tradeItem) - (super.checkCharge(tradeItem) * discount(tradeItem.getCount()));
+    public int checkCharge(TradeItem tradeItem) {
+        return (int)(super.checkCharge(tradeItem) - (super.checkCharge(tradeItem) * discount(tradeItem.getCount())));
     }
 
     public double discount(int count) {

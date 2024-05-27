@@ -6,7 +6,7 @@ public class BasicCharge implements Charge{
 
 
     @Override
-    public double checkCharge(TradeItem tradeItem) {
-        return tradeItem.getPrice() * 0.05;
+    public int checkCharge(TradeItem tradeItem) {
+        return (int)(tradeItem.getPrice() * 0.05);
     }
 }
