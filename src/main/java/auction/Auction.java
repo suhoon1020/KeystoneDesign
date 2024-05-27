@@ -7,14 +7,14 @@ import ChargeManager.Charge;
 import ChargeManager.DiscountCharge;
 import auctionData.TradeHistory;
 import auctionData.TradeItem;
+import auctionData.TradeItemFileSystem;
 import itemInfos.Item;
 import managers.TradeHistoryFileSystem;
-import managers.TradeItemFileSystem;
-import managers.UserFileSystem;
 import swing.SwingLogin;
 import user.InventoryItem;
 
 import user.User;
+import user.UserFileSystem;
 
 public class Auction {
     private static Auction auction;

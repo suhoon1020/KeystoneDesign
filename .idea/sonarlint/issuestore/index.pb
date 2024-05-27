@@ -501,3 +501,11 @@ W
 'src/main/java/ChargeManager/Charge.java,8\f\8fd6016350e9b36a7ee619a13c4b24e2f0eaa0f2
 _
 /src/main/java/ChargeManager/DiscountCharge.java,d\5\d523252acab18596ff462a8d68d1dbf2421cdfe1
+\
+,src/main/java/itemObserver/ItemObserver.java,a\3\a346234b4d53923ed42622eac2bc97fd05d29af4
+[
++src/main/java/itemObserver/ItemSubject.java,e\1\e1878cc12146d4704ae26ca2c5fb0b5098bcf548
+]
+-src/main/java/itemInfos/ItemDeserializer.java,f\0\f0bce866a2861d39b8a8511fdb225ce109148f9d
+[
++src/main/java/itemInfos/ItemFileSystem.java,1\2\121386d178352bf0468d5a3387790883f5cc8de0
