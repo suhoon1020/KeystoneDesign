@@ -12,6 +12,8 @@ public class User implements ItemObserver{
     private String name;
     private String phoneNumber;
     private int gold;
+    private boolean isAdmin;
+    
     private List<InventoryItem> itemList;
 
     public String getId() {
@@ -34,12 +36,17 @@ public class User implements ItemObserver{
         return gold;
     }
 
+    public boolean isAdmin(){
+        return isAdmin;
+    }
+
     public List<InventoryItem> getItemList() {
         return itemList;
     }
 
+    // 스윙 데이터 출력
     public String[] getListData(){
-        return new String[]{id, password, name, phoneNumber, Integer.toString(gold)};
+        return new String[]{id, password, name, phoneNumber, Integer.toString(gold), String.valueOf(isAdmin)};
     }
 
     public void setGold(int gold){
@@ -52,6 +59,7 @@ public class User implements ItemObserver{
         this.password = builder.password;
         this.name = builder.name;
         this.phoneNumber = builder.phoneNumber;
+        this.isAdmin = false;
         this.gold = builder.gold;
         
         if(builder.itemList == null)
