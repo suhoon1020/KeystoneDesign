@@ -6,10 +6,10 @@ import ChargeManager.BasicCharge;
 import ChargeManager.Charge;
 import ChargeManager.DiscountCharge;
 import auctionData.TradeHistory;
+import auctionData.TradeHistoryFileSystem;
 import auctionData.TradeItem;
 import auctionData.TradeItemFileSystem;
 import itemInfos.Item;
-import managers.TradeHistoryFileSystem;
 import swing.SwingLogin;
 import user.InventoryItem;
 
@@ -95,7 +95,6 @@ public class Auction {
         return "";
     }
 
-
     public boolean sellItem(String sellItemName, int sellCount, int price){
         InventoryItem inventoryItem = user.getItemByName(sellItemName);
 
@@ -132,27 +131,30 @@ public class Auction {
 
     public boolean buyItem(int tradeId, int buyCount){
         TradeItem auctionTradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(tradeId);
-        //구매할 아이템 개수 * 금액 만큼 돈이 있는지 && 아이템 구매 개수가 사는 개수보다 많은지 확인
+        // 구매할 아이템 개수 * 금액 만큼 돈이 있는지 && 아이템 구매 개수가 사는 개수보다 많은지 확인
         if(auctionTradeItem.getCount() >= buyCount && user.getGold() >= auctionTradeItem.getPrice() * buyCount){
             Item item = auctionTradeItem.getItem();
-            // todo 수수료 계산
+
+            // 수수료 계산
             Charge charge = new BasicCharge();
             charge = new DiscountCharge(charge);
-            double fianlcharge=charge.checkCharge(auctionTradeItem);
-            // TODO 거래 기록 남기기
+            double fianlcharge = charge.checkCharge(auctionTradeItem);
+
+            // 거래 기록 남기기
             TradeHistory tradeHistory = new TradeHistory(user.getName(),auctionTradeItem.getName(),auctionTradeItem, fianlcharge);
             TradeHistoryFileSystem.getTradeItemFileSystem().putTradeHistory(tradeHistory);
+
             // 돈 차감
             user.setGold(user.getGold() - auctionTradeItem.getPrice() * buyCount);
 
             // 판매자 돈 증가
             User seller = UserFileSystem.getUserFileSystem().getUserByName(auctionTradeItem.getUserName());
-            // TODO 수수료 만큼은 금액 차감!!
+
+            // 수수료 만큼은 금액 차감
             if(seller != null)
-                seller.setGold(seller.getGold() + auctionTradeItem.getPrice() * buyCount-(int)fianlcharge);
+                seller.setGold(seller.getGold() + auctionTradeItem.getPrice() * buyCount - (int)fianlcharge);
 
             // 거래 아이템에서 인벤토리 아이템으로 옮기기
-
             // 거래 후 거래 아이템 정보
             List<TradeItem> tradeItems = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList();
             TradeItem tradeItem = new TradeItem(auctionTradeItem.getUserName(), item.clone(), auctionTradeItem.getCount() - buyCount, auctionTradeItem.getPrice());
@@ -184,6 +186,7 @@ public class Auction {
             UserFileSystem.getUserFileSystem().saveInfosToFile();
             TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
             TradeHistoryFileSystem.getTradeItemFileSystem().saveInfosToFile();
+
             return true;
         }
 

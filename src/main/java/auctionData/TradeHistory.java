@@ -1,8 +1,5 @@
 package auctionData;
 
-
-import java.util.List;
-
 public class TradeHistory {
     String buyerID;
     String sellerID;

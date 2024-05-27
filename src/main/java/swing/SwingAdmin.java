@@ -48,7 +48,7 @@ public class SwingAdmin extends JFrame {
     private String[] itemTypes = {"Equipment", "Material", "Potion", "Weapon"};
     private String[] itemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
 
-    private String[] userHeader = {"ID", "PW", "NAME", "PHONE", "GOLD"};
+    private String[] userHeader = {"ID", "PW", "NAME", "PHONE", "GOLD", "ISADMIN"};
 
     private User currentUser;
     private JPanel contentPane;
