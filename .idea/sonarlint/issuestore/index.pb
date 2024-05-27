@@ -513,3 +513,5 @@ e
 5src/main/java/auctionData/TradeHistoryFileSystem.java,4\c\4c73cfd9da57acc6682d7084e9521e0d5a3cfb43
 U
 %src/main/java/auctionData/String.java,7\a\7ae5d52c7b7562096b89645c95f2352a96e25a14
+b
+2src/main/java/auctionData/TradeItemFileSystem.java,e\2\e2a8ffbfb146085e9631fcb78326e9ce257b8a73

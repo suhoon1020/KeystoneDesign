@@ -137,7 +137,7 @@ public class Auction {
             // 수수료 계산
             Charge charge = new BasicCharge();
             charge = new DiscountCharge(charge);
-            double fianlcharge = charge.checkCharge(auctionTradeItem);
+            int fianlcharge = charge.checkCharge(auctionTradeItem);
             // 거래 기록 남기기
             TradeHistory tradeHistory = new TradeHistory(user.getName(), auctionTradeItem.getUserName(), auctionTradeItem.getName(),
                     auctionTradeItem.getPrice(), fianlcharge);
