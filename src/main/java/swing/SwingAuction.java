@@ -245,6 +245,11 @@ public class SwingAuction extends JFrame {
 
         JButton B_goSearch = new JButton("검색");
         B_goSearch.setBounds(772, -1, 100, 56);
+        B_goSearch.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                refreshFilterTradeItemTable();
+            }
+        });
         search.add(B_goSearch);
 
         In_itemBuyCount = new JFormattedTextField(F_NumberFormet);
@@ -431,8 +436,8 @@ public class SwingAuction extends JFrame {
                 if(!In_itemSellCount.getText().isEmpty() && !In_itemSellPrice.getText().isEmpty()){
                     int selectedRow = T_InventoryTable.getSelectedRow();
                     String sellItemName = T_InventoryTable.getValueAt(selectedRow, 1).toString();
-                    int sellItemCount = Integer.parseInt(In_itemSellCount.getText());
-                    int sellItemPrice = Integer.parseInt(In_itemSellPrice.getText());
+                    int sellItemCount = Integer.parseInt(In_itemSellCount.getText().replace(",", ""));
+                    int sellItemPrice = Integer.parseInt(In_itemSellPrice.getText().replace(",", ""));
     
                     if(Auction.getAuction().sellItem(sellItemName, sellItemCount, sellItemPrice)){
                         // 판매 등록 성공
@@ -516,6 +521,16 @@ public class SwingAuction extends JFrame {
         });
         Btt_goUserInfo.setFont(new Font("굴림", Font.PLAIN, 25));
         manu.add(Btt_goUserInfo);
+
+        JButton Btt_logOut = new JButton("종료");
+        Btt_logOut.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SwingLogin.getSwingLogin().setVisible(true);
+                dispose();
+            }
+        });
+        Btt_logOut.setFont(new Font("굴림", Font.PLAIN, 25));
+        manu.add(Btt_logOut);
         
         JPanel panel = new JPanel();
         panel.setBounds(12, 10, 262, 74);

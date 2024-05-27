@@ -1083,6 +1083,16 @@ public class SwingAdmin extends JFrame {
         });
         Btt_goUser.setFont(new Font("굴림", Font.PLAIN, 20));
         manu.add(Btt_goUser);
+
+        JButton Btt_logOut = new JButton("종료");
+        Btt_logOut.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SwingLogin.getSwingLogin().setVisible(true);
+                dispose();
+            }
+        });
+        Btt_logOut.setFont(new Font("굴림", Font.PLAIN, 20));
+        manu.add(Btt_logOut);
     }
 
     public void refreshTradeItemTable() {

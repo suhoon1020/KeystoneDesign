@@ -27,6 +27,10 @@ public class TradeHistoryFileSystem {
         return tradeHistoryFileSystem;
     }
 
+    private TradeHistoryFileSystem(){
+        loadInfosFromFile();
+    }
+
     public void saveInfosToFile() {
         Gson gson = new Gson();
 
