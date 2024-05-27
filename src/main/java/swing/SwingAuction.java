@@ -287,6 +287,10 @@ public class SwingAuction extends JFrame {
         Btt_buyItem.setBounds(141, 518, 125, 63);
         AuctionPage.add(Btt_buyItem);
 
+        /*
+         *      INVENTORY PAGE
+         */
+
         JPanel inventoryPage = new JPanel();
         contents.add(inventoryPage, "InventoryPage");
         inventoryPage.setLayout(null);

@@ -1,14 +1,20 @@
 package itemInfos;
 
 public class Material extends Item{
-    @Override
-    public void setSpecificAttributes(ItemBuilder itemBuilder){
-
-    }
 
     @Override
     public int getOption1() {
         return 0;
+    }
+    
+    @Override
+    public String[] getListData() {
+        return new String[]{type, name, grade, desc, "0"};
+    }
+
+    @Override
+    public void setSpecificAttributes(ItemBuilder itemBuilder){
+
     }
 
     @Override
@@ -21,4 +27,6 @@ public class Material extends Item{
             .option1(0)
             .build();
     }
+
+
 }

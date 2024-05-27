@@ -4,14 +4,21 @@ public class Equipment extends Item{
     protected int defence;
 
     @Override
+    public int getOption1() {
+        return defence;
+    }
+
+    @Override
+    public String[] getListData() {
+        return new String[]{type, name, grade, desc, Integer.toString(defence)};
+    }
+
+
+    @Override
     protected void setSpecificAttributes(ItemBuilder itemBuilder) {
         this.defence=itemBuilder.option1;
     }
 
-    @Override
-    public int getOption1() {
-        return defence;
-    }
 
     @Override
     public Item clone() {
@@ -23,5 +30,4 @@ public class Equipment extends Item{
             .option1(defence)
             .build();
     }
-
 }

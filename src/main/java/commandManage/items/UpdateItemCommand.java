@@ -18,7 +18,7 @@ public class UpdateItemCommand implements Command {
     @Override
     public void execute() {
         List<Item> items = ItemFileSystem.getItemFileSystem().getItemList();
-        for(int i = 0; i >items.size(); ++i){
+        for(int i = 0; i < items.size(); ++i){
             if(items.get(i).getName().equals(item.getName())){
                 items.set(i, item);
                 JOptionPane.showMessageDialog(null, "아이템이 수정되었습니다");

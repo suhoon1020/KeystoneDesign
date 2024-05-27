@@ -4,13 +4,18 @@ public class Weapon extends Item {
     protected int damage;
 
     @Override
-    protected void setSpecificAttributes(ItemBuilder itemBuilder) {
-        this.damage = itemBuilder.option1;
-    }
-    
-    @Override
     public int getOption1() {
         return damage;
+    }
+
+    @Override
+    public String[] getListData() {
+        return new String[]{type, name, grade, desc, Integer.toString(damage)};
+    }
+
+    @Override
+    protected void setSpecificAttributes(ItemBuilder itemBuilder) {
+        this.damage = itemBuilder.option1;
     }
 
     @Override
@@ -23,4 +28,6 @@ public class Weapon extends Item {
             .option1(damage)
             .build();
     }
+
+
 }

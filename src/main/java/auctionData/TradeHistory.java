@@ -2,6 +2,7 @@ package auctionData;
 
 
 public interface TradeHistory {
-    public void setHistory();
+    public void showHistory(String buyerID, String sellerID, TradeItem item);
 
+    //
 }
