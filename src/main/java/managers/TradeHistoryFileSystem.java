@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import auctionData.BasicHistory;
 import auctionData.TradeHistory;
 
 import java.io.FileReader;
@@ -18,21 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TradeHistoryFileSystem {
-    private static final String TRAGE_HISTORY_FILE = "tradeHistory.json";
-
-
-
-    private static List<BasicHistory> tradeHistories;
-
-    private static List<BasicHistory> filterHistory;
-
-    public static void setFilterHistory(List<BasicHistory> filterHistory) {
-        TradeHistoryFileSystem.filterHistory = filterHistory;
-    }
-
-    public List<BasicHistory> getFilterHistory() {
-        return filterHistory;
-    }
+    private static final String TRADE_HISTORY_FILE = "tradeHistory.json";
+    private static List<TradeHistory> tradeHistories;
 
     private static TradeHistoryFileSystem tradeHistoryFileSystem;
 
@@ -47,7 +33,7 @@ public class TradeHistoryFileSystem {
         Gson gson = new Gson();
 
         try {
-            FileWriter fw = new FileWriter(TRAGE_HISTORY_FILE);
+            FileWriter fw = new FileWriter(TRADE_HISTORY_FILE);
 
             fw.write(gson.toJson(tradeHistories));
             fw.close();
@@ -57,12 +43,12 @@ public class TradeHistoryFileSystem {
     }
 
     public void loadInfosFromFile() {
-        if (!Files.exists(Paths.get(TRAGE_HISTORY_FILE))) {
+        if (!Files.exists(Paths.get(TRADE_HISTORY_FILE))) {
             tradeHistories = new ArrayList<>();
         } else {
             try {
                 Gson gson = new Gson();
-                Reader reader = new FileReader(TRAGE_HISTORY_FILE);
+                Reader reader = new FileReader(TRADE_HISTORY_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
                 tradeHistories = gson.fromJson(jsonElement, new TypeToken<List<TradeHistory>>() {
@@ -73,13 +59,11 @@ public class TradeHistoryFileSystem {
         }
     }
 
-    public List<BasicHistory> getTradeHistories() {
+    public List<TradeHistory> getTradeHistories() {
         return tradeHistories;
     }
 
-    public Boolean putTradeHistory(BasicHistory newHistory) {
+    public void putTradeHistory(TradeHistory newHistory) {
         tradeHistories.add(newHistory);
-
-        return true;
     }
 }

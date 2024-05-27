@@ -2,8 +2,13 @@ package auction;
 
 import java.util.List;
 
+import ChargeManager.BasicCharge;
+import ChargeManager.Charge;
+import ChargeManager.DiscountCharge;
+import auctionData.TradeHistory;
 import auctionData.TradeItem;
 import itemInfos.Item;
+import managers.TradeHistoryFileSystem;
 import managers.TradeItemFileSystem;
 import managers.UserFileSystem;
 import swing.SwingLogin;
@@ -130,15 +135,21 @@ public class Auction {
         //구매할 아이템 개수 * 금액 만큼 돈이 있는지 && 아이템 구매 개수가 사는 개수보다 많은지 확인
         if(auctionTradeItem.getCount() >= buyCount && user.getGold() >= auctionTradeItem.getPrice() * buyCount){
             Item item = auctionTradeItem.getItem();
+            // todo 수수료 계산
+            Charge charge = new BasicCharge();
+            charge = new DiscountCharge(charge);
+            double fianlcharge=charge.checkCharge(auctionTradeItem);
             // TODO 거래 기록 남기기
-
+            TradeHistory tradeHistory = new TradeHistory(user.getName(),auctionTradeItem.getName(),auctionTradeItem, fianlcharge);
+            TradeHistoryFileSystem.getTradeItemFileSystem().putTradeHistory(tradeHistory);
             // 돈 차감
             user.setGold(user.getGold() - auctionTradeItem.getPrice() * buyCount);
 
             // 판매자 돈 증가
             User seller = UserFileSystem.getUserFileSystem().getUserByName(auctionTradeItem.getUserName());
+            // TODO 수수료 만큼은 금액 차감!!
             if(seller != null)
-                seller.setGold(seller.getGold() + auctionTradeItem.getPrice() * buyCount);
+                seller.setGold(seller.getGold() + auctionTradeItem.getPrice() * buyCount-(int)fianlcharge);
 
             // 거래 아이템에서 인벤토리 아이템으로 옮기기
 
@@ -172,7 +183,7 @@ public class Auction {
             // 저장
             UserFileSystem.getUserFileSystem().saveInfosToFile();
             TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
-
+            TradeHistoryFileSystem.getTradeItemFileSystem().saveInfosToFile();
             return true;
         }
 
