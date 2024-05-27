@@ -11,7 +11,7 @@ public class ChargeDecorator implements Charge{
     }
 
     @Override
-    public double checkCharge(TradeItem tradeItem) {
+    public int checkCharge(TradeItem tradeItem) {
         return this.charge.checkCharge(tradeItem);
     }
 }

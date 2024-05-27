@@ -17,7 +17,6 @@ import java.util.List;
 public class TradeHistoryFileSystem {
     private static final String TRADE_HISTORY_FILE = "tradeHistory.json";
     private static List<TradeHistory> tradeHistories;
-
     private static TradeHistoryFileSystem tradeHistoryFileSystem;
 
     public static TradeHistoryFileSystem getTradeItemFileSystem() {
@@ -29,6 +28,14 @@ public class TradeHistoryFileSystem {
 
     private TradeHistoryFileSystem(){
         loadInfosFromFile();
+    }
+
+    public List<TradeHistory> getTradeHistories() {
+        return tradeHistories;
+    }
+
+    public static TradeHistoryFileSystem getTradeHistoryFileSystem() {
+        return tradeHistoryFileSystem;
     }
 
     public void saveInfosToFile() {
@@ -59,10 +66,6 @@ public class TradeHistoryFileSystem {
                 System.err.println(err);
             }
         }
-    }
-
-    public List<TradeHistory> getTradeHistories() {
-        return tradeHistories;
     }
 
     public void putTradeHistory(TradeHistory newHistory) {

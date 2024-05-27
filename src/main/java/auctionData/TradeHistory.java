@@ -6,10 +6,35 @@ public class TradeHistory {
     String sellerName;
     String itemName;
     int price;
-    double charge;
+    int charge;
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getBuyerName() {
+        return buyerName;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public int getCharge() {
+        return charge;
+    }
 
 
-    public TradeHistory(String buyerID, String sellerID, String itemName,int price, double charge) {
+    public String[] getListData() {
+        return new String[]{buyerName, sellerName, itemName, Integer.toString(price),Integer.toString(charge)};
+    }
+
+
+    public TradeHistory(String buyerID, String sellerID, String itemName, int price, int charge) {
         this.buyerName = buyerID;
         this.sellerName = sellerID;
         this.itemName = itemName;
