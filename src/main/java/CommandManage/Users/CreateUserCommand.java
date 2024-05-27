@@ -32,18 +32,14 @@ public class CreateUserCommand implements Command {
     @Override
     public void execute() {
         if (UserFileSystem.getUserFileSystem().getUserById(user.getId()) == null){
-            if(UserFileSystem.getUserFileSystem().getUserByName(user.getName()) == null){
-                UserFileSystem.getUserFileSystem().getUserList().add(user);
-                addDefaultItems();
+            UserFileSystem.getUserFileSystem().getUserList().add(user);
+            addDefaultItems();
 
-                ItemFileSystem.getItemFileSystem().registerObserver(user);
+            ItemFileSystem.getItemFileSystem().registerObserver(user);
 
-                // 저장
-                UserFileSystem.getUserFileSystem().saveInfosToFile();
-                JOptionPane.showMessageDialog(null,"유저 생성에 성공하였습니다");
-                return;
-            }
-            JOptionPane.showMessageDialog(null,"중복된 이름이 있습니다");
+            // 저장
+            UserFileSystem.getUserFileSystem().saveInfosToFile();
+            JOptionPane.showMessageDialog(null,"유저 생성에 성공하였습니다");
             return;
         }
 

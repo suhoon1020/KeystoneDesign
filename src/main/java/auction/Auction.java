@@ -36,6 +36,10 @@ public class Auction {
         auctionState = auctionState.changeState();
     }
 
+    public String getId() {
+        return user.getId();
+    }
+
     public String getName() {
         return user.getName();
     }
@@ -71,13 +75,14 @@ public class Auction {
      */
 
     public String findID(String name, String phoneNumber) {
-        User user = UserFileSystem.getUserFileSystem().getUserByName(name);
+        List<User> users = UserFileSystem.getUserFileSystem().getUsersByName(name);
 
-        if (user != null) {
-            if (user.getPhoneNumber().equals(phoneNumber))
-                return user.getId();
-            else
-                return "";
+        if (users.size() != 0) {
+            for(User user : users){
+                if (user.getName().equals(name) && user.getPhoneNumber().equals(phoneNumber)){
+                    return user.getId();
+                }
+            }
         }
 
         return "";
@@ -117,8 +122,36 @@ public class Auction {
             }
 
             // 경매장 아이템 등록
-            TradeItem tradeItem = new TradeItem(user.getName(), item.clone(), sellCount, price);
+            TradeItem tradeItem = new TradeItem(user.getId(), item.clone(), sellCount, price);
             TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList().add(tradeItem);
+
+            // 저장
+            UserFileSystem.getUserFileSystem().saveInfosToFile();
+            TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public boolean cancleSellItem(int tradeId){
+        TradeItem auctionTradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(tradeId);
+
+        if(auctionTradeItem != null){
+            Item item = auctionTradeItem.getItem();
+            
+            List<TradeItem> tradeItems = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList();
+
+            // 거래 목록에서 아이템 삭제
+            for (int i = 0; i < tradeItems.size(); ++i) {
+                if (tradeItems.get(i).getTradeId() == tradeId) {
+                    tradeItems.remove(i);
+                }
+            }
+            // 아이템 인벤토리로 옮기기
+            InventoryItem inventoryItem = new InventoryItem(item.clone(), auctionTradeItem.getCount());
+            user.addItemCount(inventoryItem);
 
             // 저장
             UserFileSystem.getUserFileSystem().saveInfosToFile();
@@ -134,19 +167,21 @@ public class Auction {
         //구매할 아이템 개수 * 금액 만큼 돈이 있는지 && 아이템 구매 개수가 사는 개수보다 많은지 확인
         if (auctionTradeItem.getCount() >= buyCount && user.getGold() >= auctionTradeItem.getPrice() * buyCount) {
             Item item = auctionTradeItem.getItem();
+
             // 수수료 계산
             Charge charge = new BasicCharge();
             charge = new DiscountCharge(charge);
             int fianlcharge = charge.checkCharge(auctionTradeItem);
+
             // 거래 기록 남기기
-            TradeHistory tradeHistory = new TradeHistory(user.getName(), auctionTradeItem.getUserName(), auctionTradeItem.getName(),
+            TradeHistory tradeHistory = new TradeHistory(user.getName(), auctionTradeItem.getUserId(), auctionTradeItem.getName(),
                     auctionTradeItem.getPrice(), fianlcharge);
             TradeHistoryFileSystem.getTradeItemFileSystem().putTradeHistory(tradeHistory);
             // 돈 차감
             user.setGold(user.getGold() - auctionTradeItem.getPrice() * buyCount);
 
             // 판매자 돈 증가
-            User seller = UserFileSystem.getUserFileSystem().getUserByName(auctionTradeItem.getUserName());
+            User seller = UserFileSystem.getUserFileSystem().getUserById(auctionTradeItem.getUserId());
             //수수료 만큼은 금액 차감!!
             if (seller != null)
                 seller.setGold(seller.getGold() + auctionTradeItem.getPrice() * buyCount - (int) fianlcharge);
@@ -155,7 +190,7 @@ public class Auction {
 
             // 거래 후 거래 아이템 정보
             List<TradeItem> tradeItems = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList();
-            TradeItem tradeItem = new TradeItem(auctionTradeItem.getUserName(), item.clone(), auctionTradeItem.getCount() - buyCount, auctionTradeItem.getPrice());
+            TradeItem tradeItem = new TradeItem(auctionTradeItem.getUserId(), item.clone(), auctionTradeItem.getCount() - buyCount, auctionTradeItem.getPrice());
 
             // 거래 아이템 정보 수정 / 삭제
             if (tradeItem.getCount() > 0) {

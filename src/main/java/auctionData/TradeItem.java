@@ -5,14 +5,14 @@ import itemInfos.Item;
 public class TradeItem {
     private static int TRADE = 0;
     private int tradeId;
-    private String userName;
+    private String userId;
     private Item item;
     private int price;
     private int count;
 
-    public TradeItem(String userName, Item item, int count, int price) {
+    public TradeItem(String userId, Item item, int count, int price) {
         this.tradeId = TRADE++;
-        this.userName = userName;
+        this.userId = userId;
         this.item = item;
         this.price = price;
         this.count = count;
@@ -22,8 +22,8 @@ public class TradeItem {
         return tradeId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUserId() {
+        return userId;
     }
 
     public Item getItem(){
@@ -55,12 +55,12 @@ public class TradeItem {
     }
 
     public String[] getSimpleListData(){
-        return new String[]{Integer.toString(tradeId), userName, item.getName(), item.getGrade(), Integer.toString(count), Integer.toString(price)};
+        return new String[]{Integer.toString(tradeId), userId, item.getName(), item.getGrade(), Integer.toString(count), Integer.toString(price)};
     }
 
     public String[] getListData(){
         return new String[]{Integer.toString(tradeId),
-                userName, 
+                userId, 
                 item.getType(),
                 item.getName(), 
                 item.getGrade(), 

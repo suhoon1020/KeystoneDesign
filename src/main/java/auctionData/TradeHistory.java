@@ -2,8 +2,8 @@ package auctionData;
 
 
 public class TradeHistory {
-    String buyerName;
-    String sellerName;
+    String buyerId;
+    String sellerId;
     String itemName;
     int price;
     int charge;
@@ -12,12 +12,12 @@ public class TradeHistory {
         return price;
     }
 
-    public String getBuyerName() {
-        return buyerName;
+    public String getBuyerId() {
+        return buyerId;
     }
 
-    public String getSellerName() {
-        return sellerName;
+    public String getSellerId() {
+        return sellerId;
     }
 
     public String getItemName() {
@@ -30,13 +30,13 @@ public class TradeHistory {
 
 
     public String[] getListData() {
-        return new String[]{buyerName, sellerName, itemName, Integer.toString(price),Integer.toString(charge)};
+        return new String[]{buyerId, sellerId, itemName, Integer.toString(price),Integer.toString(charge)};
     }
 
 
     public TradeHistory(String buyerID, String sellerID, String itemName, int price, int charge) {
-        this.buyerName = buyerID;
-        this.sellerName = sellerID;
+        this.buyerId = buyerID;
+        this.sellerId = sellerID;
         this.itemName = itemName;
         this.price = price;
         this.charge = charge;

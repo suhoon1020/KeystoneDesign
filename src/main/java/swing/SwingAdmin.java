@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.NumberFormatter;
 
 import auction.Auction;
 import auctionData.TradeHistory;
@@ -827,8 +826,8 @@ public class SwingAdmin extends JFrame {
                 UpdateUserCommand command = new UpdateUserCommand(user);
                 invoker.setCommand(command);
                 invoker.run();
+                
                 refreshUserTable();
-
             }
         });
         Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));

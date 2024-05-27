@@ -101,7 +101,7 @@ public class SwingLogin extends JFrame {
                 if (Auction.getAuction().login(In_ID.getText(), In_password.getText())) {
                     In_ID.setText("");
                     In_password.setText("");
-                    
+
                     JOptionPane.showMessageDialog(null, "로그인이 완료 되었습니다");
 
                     dispose();
@@ -195,16 +195,16 @@ public class SwingLogin extends JFrame {
         Btt_tryRegister.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (In_register_ID.getText().isEmpty()
-                        || In_register_Password.getText().isEmpty()
-                        || In_regisiter_Name.getText().isEmpty()
-                        || In_register_PhoneNumber.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "정보를 모두 입력하여 주십시오");
-                } else {
-                    if(Pattern.matches("010-\\d{3,4}-\\d{4}",In_register_PhoneNumber.getText())
-                    ||In_register_ID.getText().length() <=5
-                    ||In_register_Password.getText().length()<=8) {
-                        User user = new User.UserBuilder()
+                if(!Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", In_register_ID.getText()))
+                    JOptionPane.showMessageDialog(null, "아이디 형식은 영어로 시작하는 5 ~ 12 영어, 숫자 조합입니다");
+                else if(!Pattern.matches("^[a-zA-Z0-9_]{5,12}$", In_register_Password.getText()))
+                    JOptionPane.showMessageDialog(null, "비밀번호 형식은  5 ~ 12 영어, 숫자 조합입니다");
+                else if(In_regisiter_Name.getText().isEmpty())
+                    JOptionPane.showMessageDialog(null, "이름을 입력해주세요");
+                else if(!Pattern.matches("010-\\d{3,4}-\\d{4}", In_register_Password.getText()))
+                    JOptionPane.showMessageDialog(null, "전화번호는 010-(3 ~ 4자리 숫자)-(4자리 숫자) 형식입니다.");
+                else{
+                    User user = new User.UserBuilder()
                                 .ID(In_register_ID.getText())
                                 .password(In_register_Password.getText())
                                 .name(In_regisiter_Name.getText())
@@ -212,14 +212,11 @@ public class SwingLogin extends JFrame {
                                 .gold(10000)
                                 .build();
 
-                        CreateUserCommand command = new CreateUserCommand(user);
-                        invoker.setCommand(command);
-                        invoker.run();
+                    CreateUserCommand command = new CreateUserCommand(user);
+                    invoker.setCommand(command);
+                    invoker.run();
 
-                        cardLayout.show(getContentPane(), "LoginPage");
-                    }
-                    else
-                        JOptionPane.showMessageDialog(null,"올바른 입력 형식이 아닙니다");
+                    cardLayout.show(getContentPane(), "LoginPage");
                 }
             }
         });

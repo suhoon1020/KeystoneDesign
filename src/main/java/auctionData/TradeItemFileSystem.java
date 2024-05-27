@@ -90,7 +90,7 @@ public class TradeItemFileSystem implements ItemObserver{
                 for (int i = 0; i < tradeItems.size(); ++i) {
                     if (tradeItems.get(i).getName().equals(itemName)) {
                         TradeItem tradeItem = tradeItems.get(i);
-                        tradeItem = new TradeItem(tradeItem.getUserName(), newItem.clone(), tradeItem.getCount(), tradeItem.getPrice());
+                        tradeItem = new TradeItem(tradeItem.getUserId(), newItem.clone(), tradeItem.getCount(), tradeItem.getPrice());
                         tradeItems.set(i, tradeItem);
                     }
                 }

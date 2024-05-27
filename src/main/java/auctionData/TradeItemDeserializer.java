@@ -14,7 +14,7 @@ public class TradeItemDeserializer implements JsonDeserializer<TradeItem> {
     public TradeItem deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         
-        String userID = jsonObject.get("userName").getAsString();
+        String userID = jsonObject.get("userId").getAsString();
 
         JsonObject item = jsonObject.getAsJsonObject("item");
         String type = item.getAsJsonObject().get("type").getAsString();

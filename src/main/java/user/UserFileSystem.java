@@ -73,12 +73,15 @@ public class UserFileSystem {
         }
         return null;
     }
+    public List<User> getUsersByName(String name) {
+        List<User> users = new ArrayList<User>();
 
-    public User getUserByName(String name) {
         for (User user : users) {
-            if (user.getId().equals(name))
-                return user;
+            if (user.getId().equals(name)){
+                users.add(user);
+            }
         }
-        return null;
+        
+        return users;
     }
 }
