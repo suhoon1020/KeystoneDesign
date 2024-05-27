@@ -99,7 +99,11 @@ public class SwingLogin extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (Auction.getAuction().login(In_ID.getText(), In_password.getText())) {
+                    In_ID.setText("");
+                    In_password.setText("");
+                    
                     JOptionPane.showMessageDialog(null, "로그인이 완료 되었습니다");
+
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "회원정보가 없습니다.");
