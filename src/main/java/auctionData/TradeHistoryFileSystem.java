@@ -26,16 +26,12 @@ public class TradeHistoryFileSystem {
         return tradeHistoryFileSystem;
     }
 
-    private TradeHistoryFileSystem(){
-        loadInfosFromFile();
-    }
-
-    public List<TradeHistory> getTradeHistories() {
-        return tradeHistories;
-    }
-
     public static TradeHistoryFileSystem getTradeHistoryFileSystem() {
         return tradeHistoryFileSystem;
+    }
+
+    private TradeHistoryFileSystem(){
+        loadInfosFromFile();
     }
 
     public void saveInfosToFile() {
@@ -70,5 +66,9 @@ public class TradeHistoryFileSystem {
 
     public void putTradeHistory(TradeHistory newHistory) {
         tradeHistories.add(newHistory);
+    }
+
+    public List<TradeHistory> getTradeHistories() {
+        return tradeHistories;
     }
 }

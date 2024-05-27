@@ -54,6 +54,10 @@ public class TradeItem {
         this.item = item;
     }
 
+    public String[] getSimpleListData(){
+        return new String[]{Integer.toString(tradeId), userName, item.getName(), item.getGrade(), Integer.toString(count), Integer.toString(price)};
+    }
+
     public String[] getListData(){
         return new String[]{Integer.toString(tradeId),
                 userName, 

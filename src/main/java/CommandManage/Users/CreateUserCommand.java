@@ -1,4 +1,4 @@
-package commandManage.Users;
+package commandManage.users;
 
 import commandManage.Command;
 import itemInfos.Item;
@@ -35,7 +35,7 @@ public class CreateUserCommand implements Command {
             if(UserFileSystem.getUserFileSystem().getUserByName(user.getName()) == null){
                 UserFileSystem.getUserFileSystem().getUserList().add(user);
                 addDefaultItems();
-                
+
                 ItemFileSystem.getItemFileSystem().registerObserver(user);
 
                 // 저장

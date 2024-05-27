@@ -22,6 +22,7 @@ public class UpdateItemCommand implements Command {
             if(items.get(i).getName().equals(item.getName())){
                 items.set(i, item);
                 
+                ItemFileSystem.getItemFileSystem().saveInfosToFile();
                 ItemFileSystem.getItemFileSystem().notifyObservers(item, "Update");
 
                 JOptionPane.showMessageDialog(null, "아이템이 수정되었습니다");
