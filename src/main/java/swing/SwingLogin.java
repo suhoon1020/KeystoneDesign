@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import auction.Auction;
-import commandManage.Users.CreateUserCommand;
+import commandManage.users.CreateUserCommand;
 import user.User;
 import commandManage.Invoker;
 
