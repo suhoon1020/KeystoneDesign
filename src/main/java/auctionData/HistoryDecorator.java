@@ -1,7 +1,5 @@
 package auctionData;
 
-import java.util.List;
-
 public class HistoryDecorator implements TradeHistory{
 
     protected TradeHistory tradeHistory;
@@ -11,7 +9,7 @@ public class HistoryDecorator implements TradeHistory{
     }
 
     @Override
-    public void showHistory(String buyerID, String sellerID, TradeItem item) {
-        this.tradeHistory.showHistory(buyerID,sellerID,item);
+    public void setHistory() {
+        this.tradeHistory.setHistory();
     }
 }

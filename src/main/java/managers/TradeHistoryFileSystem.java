@@ -21,8 +21,17 @@ public class TradeHistoryFileSystem {
     private static final String TRAGE_HISTORY_FILE = "tradeHistory.json";
 
     private static List<BasicHistory> TradeHistories;
-
+    private static List<BasicHistory> filterTradeHistories;
     private static TradeHistoryFileSystem tradeHistoryFileSystem;
+
+
+    public  List<BasicHistory> getFilterTradeHistories() {
+        return filterTradeHistories;
+    }
+
+    public void setFilterTradeHistories(List<BasicHistory> filterTradeHistories) {
+        TradeHistoryFileSystem.filterTradeHistories = filterTradeHistories;
+    }
 
     public static TradeHistoryFileSystem getTradeHistoryItemFileSystem(){
         if(tradeHistoryFileSystem == null)

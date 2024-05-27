@@ -1,6 +1,9 @@
 package auctionData;
 
 
+import managers.TradeHistoryFileSystem;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class BasicHistory implements TradeHistory{
@@ -28,8 +31,10 @@ public class BasicHistory implements TradeHistory{
     }
 
     @Override
-    public void showHistory(String buyerID, String sellerID, TradeItem item) {
-        //todo 거래내역 조회 기능
+    public void setHistory() {
+        //todo 거래내역 전부 조회
+        List<BasicHistory> loadFiles = TradeHistoryFileSystem.getTradeHistoryItemFileSystem().getTradeHistories();
+        TradeHistoryFileSystem.setFilterTradeHistories(loadFiles);
     }
 
 }

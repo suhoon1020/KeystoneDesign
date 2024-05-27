@@ -473,3 +473,11 @@ S
 #src/main/java/itemInfos/Potion.java,9\f\9fa8e4d3768c54af8b7d92a286da1a7f1da95464
 S
 #src/main/java/itemInfos/Weapon.java,7\3\73f8cca50a78b0854a9f60d6e0e503acfc85b67d
+^
+.src/main/java/auctionData/MaterialHistory.java,d\6\d645cbe7d101099e5b10e0d605b0b8d338f6921c
+\
+,src/main/java/auctionData/WeaponHistory.java,2\5\2564f47a4a28cd21375ed52f6a3b9eadeefd6adf
+\
+,src/main/java/auctionData/PotionHistory.java,6\8\6885862a47eb0de66503a170a7e1f2a3602c6f40
+_
+/src/main/java/auctionData/EquipMentHistory.java,1\2\12169e9dbf0a4ed1ea71059a02398230be01f56e
