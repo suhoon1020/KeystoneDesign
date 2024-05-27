@@ -40,33 +40,31 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class SwingAuction extends JFrame {
-    private static SwingAuction swingAuction = new SwingAuction();
-    private TradeItemSort itemSort = new TradeItemSortByPrice();
-
-    private JPanel contentPane;
-
-    // 거래 아이템 목록
+    private String[] tradeItemTypes = {"ALL", "Equipment", "Material", "Potion", "Weapon"};
+    private String[] tradeItemGrades = {"ALL", "Common", "Uncommon", "Eqic", "Legendary"};
     private String[] tradeItemHeader = {"TRADEID", "USER", "TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT", "PRICE"};
-    private JTable T_tradeItemList;
-    private JScrollPane S_tradeitemList;
-    private DefaultTableModel tradeItemTableModel;
+    
+    private String[] inventoryItemHeader = {"TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT"};
+    
+    private JPanel contentPane;
+    private JTextField ItemSearch;
 
     private JComboBox<String> C_filterItemType;
     private JComboBox<String> C_filterItemGrades;
-    private JTextField ItemSearch;
-
     private JFormattedTextField In_itemBuyCount;
 
-
-    // 인벤토리
-    private String[] inventoryItemHeader = {"TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT"};
-    private JTable T_inventoryList;
-    private JScrollPane S_inventoryList;
+    private JTable T_TradeItemList;
+    private JTable T_InventoryTable;
+    private JScrollPane S_itemList;
+    private JScrollPane S_inventory;
+    private DefaultTableModel TradeItemTableModel;
     private DefaultTableModel inventoryTableModel;
+    
+    private TradeItemSort itemSort = new TradeItemSortByPrice();
 
-    private String[] tradeItemTypes = {"ALL", "Equipment", "Material", "Potion", "Weapon"};
-    private String[] tradeItemGrades = {"ALL", "Common", "Uncommon", "Eqic", "Legendary"};
-
+    private static SwingAuction swingAuction = new SwingAuction();
+    private JFormattedTextField In_itemSellCount;
+    private JFormattedTextField In_itemSellPrice;
     private JTextField In_userItemType;
     private JTextField In_userItemDesc;
     private JTextField In_userItemGrade;
@@ -74,16 +72,6 @@ public class SwingAuction extends JFrame {
     private JTextField In_userItemCount;
     private JTextField In_userItemOp1;
     private JTextField In_userGold;
-
-    private JFormattedTextField In_itemSellCount;
-    private JFormattedTextField In_itemSellPrice;
-
-    // 개인정보
-    private String[] userTradeItemHeader = {"TRADEID", "USER", "TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT", "PRICE"};
-    private JTable T_userTradeItemList;
-    private JScrollPane S_userTradeItemList;
-    private DefaultTableModel userTradeItemTableModel;
-    private JTextField In_selectTradeItemId;
 
     public static SwingAuction getSwingAuction() {
         return swingAuction;
@@ -127,28 +115,28 @@ public class SwingAuction extends JFrame {
         contents.setLayout(cardLayout);
         contentPane.add(contents);
 
-        JPanel auctionPage = new JPanel();
-        auctionPage.setLayout(null);
-        contents.add(auctionPage, "AuctionPage");
+        JPanel AuctionPage = new JPanel();
+        AuctionPage.setLayout(null);
+        contents.add(AuctionPage, "AuctionPage");
 
         JPanel list = new JPanel();
         list.setBorder(new LineBorder(new Color(0, 0, 0)));
         list.setBounds(278, 78, 872, 503);
-        auctionPage.add(list);
+        AuctionPage.add(list);
         list.setLayout(new GridLayout(0, 1, 0, 0));
 
-        tradeItemTableModel = new DefaultTableModel(tradeItemHeader, 0);
-        T_tradeItemList = new JTable(tradeItemTableModel);
-        T_tradeItemList.getTableHeader().setReorderingAllowed(false);
-        T_tradeItemList.getTableHeader().setResizingAllowed(false);
-        S_tradeitemList = new JScrollPane();
-        list.add(S_tradeitemList);
+        TradeItemTableModel = new DefaultTableModel(tradeItemHeader, 0);
+        T_TradeItemList = new JTable(TradeItemTableModel);
+        T_TradeItemList.getTableHeader().setReorderingAllowed(false);
+        T_TradeItemList.getTableHeader().setResizingAllowed(false);
+        S_itemList = new JScrollPane();
+        list.add(S_itemList);
         refreshTradeItemTable();
 
         JPanel filter = new JPanel();
         filter.setBorder(new LineBorder(new Color(0, 0, 0)));
         filter.setBounds(12, 10, 258, 498);
-        auctionPage.add(filter);
+        AuctionPage.add(filter);
         filter.setLayout(null);
 
         JPanel filterItemOption = new JPanel();
@@ -248,7 +236,7 @@ public class SwingAuction extends JFrame {
         JPanel search = new JPanel();
         search.setLayout(null);
         search.setBounds(278, 10, 872, 56);
-        auctionPage.add(search);
+        AuctionPage.add(search);
 
         ItemSearch = new JTextField();
         ItemSearch.setColumns(10);
@@ -266,7 +254,7 @@ public class SwingAuction extends JFrame {
 
         In_itemBuyCount = new JFormattedTextField(F_NumberFormet);
         In_itemBuyCount.setBounds(12, 518, 123, 63);
-        auctionPage.add(In_itemBuyCount);
+        AuctionPage.add(In_itemBuyCount);
         In_itemBuyCount.setColumns(10);
         
         JButton Btt_buyItem = new JButton("구매");
@@ -274,9 +262,9 @@ public class SwingAuction extends JFrame {
         Btt_buyItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(!In_itemBuyCount.getText().isEmpty()){
-                    int selectedRow = T_tradeItemList.getSelectedRow();
-                    int tradeId = Integer.parseInt(T_tradeItemList.getValueAt(selectedRow, 0).toString());
-                    String tradeUserName = T_tradeItemList.getValueAt(selectedRow, 1).toString();
+                    int selectedRow = T_TradeItemList.getSelectedRow();
+                    int tradeId = Integer.parseInt(T_TradeItemList.getValueAt(selectedRow, 0).toString());
+                    String tradeUserName = T_TradeItemList.getValueAt(selectedRow, 1).toString();
 
                     if(!Auction.getAuction().getName().equals(tradeUserName)){
                         int buyItemCount = Integer.valueOf(In_itemBuyCount.getText().replace(",", ""));
@@ -302,7 +290,7 @@ public class SwingAuction extends JFrame {
             }
         });
         Btt_buyItem.setBounds(141, 518, 125, 63);
-        auctionPage.add(Btt_buyItem);
+        AuctionPage.add(Btt_buyItem);
 
         /*
          *      INVENTORY PAGE
@@ -319,11 +307,11 @@ public class SwingAuction extends JFrame {
         invItemList.setLayout(new GridLayout(0, 1, 0, 0));
 
         inventoryTableModel = new DefaultTableModel(inventoryItemHeader, 0);
-        T_inventoryList = new JTable(inventoryTableModel);
-        T_inventoryList.getTableHeader().setReorderingAllowed(false);
-        T_inventoryList.getTableHeader().setResizingAllowed(false);
-        S_inventoryList = new JScrollPane();
-        invItemList.add(S_inventoryList);
+        T_InventoryTable = new JTable(inventoryTableModel);
+        T_InventoryTable.getTableHeader().setReorderingAllowed(false);
+        T_InventoryTable.getTableHeader().setResizingAllowed(false);
+        S_inventory = new JScrollPane();
+        invItemList.add(S_inventory);
         refreshInventoryTable();
 
         JPanel sellItemInfos = new JPanel();
@@ -446,8 +434,8 @@ public class SwingAuction extends JFrame {
         Btt_itemSell.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(!In_itemSellCount.getText().isEmpty() && !In_itemSellPrice.getText().isEmpty()){
-                    int selectedRow = T_inventoryList.getSelectedRow();
-                    String sellItemName = T_inventoryList.getValueAt(selectedRow, 1).toString();
+                    int selectedRow = T_InventoryTable.getSelectedRow();
+                    String sellItemName = T_InventoryTable.getValueAt(selectedRow, 1).toString();
                     int sellItemCount = Integer.parseInt(In_itemSellCount.getText().replace(",", ""));
                     int sellItemPrice = Integer.parseInt(In_itemSellPrice.getText().replace(",", ""));
     
@@ -468,90 +456,37 @@ public class SwingAuction extends JFrame {
             }
         });
 
-        T_inventoryList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        T_InventoryTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting() && T_inventoryList.getSelectedRow() != -1) {
+                if (!event.getValueIsAdjusting() && T_InventoryTable.getSelectedRow() != -1) {
                     // 선택된 행의 데이터 출력
-                    int selectedRow = T_inventoryList.getSelectedRow();
+                    int selectedRow = T_InventoryTable.getSelectedRow();
 
-                    In_userItemType.setText(T_inventoryList.getValueAt(selectedRow, 0).toString());
-                    In_userItemName.setText(T_inventoryList.getValueAt(selectedRow, 1).toString());
-                    In_userItemGrade.setText(T_inventoryList.getValueAt(selectedRow, 2).toString());
-                    In_userItemDesc.setText(T_inventoryList.getValueAt(selectedRow, 3).toString());
-                    In_userItemOp1.setText(T_inventoryList.getValueAt(selectedRow, 4).toString());
-                    In_userItemCount.setText(T_inventoryList.getValueAt(selectedRow, 5).toString());
+                    In_userItemType.setText(T_InventoryTable.getValueAt(selectedRow, 0).toString());
+                    In_userItemName.setText(T_InventoryTable.getValueAt(selectedRow, 1).toString());
+                    In_userItemGrade.setText(T_InventoryTable.getValueAt(selectedRow, 2).toString());
+                    In_userItemDesc.setText(T_InventoryTable.getValueAt(selectedRow, 3).toString());
+                    In_userItemCount.setText(T_InventoryTable.getValueAt(selectedRow, 4).toString());
+                    In_userItemOp1.setText(T_InventoryTable.getValueAt(selectedRow, 5).toString());
                 }
             }
         });
 
         /*
-         *      USER TRADE HIOSTORY PAGE PAGE
+         *      USER INFO PAGE
          */
 
-        JPanel userTradeHistoryPage = new JPanel();
-        userTradeHistoryPage.setLayout(null);
-        contents.add(userTradeHistoryPage, "UserTradeHistoryPage");
+        JPanel UserInfoPage = new JPanel();
+        UserInfoPage.setLayout(null);
+        contents.add(UserInfoPage, "UserInfoPage");
 
-        JPanel userTradeList = new JPanel();
-        userTradeList.setBounds(12, 10, 1138, 507);
-        userTradeList.setLayout(new GridLayout(0, 1, 0, 0));
-        userTradeHistoryPage.add(userTradeList);
+        JPanel userInfo = new JPanel();
+        userInfo.setBounds(12, 10, 379, 535);
+        UserInfoPage.add(userInfo);
 
-        userTradeItemTableModel = new DefaultTableModel(userTradeItemHeader, 0);
-        T_userTradeItemList = new JTable(userTradeItemTableModel);
-        T_userTradeItemList.getTableHeader().setReorderingAllowed(false);
-        T_userTradeItemList.getTableHeader().setResizingAllowed(false);
-        S_userTradeItemList = new JScrollPane();
-        userTradeList.add(S_userTradeItemList);
-        
-        JLabel L_selectTradeItemId = new JLabel("선택 아이템 거래 아이디 :");
-        L_selectTradeItemId.setHorizontalAlignment(SwingConstants.CENTER);
-        L_selectTradeItemId.setFont(new Font("굴림", Font.PLAIN, 20));
-        L_selectTradeItemId.setBounds(12, 527, 246, 69);
-        userTradeHistoryPage.add(L_selectTradeItemId);
-
-        In_selectTradeItemId = new JTextField();
-        In_selectTradeItemId.setEditable(false);
-        In_selectTradeItemId.setBounds(270, 527, 180, 69);
-        userTradeHistoryPage.add(In_selectTradeItemId);
-        In_selectTradeItemId.setColumns(10);
-
-        JButton Btt_cancleSell = new JButton("판매취소");
-        Btt_cancleSell.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-                if(!In_selectTradeItemId.getText().isEmpty()){
-                    if(Auction.getAuction().cancleSellItem(Integer.parseInt(In_selectTradeItemId.getText()))){
-                        JOptionPane.showMessageDialog(null, "아이템 등록 취소 성공");
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "아이템 등록 취소 실패");
-                    }
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "아이템을 선택해주세요");
-                }
-                
-                refreshUserTradeItemTable();
-        	}
-        });
-        Btt_cancleSell.setFont(new Font("굴림", Font.PLAIN, 20));
-        Btt_cancleSell.setBounds(902, 527, 248, 69);
-        userTradeHistoryPage.add(Btt_cancleSell);
-
-        T_userTradeItemList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting() && T_userTradeItemList.getSelectedRow() != -1) {
-                    // 선택된 행의 데이터 출력
-                    int selectedRow = T_userTradeItemList.getSelectedRow();
-
-                    In_selectTradeItemId.setText(T_userTradeItemList.getValueAt(selectedRow, 0).toString());
-                }
-            }
-        });
-
-        /*
-        *      MANU
-        */
+        JPanel tradingHistory = new JPanel();
+        tradingHistory.setBounds(403, 10, 747, 535);
+        UserInfoPage.add(tradingHistory);
 
         JPanel manu = new JPanel();
         manu.setBounds(285, 21, 889, 63);
@@ -578,15 +513,14 @@ public class SwingAuction extends JFrame {
         Btt_goInventory.setFont(new Font("굴림", Font.PLAIN, 25));
         manu.add(Btt_goInventory);
 
-        JButton Btt_goUserTradeHistory = new JButton("유저 정보");
-        Btt_goUserTradeHistory.addActionListener(new ActionListener() {
+        JButton Btt_goUserInfo = new JButton("유저 정보");
+        Btt_goUserInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(contents, "UserTradeHistoryPage");
-                refreshUserTradeItemTable();
+                cardLayout.show(contents, "UserInfoPage");
             }
         });
-        Btt_goUserTradeHistory.setFont(new Font("굴림", Font.PLAIN, 25));
-        manu.add(Btt_goUserTradeHistory);
+        Btt_goUserInfo.setFont(new Font("굴림", Font.PLAIN, 25));
+        manu.add(Btt_goUserInfo);
 
         JButton Btt_logOut = new JButton("종료");
         Btt_logOut.addActionListener(new ActionListener() {
@@ -598,19 +532,19 @@ public class SwingAuction extends JFrame {
         Btt_logOut.setFont(new Font("굴림", Font.PLAIN, 25));
         manu.add(Btt_logOut);
         
-        JPanel userGold = new JPanel();
-        userGold.setBounds(12, 10, 262, 74);
-        contentPane.add(userGold);
-        userGold.setLayout(new GridLayout(1, 0, 0, 0));
+        JPanel panel = new JPanel();
+        panel.setBounds(12, 10, 262, 74);
+        contentPane.add(panel);
+        panel.setLayout(new GridLayout(1, 0, 0, 0));
         
         JLabel L_userGold = new JLabel("골드 :");
         L_userGold.setHorizontalAlignment(SwingConstants.CENTER);
         L_userGold.setFont(new Font("굴림", Font.PLAIN, 25));
-        userGold.add(L_userGold);
+        panel.add(L_userGold);
         
         In_userGold = new JTextField();
         In_userGold.setEditable(false);
-        userGold.add(In_userGold);
+        panel.add(In_userGold);
         In_userGold.setColumns(10);
         In_userGold.setText(Integer.toString(Auction.getAuction().getGold()));
     }
@@ -623,23 +557,23 @@ public class SwingAuction extends JFrame {
     }
     
     public void refreshTradeItemTable() {
-        tradeItemTableModel.setRowCount(0);
+        TradeItemTableModel.setRowCount(0);
 
         List<TradeItem> L = itemSort.sort(TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList());
 
         for(TradeItem i : L){
             Object[] rowData = i.getListData();
-            tradeItemTableModel.addRow(rowData);
+            TradeItemTableModel.addRow(rowData);
         }
 
-        S_tradeitemList.setViewportView(T_tradeItemList);
+        S_itemList.setViewportView(T_TradeItemList);
 
         if(In_userGold != null)
             In_userGold.setText(Integer.toString(Auction.getAuction().getGold()));
     }
 
     public void refreshFilterTradeItemTable(){
-        tradeItemTableModel.setRowCount(0);
+        TradeItemTableModel.setRowCount(0);
 
         List<TradeItem> L = itemSort.sort(TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList());
 
@@ -661,10 +595,10 @@ public class SwingAuction extends JFrame {
                     continue;
 
             Object[] rowData = i.getListData();
-            tradeItemTableModel.addRow(rowData);
+            TradeItemTableModel.addRow(rowData);
         }
 
-        S_tradeitemList.setViewportView(T_tradeItemList);
+        S_itemList.setViewportView(T_TradeItemList);
 
         if(In_userGold != null)
             In_userGold.setText(Integer.toString(Auction.getAuction().getGold()));
@@ -674,29 +608,16 @@ public class SwingAuction extends JFrame {
     public void refreshInventoryTable() {
         inventoryTableModel.setRowCount(0);
 
-        for(InventoryItem i : Auction.getAuction().getInventory()){
+        List<InventoryItem> L = Auction.getAuction().getInventory();
+        
+        for(InventoryItem i : L){
             Object[] rowData = i.getListData();
             inventoryTableModel.addRow(rowData);
         }
 
-        S_inventoryList.setViewportView(T_inventoryList);
+        S_inventory.setViewportView(T_InventoryTable);
 
         if(In_userGold != null)
             In_userGold.setText(Integer.toString(Auction.getAuction().getGold()));
-    }
-
-
-    public void refreshUserTradeItemTable() {
-        userTradeItemTableModel.setRowCount(0);
-        
-        for(TradeItem t : TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList()){
-            if(!t.getUserId().equals(Auction.getAuction().getId()))
-                continue;
-
-            Object[] rowData = t.getListData();
-            userTradeItemTableModel.addRow(rowData);
-        }
-
-        S_userTradeItemList.setViewportView(T_userTradeItemList);
     }
 }
