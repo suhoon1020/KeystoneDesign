@@ -6,10 +6,10 @@ import ChargeManager.BasicCharge;
 import ChargeManager.Charge;
 import ChargeManager.DiscountCharge;
 import auctionData.TradeHistory;
+import auctionData.TradeHistoryFileSystem;
 import auctionData.TradeItem;
 import auctionData.TradeItemFileSystem;
 import itemInfos.Item;
-import managers.TradeHistoryFileSystem;
 import swing.SwingLogin;
 import user.InventoryItem;
 
