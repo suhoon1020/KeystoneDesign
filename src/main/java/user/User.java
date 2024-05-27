@@ -3,7 +3,10 @@ package user;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+import itemInfos.Item;
+import itemObserver.ItemObserver;
+
+public class User implements ItemObserver{
     private String id;
     private String password;
     private String name;
@@ -125,6 +128,34 @@ public class User {
 
         return false;
     }
+
+    // 아이템 업데이트
+    @Override
+    public void updateItem(Item newItem, String option) {
+        String itemName = newItem.getName();
+        
+        switch (option) {
+            case "Update":
+                for (int i = 0; i < itemList.size(); ++i) {
+                    if (itemList.get(i).getName().equals(itemName)) {
+                        InventoryItem inventoryItem = itemList.get(i);
+                        inventoryItem = new InventoryItem(newItem.clone(), inventoryItem.getCount());
+                        itemList.set(i, inventoryItem);
+                        break;
+                    }
+                }
+                break;
+            case "Delete":
+                for (int i = 0; i < itemList.size(); ++i) {
+                    if (itemList.get(i).getName().equals(itemName)) {
+                        itemList.remove(i);
+                        break;
+                    }
+                }
+                break;
+        }
+    }
+
 
     //빌더 세팅
     public static class UserBuilder {

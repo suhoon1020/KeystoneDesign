@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
 import auctionData.TradeItem;
+import auctionData.TradeItemFileSystem;
 import commandManage.*;
 import commandManage.inventoryItems.CreateInvItemCommand;
 import commandManage.inventoryItems.DeleteInvItemCommand;
@@ -32,11 +33,10 @@ import commandManage.users.DeleteUserCommand;
 import commandManage.users.UpdateUserCommand;
 import itemInfos.Item;
 import itemInfos.ItemBuilder;
-import managers.ItemFileSystem;
-import managers.TradeItemFileSystem;
-import managers.UserFileSystem;
+import itemInfos.ItemFileSystem;
 import user.InventoryItem;
 import user.User;
+import user.UserFileSystem;
 
 
 public class SwingAdmin extends JFrame {
@@ -540,7 +540,7 @@ public class SwingAdmin extends JFrame {
         Btt_deleteTradeItem_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(!In_itemInfoName.getText().isEmpty()){
-                    DeleteItemCommand deleteItemCommand = new DeleteItemCommand(In_itemInfoName.getText());
+                    DeleteItemCommand deleteItemCommand = new DeleteItemCommand(ItemFileSystem.getItemFileSystem().getItemByName(In_itemInfoName.getText()));
                     invoker.setCommand(deleteItemCommand);
                     invoker.run();
 
@@ -706,7 +706,7 @@ public class SwingAdmin extends JFrame {
                  if (In_userID.getText().isEmpty())
                      JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
                  else {
-                     DeleteUserCommand command = new DeleteUserCommand(In_userID.getText());
+                     DeleteUserCommand command = new DeleteUserCommand(UserFileSystem.getUserFileSystem().getUserById(In_userID.getText()));
                      invoker.setCommand(command);
                      invoker.run();
                      refreshUserTable();

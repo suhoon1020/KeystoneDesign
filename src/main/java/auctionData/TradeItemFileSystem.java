@@ -1,4 +1,4 @@
-package managers;
+package auctionData;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,7 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import auctionData.TradeItem;
+import itemInfos.Item;
+import itemObserver.ItemObserver;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,13 +18,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TradeItemFileSystem {
+public class TradeItemFileSystem implements ItemObserver{
     private static final String TRADE_ITEM_FILE = "TradeItems.json";
-    private static List<TradeItem> tradeItems;
 
-    public List<TradeItem> getTradeItemList(){
-        return tradeItems;
-    }
+    private static List<TradeItem> tradeItems;
 
     private static TradeItemFileSystem tradeHistoryFileSystem;
 
@@ -77,5 +75,36 @@ public class TradeItemFileSystem {
                 return tradeItem;
         }
         return null;
+    }
+
+    public List<TradeItem> getTradeItemList(){
+        return tradeItems;
+    }
+
+    @Override
+    public void updateItem(Item newItem, String option) {
+        String itemName = newItem.getName();
+        
+        switch (option) {
+            case "Update":
+                for (int i = 0; i < tradeItems.size(); ++i) {
+                    if (tradeItems.get(i).getName().equals(itemName)) {
+                        TradeItem tradeItem = tradeItems.get(i);
+                        tradeItem = new TradeItem(tradeItem.getUserName(), newItem.clone(), tradeItem.getCount(), tradeItem.getPrice());
+                        tradeItems.set(i, tradeItem);
+                    }
+                }
+                break;
+            case "Delete":
+                for (int i = 0; i < tradeItems.size(); ++i) {
+                    if (tradeItems.get(i).getName().equals(itemName)) {
+                        tradeItems.remove(i);
+                    }
+                }
+                break;
+        }
+
+        // 저장
+        saveInfosToFile();
     }
 }

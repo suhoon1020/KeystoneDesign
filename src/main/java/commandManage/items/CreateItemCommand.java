@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import commandManage.Command;
 import itemInfos.Item;
-import managers.ItemFileSystem;
+import itemInfos.ItemFileSystem;
 
 public class CreateItemCommand implements Command {
     Item item;
@@ -15,7 +15,7 @@ public class CreateItemCommand implements Command {
 
     @Override
     public void execute() {
-        if(ItemFileSystem.getItemFileSystem().getItem(item.getName()) == null){
+        if(ItemFileSystem.getItemFileSystem().getItemByName(item.getName()) == null){
             ItemFileSystem.getItemFileSystem().getItemList().add(item);
             ItemFileSystem.getItemFileSystem().saveInfosToFile();
 

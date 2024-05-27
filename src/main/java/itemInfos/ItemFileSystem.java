@@ -1,4 +1,4 @@
-package managers;
+package itemInfos;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,12 +15,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import itemInfos.Item;
+import auctionData.TradeItemFileSystem;
+import itemObserver.ItemObserver;
+import itemObserver.ItemSubject;
+import user.UserFileSystem;
 
-public class ItemFileSystem {
+public class ItemFileSystem implements ItemSubject{
     public static final String ITEM_FILE = "items.json";
 
     private static List<Item> items;
+    private List<ItemObserver> observers;
 
     private static ItemFileSystem itemFileSystem;
 
@@ -33,6 +37,12 @@ public class ItemFileSystem {
 
     private ItemFileSystem(){
         loadInfosFromFile();
+
+        observers = new ArrayList<ItemObserver>();
+        observers.add(TradeItemFileSystem.getTradeItemFileSystem());
+        for(ItemObserver observer : UserFileSystem.getUserFileSystem().getUserList()){
+            observers.add(observer);
+        }
     }
 
     public void saveInfosToFile() {
@@ -68,7 +78,7 @@ public class ItemFileSystem {
         }
     }
 
-    public Item getItem(String name) {
+    public Item getItemByName(String name) {
         for (Item i : items) {
             if(i.getName().equals(name)) return i;
         }
@@ -78,5 +88,22 @@ public class ItemFileSystem {
 
     public List<Item> getItemList(){
         return items;
+    }
+
+    @Override
+    public void registerObserver(ItemObserver o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(ItemObserver o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers(Item item, String option) {
+        for (ItemObserver o : observers){
+            o.updateItem(item, option);
+        }
     }
 }

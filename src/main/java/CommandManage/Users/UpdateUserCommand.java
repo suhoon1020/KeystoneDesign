@@ -1,8 +1,8 @@
 package commandManage.users;
 
 import commandManage.Command;
-import managers.UserFileSystem;
 import user.User;
+import user.UserFileSystem;
 
 import java.util.List;
 

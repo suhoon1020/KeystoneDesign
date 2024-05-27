@@ -1,8 +1,9 @@
 package commandManage.users;
 
 import commandManage.Command;
-import managers.UserFileSystem;
+import itemInfos.ItemFileSystem;
 import user.User;
+import user.UserFileSystem;
 
 import javax.swing.*;
 
@@ -18,7 +19,11 @@ public class CreateUserCommand implements Command {
         if (UserFileSystem.getUserFileSystem().getUserById(user.getId()) == null){
             if(UserFileSystem.getUserFileSystem().getUserByName(user.getName()) == null){
                 UserFileSystem.getUserFileSystem().getUserList().add(user);
+
+                ItemFileSystem.getItemFileSystem().registerObserver(user);
+
                 UserFileSystem.getUserFileSystem().saveInfosToFile();
+                
                 JOptionPane.showMessageDialog(null,"유저 생성에 성공하였습니다");
                 return;
             }

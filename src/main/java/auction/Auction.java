@@ -3,13 +3,13 @@ package auction;
 import java.util.List;
 
 import auctionData.TradeItem;
+import auctionData.TradeItemFileSystem;
 import itemInfos.Item;
-import managers.TradeItemFileSystem;
-import managers.UserFileSystem;
 import swing.SwingLogin;
 import user.InventoryItem;
 
 import user.User;
+import user.UserFileSystem;
 
 public class Auction {
     private static Auction auction;

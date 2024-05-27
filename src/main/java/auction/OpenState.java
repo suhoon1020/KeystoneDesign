@@ -1,9 +1,9 @@
 package auction;
 
-import managers.UserFileSystem;
 import swing.SwingAdmin;
 import swing.SwingAuction;
 import user.User;
+import user.UserFileSystem;
 
 public class OpenState implements AuctionState {
 

@@ -1,12 +1,9 @@
-package managers;
+package auctionData;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-
-import auctionData.BasicHistory;
-import auctionData.TradeHistory;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,19 +17,7 @@ import java.util.List;
 public class TradeHistoryFileSystem {
     private static final String TRAGE_HISTORY_FILE = "tradeHistory.json";
 
-
-
-    private static List<BasicHistory> tradeHistories;
-
-    private static List<BasicHistory> filterHistory;
-
-    public static void setFilterHistory(List<BasicHistory> filterHistory) {
-        TradeHistoryFileSystem.filterHistory = filterHistory;
-    }
-
-    public List<BasicHistory> getFilterHistory() {
-        return filterHistory;
-    }
+    private static List<TradeHistory> tradeHistories;
 
     private static TradeHistoryFileSystem tradeHistoryFileSystem;
 
@@ -41,6 +26,10 @@ public class TradeHistoryFileSystem {
             tradeHistoryFileSystem = new TradeHistoryFileSystem();
 
         return tradeHistoryFileSystem;
+    }
+
+    private TradeHistoryFileSystem(){
+        loadInfosFromFile();
     }
 
     public void saveInfosToFile() {
@@ -73,11 +62,11 @@ public class TradeHistoryFileSystem {
         }
     }
 
-    public List<BasicHistory> getTradeHistories() {
+    public List<TradeHistory> getTradeHistories() {
         return tradeHistories;
     }
 
-    public Boolean putTradeHistory(BasicHistory newHistory) {
+    public Boolean putTradeHistory(TradeHistory newHistory) {
         tradeHistories.add(newHistory);
 
         return true;

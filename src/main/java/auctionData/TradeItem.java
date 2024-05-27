@@ -50,6 +50,10 @@ public class TradeItem {
         return count;
     }
 
+    public void setItem(Item item){
+        this.item = item;
+    }
+
     public String[] getListData(){
         return new String[]{Integer.toString(tradeId),
                 userName, 

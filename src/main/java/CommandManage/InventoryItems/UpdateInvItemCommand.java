@@ -1,9 +1,9 @@
 package commandManage.inventoryItems;
 
 import commandManage.Command;
-import managers.UserFileSystem;
 import user.InventoryItem;
 import user.User;
+import user.UserFileSystem;
 
 import javax.swing.*;
 

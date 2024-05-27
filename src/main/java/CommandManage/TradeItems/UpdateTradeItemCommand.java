@@ -1,10 +1,11 @@
 package commandManage.tradeItems;
 
 import commandManage.Command;
-import managers.TradeItemFileSystem;
+
 import javax.swing.*;
 
 import auctionData.TradeItem;
+import auctionData.TradeItemFileSystem;
 
 import java.util.List;
 

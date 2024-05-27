@@ -1,8 +1,7 @@
 package auctionData;
 
 
-import java.util.List;
+public class TradeHistory {
 
-public interface TradeHistory {
-    public List<BasicHistory> showHistory();
+    
 }
