@@ -36,11 +36,11 @@ public class Auction {
         auctionState = auctionState.changeState();
     }
 
-    public String getName(){
+    public String getName() {
         return user.getName();
     }
 
-    public int getGold(){
+    public int getGold() {
         return user.getGold();
     }
 
@@ -96,23 +96,22 @@ public class Auction {
     }
 
 
-    public boolean sellItem(String sellItemName, int sellCount, int price){
+    public boolean sellItem(String sellItemName, int sellCount, int price) {
         InventoryItem inventoryItem = user.getItemByName(sellItemName);
 
         //유저 인벤토리에서 아이템 개수 만큼 있는지 확인
-        if(inventoryItem.getCount() >= sellCount){
+        if (inventoryItem.getCount() >= sellCount) {
             Item item = inventoryItem.getItem();
 
             // 판매 후 아이템 정보
             InventoryItem newInventoryItem = new InventoryItem(item.clone(), inventoryItem.getCount() - sellCount);
 
             // 인벤토리 아이템 정보 수정 / 삭제
-            if(newInventoryItem.getCount() > 0){
+            if (newInventoryItem.getCount() > 0) {
                 // 아이템 갯수가 많음 >> 아이템 수량 수정
                 user.updateItem(newInventoryItem);
 
-            }
-            else if(newInventoryItem.getCount() == 0){
+            } else if (newInventoryItem.getCount() == 0) {
                 // 아이템 갯수가 같음 >> 아이템 삭제
                 user.deleteItem(inventoryItem.getName());
             }
@@ -130,35 +129,35 @@ public class Auction {
         return false;
     }
 
-    public boolean buyItem(int tradeId, int buyCount){
+    public boolean buyItem(int tradeId, int buyCount) {
         TradeItem auctionTradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(tradeId);
         //구매할 아이템 개수 * 금액 만큼 돈이 있는지 && 아이템 구매 개수가 사는 개수보다 많은지 확인
-        if(auctionTradeItem.getCount() >= buyCount && user.getGold() >= auctionTradeItem.getPrice() * buyCount){
+        if (auctionTradeItem.getCount() >= buyCount && user.getGold() >= auctionTradeItem.getPrice() * buyCount) {
             Item item = auctionTradeItem.getItem();
-            // todo 수수료 계산
+            // 수수료 계산
             Charge charge = new BasicCharge();
             charge = new DiscountCharge(charge);
-            double fianlcharge=charge.checkCharge(auctionTradeItem);
-            // TODO 거래 기록 남기기
-            TradeHistory tradeHistory = new TradeHistory(user.getName(),auctionTradeItem.getName(),auctionTradeItem, fianlcharge);
+            double fianlcharge = charge.checkCharge(auctionTradeItem);
+            // 거래 기록 남기기
+            TradeHistory tradeHistory = new TradeHistory(user.getName(), auctionTradeItem.getName(), auctionTradeItem, fianlcharge);
             TradeHistoryFileSystem.getTradeItemFileSystem().putTradeHistory(tradeHistory);
             // 돈 차감
             user.setGold(user.getGold() - auctionTradeItem.getPrice() * buyCount);
 
             // 판매자 돈 증가
             User seller = UserFileSystem.getUserFileSystem().getUserByName(auctionTradeItem.getUserName());
-            // TODO 수수료 만큼은 금액 차감!!
-            if(seller != null)
-                seller.setGold(seller.getGold() + auctionTradeItem.getPrice() * buyCount-(int)fianlcharge);
+            //수수료 만큼은 금액 차감!!
+            if (seller != null)
+                seller.setGold(seller.getGold() + auctionTradeItem.getPrice() * buyCount - (int) fianlcharge);
 
             // 거래 아이템에서 인벤토리 아이템으로 옮기기
 
             // 거래 후 거래 아이템 정보
             List<TradeItem> tradeItems = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList();
             TradeItem tradeItem = new TradeItem(auctionTradeItem.getUserName(), item.clone(), auctionTradeItem.getCount() - buyCount, auctionTradeItem.getPrice());
-            
+
             // 거래 아이템 정보 수정 / 삭제
-            if(tradeItem.getCount() > 0){
+            if (tradeItem.getCount() > 0) {
                 // 아이템 갯수가 많음 >> 아이템 수량 수정
                 for (int i = 0; i < tradeItems.size(); ++i) {
                     if (tradeItems.get(i).getTradeId() == tradeId) {
@@ -166,8 +165,7 @@ public class Auction {
 
                     }
                 }
-            }
-            else if(tradeItem.getCount() == 0){
+            } else if (tradeItem.getCount() == 0) {
                 // 아이템 갯수가 같음 >> 아이템 삭제
                 for (int i = 0; i < tradeItems.size(); ++i) {
                     if (tradeItems.get(i).getTradeId() == tradeId) {
