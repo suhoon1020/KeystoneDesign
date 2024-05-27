@@ -1,10 +1,7 @@
-package managers;
-
+package user;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-
-import user.User;
 
 import java.io.*;
 import java.nio.file.Files;

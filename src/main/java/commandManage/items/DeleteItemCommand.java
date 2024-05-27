@@ -6,21 +6,26 @@ import javax.swing.JOptionPane;
 
 import commandManage.Command;
 import itemInfos.Item;
-import managers.ItemFileSystem;
+import itemInfos.ItemFileSystem;
 
 public class DeleteItemCommand implements Command {
-    String itemName;
+    Item item;
     
-    public DeleteItemCommand(String itemName) {
-        this.itemName = itemName;
+    public DeleteItemCommand(Item item) {
+        this.item = item;
     }
 
     @Override
     public void execute() {
         List<Item> items = ItemFileSystem.getItemFileSystem().getItemList();
+        String itemName = item.getName();
+
         for(int i = 0; i < items.size(); ++i){
             if(items.get(i).getName().equals(itemName)){
                 items.remove(i);
+                
+                ItemFileSystem.getItemFileSystem().notifyObservers(item, "Delete");
+
                 JOptionPane.showMessageDialog(null, itemName + " 아이템이 삭제되었습니다");
                 return;
             }

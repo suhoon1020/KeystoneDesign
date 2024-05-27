@@ -1,4 +1,4 @@
-package managers;
+package user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,6 @@ import com.google.gson.JsonParseException;
 
 import itemInfos.Item;
 import itemInfos.ItemBuilder;
-import user.InventoryItem;
-import user.User;
 
 
 public class UserDeserializer implements JsonDeserializer<User> {

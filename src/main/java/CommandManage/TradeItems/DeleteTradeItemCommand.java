@@ -1,11 +1,11 @@
 package commandManage.tradeItems;
 
 import commandManage.Command;
-import managers.TradeItemFileSystem;
 
 import javax.swing.*;
 
 import auctionData.TradeItem;
+import auctionData.TradeItemFileSystem;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ public class DeleteTradeItemCommand implements Command {
         this.itemID = itemID;
     }
 
+    
     @Override
     public void execute() {
         List<TradeItem> tradeItems = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList();

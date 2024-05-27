@@ -10,7 +10,7 @@ import javax.swing.text.NumberFormatter;
 
 import auction.Auction;
 import auctionData.TradeItem;
-import managers.TradeItemFileSystem;
+import auctionData.TradeItemFileSystem;
 import sort.TradeItemSort;
 import sort.TradeItemSortByName;
 import sort.TradeItemSortByNameRev;

@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 import commandManage.Command;
 import itemInfos.Item;
-import managers.ItemFileSystem;
+import itemInfos.ItemFileSystem;
 
 public class UpdateItemCommand implements Command {
     Item item;
@@ -21,6 +21,9 @@ public class UpdateItemCommand implements Command {
         for(int i = 0; i < items.size(); ++i){
             if(items.get(i).getName().equals(item.getName())){
                 items.set(i, item);
+                
+                ItemFileSystem.getItemFileSystem().notifyObservers(item, "Update");
+
                 JOptionPane.showMessageDialog(null, "아이템이 수정되었습니다");
                 return;
             }
