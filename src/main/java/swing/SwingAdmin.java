@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
+import auction.Auction;
 import auctionData.TradeHistory;
 import auctionData.TradeHistoryFileSystem;
 import auctionData.TradeItem;
@@ -779,6 +780,27 @@ public class SwingAdmin extends JFrame {
  
              }
          });
+         
+         JButton Btt_modityAdmin = new JButton("유저 권한부여");
+         Btt_modityAdmin.addActionListener(new ActionListener() {
+         	public void actionPerformed(ActionEvent e) {
+                if(!Auction.getAuction().getName().equals(In_userID.getText())){
+                    User user = UserFileSystem.getUserFileSystem().getUserById(In_userID.getText());
+
+                    user.setAdmin(!user.isAdmin());
+    
+                    UpdateUserCommand command = new UpdateUserCommand(user);
+                    invoker.setCommand(command);
+                    invoker.run();
+                    refreshUserTable();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "자신의 권한은 수정할 수 없습니다.");
+                }
+         	}
+         });
+         Btt_modityAdmin.setFont(new Font("굴림", Font.PLAIN, 15));
+         userButtons.add(Btt_modityAdmin);
          Btt_createUser.setFont(new Font("굴림", Font.PLAIN, 15));
          userButtons.add(Btt_createUser);
  
@@ -793,11 +815,10 @@ public class SwingAdmin extends JFrame {
                          .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
                          .build();
  
-                 UpdateUserCommand command = new UpdateUserCommand(user);
-                 invoker.setCommand(command);
-                 invoker.run();
-                 refreshUserTable();
- 
+                UpdateUserCommand command = new UpdateUserCommand(user);
+                invoker.setCommand(command);
+                invoker.run();
+                refreshUserTable();
              }
          });
          Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));
@@ -806,13 +827,13 @@ public class SwingAdmin extends JFrame {
          JButton Btt_deleteUser = new JButton("유저 삭제");
          Btt_deleteUser.addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
-                 if (In_userID.getText().isEmpty())
-                     JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
-                 else {
-                     DeleteUserCommand command = new DeleteUserCommand(UserFileSystem.getUserFileSystem().getUserById(In_userID.getText()));
-                     invoker.setCommand(command);
-                     invoker.run();
-                     refreshUserTable();
+                if (In_userID.getText().isEmpty())
+                    JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
+                else {
+                    DeleteUserCommand command = new DeleteUserCommand(UserFileSystem.getUserFileSystem().getUserById(In_userID.getText()));
+                    invoker.setCommand(command);
+                    invoker.run();
+                    refreshUserTable();
                  }
              }
          });
@@ -1277,6 +1298,4 @@ public class SwingAdmin extends JFrame {
 
         S_userItemInfoList.setViewportView(T_userItemInfoList);
     }
-
-
 }

@@ -53,6 +53,10 @@ public class User implements ItemObserver{
         this.gold = gold;
     }
 
+    public void setAdmin(boolean isAdmin){
+        this.isAdmin = isAdmin;
+    }
+
     //Product
     private User(UserBuilder builder) {
         this.id = builder.ID;
