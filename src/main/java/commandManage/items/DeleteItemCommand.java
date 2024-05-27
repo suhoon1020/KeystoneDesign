@@ -24,6 +24,7 @@ public class DeleteItemCommand implements Command {
             if(items.get(i).getName().equals(itemName)){
                 items.remove(i);
                 
+                ItemFileSystem.getItemFileSystem().saveInfosToFile();
                 ItemFileSystem.getItemFileSystem().notifyObservers(item, "Delete");
 
                 JOptionPane.showMessageDialog(null, itemName + " 아이템이 삭제되었습니다");
