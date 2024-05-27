@@ -97,8 +97,8 @@ public class SwingAdmin extends JFrame {
     private JTextField In_tradeItemUserName;
     private JTextField In_tradeItemName;
     private JTextField In_tradeItemGrade;
-    private JFormattedTextField In_tradeItemCount;
-    private JFormattedTextField In_tradeItemPrice;
+    private JTextField In_tradeItemCount;
+    private JTextField In_tradeItemPrice;
 
     private JTextField In_tradeHistoryBuyer;
     private JTextField In_tradeHistorySeller;
@@ -110,7 +110,8 @@ public class SwingAdmin extends JFrame {
     private JTextField In_userPassword;
     private JTextField In_userName;
     private JTextField In_userPhoneNumber;
-    private JFormattedTextField In_userGold;
+    private JTextField In_userGold;
+    
 
     private JTextField In_inventoryUser;
     private JTextField In_userItemType;
@@ -118,9 +119,11 @@ public class SwingAdmin extends JFrame {
     private JTextField In_userItemGrade;
     private JTextField In_userItemDesc;
     private JTextField In_userItemOp1;
+    private JTextField In_userItemCount;
 
     private JTextField In_itemInfoName;
     private JTextField In_itemInfoDesc;
+    private JTextField In_itemInfoOp1;
 
     private static SwingAdmin swingAdmin = new SwingAdmin();
 
@@ -162,13 +165,6 @@ public class SwingAdmin extends JFrame {
         contents.setBounds(12, 107, 1062, 546);
         contents.setLayout(mainCardLayout);
         contentPane.add(contents);
-
-        // 숫자 입력 포멧
-        NumberFormatter F_NumberFormet = new NumberFormatter();
-        F_NumberFormet.setValueClass(Integer.class);
-        F_NumberFormet.setMinimum(Integer.valueOf(1));
-        F_NumberFormet.setMaximum(Integer.valueOf(100000));
-
 
         /*
          *      AuctionManage Page
@@ -272,11 +268,11 @@ public class SwingAdmin extends JFrame {
         tradeItemIn.add(In_tradeItemGrade);
         In_tradeItemGrade.setColumns(10);
 
-        In_tradeItemCount = new JFormattedTextField(F_NumberFormet);
+        In_tradeItemCount = new JTextField();
         tradeItemIn.add(In_tradeItemCount);
         In_tradeItemCount.setColumns(10);
 
-        In_tradeItemPrice = new JFormattedTextField(F_NumberFormet);
+        In_tradeItemPrice = new JTextField();
         tradeItemIn.add(In_tradeItemPrice);
         In_tradeItemPrice.setColumns(10);
 
@@ -576,7 +572,7 @@ public class SwingAdmin extends JFrame {
         In_itemInfoDesc.setColumns(10);
         itemInfoIn.add(In_itemInfoDesc);
 
-        JFormattedTextField In_itemInfoOp1 = new JFormattedTextField(F_NumberFormet);
+        In_itemInfoOp1 = new JTextField();
         In_itemInfoOp1.setColumns(10);
         itemInfoIn.add(In_itemInfoOp1);
 
@@ -691,163 +687,6 @@ public class SwingAdmin extends JFrame {
          *      UserManage Page
          */
 
-        JPanel userInfoPage = new JPanel();
-        userInfoPage.setBorder(new LineBorder(new Color(0, 0, 0)));
-        userInfoPage.setLayout(null);
-        contents.add(userInfoPage, "UserManagePage");
-
-        JPanel userList = new JPanel();
-        userList.setBounds(12, 10, 758, 526);
-        userList.setBorder(new LineBorder(new Color(0, 0, 0)));
-        userList.setLayout(new GridLayout(0, 1, 0, 0));
-        userInfoPage.add(userList);
-
-        userTableModel = new DefaultTableModel(userHeader, 0);
-        T_userList = new JTable(userTableModel);
-        T_userList.getTableHeader().setReorderingAllowed(false);
-        T_userList.getTableHeader().setResizingAllowed(false);
-        S_userList = new JScrollPane();
-        userList.add(S_userList);
-
-        JPanel userManageContent = new JPanel();
-        userManageContent.setBorder(new LineBorder(new Color(0, 0, 0)));
-        userManageContent.setBounds(782, 10, 268, 526);
-        userInfoPage.add(userManageContent);
-        userManageContent.setLayout(null);
-
-        JPanel userIn = new JPanel();
-        userIn.setBounds(143, 0, 125, 324);
-        userManageContent.add(userIn);
-        userIn.setLayout(new GridLayout(0, 1, 0, 0));
-
-        In_userID = new JTextField();
-        In_userID.setColumns(10);
-        userIn.add(In_userID);
-
-        In_userPassword = new JTextField();
-        In_userPassword.setColumns(10);
-        userIn.add(In_userPassword);
-
-        In_userName = new JTextField();
-        In_userName.setColumns(10);
-        userIn.add(In_userName);
-
-        In_userPhoneNumber = new JTextField();
-        In_userPhoneNumber.setColumns(10);
-        userIn.add(In_userPhoneNumber);
-
-        In_userGold = new JFormattedTextField(F_NumberFormet);
-        In_userGold.setColumns(10);
-        userIn.add(In_userGold);
-
-        JPanel userLab = new JPanel();
-        userLab.setBounds(0, 0, 141, 324);
-        userManageContent.add(userLab);
-        userLab.setLayout(new GridLayout(0, 1, 0, 0));
-
-        JLabel L_userID = new JLabel("아이디 :");
-        L_userID.setHorizontalAlignment(SwingConstants.CENTER);
-        L_userID.setFont(new Font("굴림", Font.PLAIN, 20));
-        userLab.add(L_userID);
-
-        JLabel L_userPassword = new JLabel("비밀번호 :");
-        L_userPassword.setHorizontalAlignment(SwingConstants.CENTER);
-        L_userPassword.setFont(new Font("굴림", Font.PLAIN, 20));
-        userLab.add(L_userPassword);
-
-        JLabel L_userName = new JLabel("이름 :");
-        L_userName.setHorizontalAlignment(SwingConstants.CENTER);
-        L_userName.setFont(new Font("굴림", Font.PLAIN, 20));
-        userLab.add(L_userName);
-
-        JLabel L_userPhoneNumber = new JLabel("전화번호 :");
-        L_userPhoneNumber.setHorizontalAlignment(SwingConstants.CENTER);
-        L_userPhoneNumber.setFont(new Font("굴림", Font.PLAIN, 20));
-        userLab.add(L_userPhoneNumber);
-
-        JLabel L_userGold = new JLabel("골드 :");
-        L_userGold.setHorizontalAlignment(SwingConstants.CENTER);
-        L_userGold.setFont(new Font("굴림", Font.PLAIN, 20));
-        userLab.add(L_userGold);
-
-        JPanel userButtons = new JPanel();
-        userButtons.setBounds(0, 322, 268, 204);
-        userManageContent.add(userButtons);
-        userButtons.setLayout(new GridLayout(0, 1, 0, 0));
-
-        JButton Btt_createUser = new JButton("유저 생성");
-        Btt_createUser.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                User user = new User.UserBuilder()
-                        .ID(In_userID.getText())
-                        .password(In_userPassword.getText())
-                        .name(In_userName.getText())
-                        .phoneNumber(In_userPhoneNumber.getText())
-                        .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
-                        .build();
-
-                CreateUserCommand command = new CreateUserCommand(user);
-                invoker.setCommand(command);
-                invoker.run();
-                refreshUserTable();
-
-            }
-        });
-        Btt_createUser.setFont(new Font("굴림", Font.PLAIN, 15));
-        userButtons.add(Btt_createUser);
-
-        JButton Btt_updateUser = new JButton("유저 수정");
-        Btt_updateUser.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                User user = new User.UserBuilder()
-                        .ID(In_userID.getText())
-                        .password(In_userPassword.getText())
-                        .name(In_userName.getText())
-                        .phoneNumber(In_userPhoneNumber.getText())
-                        .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
-                        .build();
-
-                UpdateUserCommand command = new UpdateUserCommand(user);
-                invoker.setCommand(command);
-                invoker.run();
-                refreshUserTable();
-
-            }
-        });
-        Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));
-        userButtons.add(Btt_updateUser);
-
-        JButton Btt_deleteUser = new JButton("유저 삭제");
-        Btt_deleteUser.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (In_userID.getText().isEmpty())
-                    JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
-                else {
-                    DeleteUserCommand command = new DeleteUserCommand(UserFileSystem.getUserFileSystem().getUserById(In_userID.getText()));
-                    invoker.setCommand(command);
-                    invoker.run();
-                    refreshUserTable();
-                }
-            }
-        });
-        Btt_deleteUser.setFont(new Font("굴림", Font.PLAIN, 15));
-        userButtons.add(Btt_deleteUser);
-
-        T_userList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting() && T_userList.getSelectedRow() != -1) {
-                    // 선택된 행의 데이터 출력
-                    int selectedRow = T_userList.getSelectedRow();
-
-                    In_userID.setText(T_userList.getValueAt(selectedRow, 0).toString());
-                    In_userPassword.setText(T_userList.getValueAt(selectedRow, 1).toString());
-                    In_userName.setText(T_userList.getValueAt(selectedRow, 2).toString());
-                    In_userPhoneNumber.setText(T_userList.getValueAt(selectedRow, 3).toString());
-                    In_userGold.setText(T_userList.getValueAt(selectedRow, 4).toString());
-                }
-            }
-        });
-
          JPanel userInfoPage = new JPanel();
          userInfoPage.setBorder(new LineBorder(new Color(0, 0, 0)));
          userInfoPage.setLayout(null);
@@ -893,7 +732,7 @@ public class SwingAdmin extends JFrame {
          In_userPhoneNumber.setColumns(10);
          userIn.add(In_userPhoneNumber);
  
-         In_userGold = new JFormattedTextField(F_NumberFormet);
+         In_userGold = new JTextField();
          In_userGold.setColumns(10);
          userIn.add(In_userGold);
  
@@ -989,14 +828,15 @@ public class SwingAdmin extends JFrame {
                 invoker.setCommand(command);
                 invoker.run();
                 refreshUserTable();
-             }
-         });
-         Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));
-         userButtons.add(Btt_updateUser);
- 
-         JButton Btt_deleteUser = new JButton("유저 삭제");
-         Btt_deleteUser.addActionListener(new ActionListener() {
-             public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));
+        userButtons.add(Btt_updateUser);
+
+        JButton Btt_deleteUser = new JButton("유저 삭제");
+        Btt_deleteUser.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 if (In_userID.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
                 else {
@@ -1004,27 +844,27 @@ public class SwingAdmin extends JFrame {
                     invoker.setCommand(command);
                     invoker.run();
                     refreshUserTable();
-                 }
-             }
-         });
-         Btt_deleteUser.setFont(new Font("굴림", Font.PLAIN, 15));
-         userButtons.add(Btt_deleteUser);
- 
-         T_userList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-             public void valueChanged(ListSelectionEvent event) {
-                 if (!event.getValueIsAdjusting() && T_userList.getSelectedRow() != -1) {
-                     // 선택된 행의 데이터 출력
-                     int selectedRow = T_userList.getSelectedRow();
- 
-                     In_userID.setText(T_userList.getValueAt(selectedRow, 0).toString());
-                     In_userPassword.setText(T_userList.getValueAt(selectedRow, 1).toString());
-                     In_userName.setText(T_userList.getValueAt(selectedRow, 2).toString());
-                     In_userPhoneNumber.setText(T_userList.getValueAt(selectedRow, 3).toString());
-                     In_userGold.setText(T_userList.getValueAt(selectedRow, 4).toString());
-                 }
-             }
-         });
- 
+                }
+            }
+        });
+        Btt_deleteUser.setFont(new Font("굴림", Font.PLAIN, 15));
+        userButtons.add(Btt_deleteUser);
+
+        T_userList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting() && T_userList.getSelectedRow() != -1) {
+                    // 선택된 행의 데이터 출력
+                    int selectedRow = T_userList.getSelectedRow();
+
+                    In_userID.setText(T_userList.getValueAt(selectedRow, 0).toString());
+                    In_userPassword.setText(T_userList.getValueAt(selectedRow, 1).toString());
+                    In_userName.setText(T_userList.getValueAt(selectedRow, 2).toString());
+                    In_userPhoneNumber.setText(T_userList.getValueAt(selectedRow, 3).toString());
+                    In_userGold.setText(T_userList.getValueAt(selectedRow, 4).toString());
+                }
+            }
+        });
+
 
         /*
          *      USER INVENTORY PAGE
@@ -1137,12 +977,12 @@ public class SwingAdmin extends JFrame {
         In_userItemDesc.setColumns(10);
         userItemIn.add(In_userItemDesc);
 
-        In_userItemOp1 = new JFormattedTextField(F_NumberFormet);
+        In_userItemOp1 = new JTextField();
         In_userItemOp1.setEditable(false);
         In_userItemOp1.setColumns(10);
         userItemIn.add(In_userItemOp1);
 
-        JFormattedTextField In_userItemCount = new JFormattedTextField(F_NumberFormet);
+        In_userItemCount = new JTextField();
         In_userItemCount.setColumns(10);
         userItemIn.add(In_userItemCount);
 
@@ -1483,5 +1323,13 @@ public class SwingAdmin extends JFrame {
         }
 
         S_userItemInfoList.setViewportView(T_userItemInfoList);
+    }
+
+    public Boolean isRightCount(int count) {
+        if (count <= 0) {
+            return false;
+        }
+
+        return true;
     }
 }
