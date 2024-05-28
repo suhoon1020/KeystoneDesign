@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import auction.Auction;
-import commandManage.users.CreateUserCommand;
+import commandManage.Users.CreateUserCommand;
 import user.User;
 import commandManage.Invoker;
 
@@ -201,7 +201,7 @@ public class SwingLogin extends JFrame {
                     JOptionPane.showMessageDialog(null, "비밀번호 형식은  5 ~ 12 영어, 숫자 조합입니다");
                 else if(In_regisiter_Name.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 입력해주세요");
-                else if(!Pattern.matches("010-\\d{3,4}-\\d{4}", In_register_Password.getText()))
+                else if(!Pattern.matches("010-\\d{3,4}-\\d{4}", In_register_PhoneNumber.getText()))
                     JOptionPane.showMessageDialog(null, "전화번호는 010-(3 ~ 4자리 숫자)-(4자리 숫자) 형식입니다.");
                 else{
                     User user = new User.UserBuilder()

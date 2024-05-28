@@ -73,8 +73,9 @@ public class UserFileSystem {
         }
         return null;
     }
+
     public List<User> getUsersByName(String name) {
-        List<User> users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
 
         for (User user : users) {
             if (user.getId().equals(name)){
