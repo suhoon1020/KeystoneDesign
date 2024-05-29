@@ -78,7 +78,7 @@ public class Auction {
     public String findID(String name, String phoneNumber) {
         List<User> users = UserFileSystem.getUserFileSystem().getUsersByName(name);
 
-        if (users.isEmpty()) {
+        if (!users.isEmpty()) {
             for (User user : users) {
                 if (user.getName().equals(name) && user.getPhoneNumber().equals(phoneNumber)) {
                     return user.getId();

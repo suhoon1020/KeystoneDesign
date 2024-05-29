@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import auction.Auction;
-import commandManage.Users.CreateUserCommand;
+import commandManage.users.CreateUserCommand;
 import user.User;
 import commandManage.Invoker;
 
@@ -195,20 +195,25 @@ public class SwingLogin extends JFrame {
         Btt_tryRegister.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", In_register_ID.getText()))
+                String id = In_register_ID.getText();
+                String password = In_register_Password.getText();
+                String name = In_regisiter_Name.getText();
+                String phoneNumber = In_register_PhoneNumber.getText();
+
+                if(!Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id))
                     JOptionPane.showMessageDialog(null, "아이디 형식은 영어로 시작하는 5 ~ 12 영어, 숫자 조합입니다");
-                else if(!Pattern.matches("^[a-zA-Z0-9_]{5,12}$", In_register_Password.getText()))
+                else if(!Pattern.matches("^[a-zA-Z0-9_]{5,12}$", password))
                     JOptionPane.showMessageDialog(null, "비밀번호 형식은  5 ~ 12 영어, 숫자 조합입니다");
-                else if(In_regisiter_Name.getText().isEmpty())
+                else if(name.isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 입력해주세요");
-                else if(!Pattern.matches("010-\\d{3,4}-\\d{4}", In_register_PhoneNumber.getText()))
+                else if(!Pattern.matches("010-\\d{3,4}-\\d{4}", phoneNumber))
                     JOptionPane.showMessageDialog(null, "전화번호는 010-(3 ~ 4자리 숫자)-(4자리 숫자) 형식입니다.");
                 else{
                     User user = new User.UserBuilder()
-                                .id(In_register_ID.getText())
-                                .password(In_register_Password.getText())
-                                .name(In_regisiter_Name.getText())
-                                .phoneNumber(In_register_PhoneNumber.getText())
+                                .id(id)
+                                .password(password)
+                                .name(name)
+                                .phoneNumber(phoneNumber)
                                 .gold(10000)
                                 .build();
 
@@ -284,13 +289,21 @@ public class SwingLogin extends JFrame {
         Btt_tryFindID.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                String result = Auction.getAuction().findID(In_findID_Name.getText(), In_findID_PhoneNumber.getText());
+                String name = In_findID_Name.getText();
+                String phoneNumber = In_findID_PhoneNumber.getText();
 
-                if (!result.isEmpty())
+                String result = Auction.getAuction().findID(name, phoneNumber);
+
+                if (!result.isEmpty()){
                     JOptionPane.showMessageDialog(null, "회원님의 아이디는 " + result + " 입니다.");
-                else
+                }
+                else{
                     JOptionPane.showMessageDialog(null, "회원님의 정보를 찾을 수 없습니다");
+                }
 
+                In_findID_Name.setText("");
+                In_findID_PhoneNumber.setText("");
+                
                 cardLayout.show(getContentPane(), "LoginPage");
             }
         });
@@ -308,6 +321,21 @@ public class SwingLogin extends JFrame {
         L_findPasswordTitle.setBounds(182, 30, 200, 45);
         findPasswordPage.add(L_findPasswordTitle);
 
+        JLabel L_findPassword_ID = new JLabel("아이디 :");
+        L_findPassword_ID.setFont(new Font("굴림", Font.PLAIN, 25));
+        L_findPassword_ID.setBounds(71, 140, 140, 41);
+        findPasswordPage.add(L_findPassword_ID);
+
+        JLabel L_findPassword_Name = new JLabel("이름 :");
+        L_findPassword_Name.setFont(new Font("굴림", Font.PLAIN, 25));
+        L_findPassword_Name.setBounds(71, 215, 140, 41);
+        findPasswordPage.add(L_findPassword_Name);
+
+        JLabel L_findPassword_PhoneNumber = new JLabel("전화번호 :");
+        L_findPassword_PhoneNumber.setFont(new Font("굴림", Font.PLAIN, 25));
+        L_findPassword_PhoneNumber.setBounds(71, 295, 140, 41);
+        findPasswordPage.add(L_findPassword_PhoneNumber);
+
         In_findPassword_ID = new JTextField();
         In_findPassword_ID.setColumns(10);
         In_findPassword_ID.setBounds(223, 140, 247, 41);
@@ -323,33 +351,27 @@ public class SwingLogin extends JFrame {
         In_findPassword_PhoneNumber.setBounds(223, 295, 247, 41);
         findPasswordPage.add(In_findPassword_PhoneNumber);
 
-        JLabel L_findPassword_ID = new JLabel("아이디 :");
-        L_findPassword_ID.setFont(new Font("굴림", Font.PLAIN, 25));
-        L_findPassword_ID.setBounds(71, 140, 140, 41);
-        findPasswordPage.add(L_findPassword_ID);
-
-        JLabel L_findPassword_Name = new JLabel("이름 :");
-        L_findPassword_Name.setFont(new Font("굴림", Font.PLAIN, 25));
-        L_findPassword_Name.setBounds(71, 215, 140, 41);
-        findPasswordPage.add(L_findPassword_Name);
-
-
-        JLabel L_findPassword_PhoneNumber = new JLabel("전화번호 :");
-        L_findPassword_PhoneNumber.setFont(new Font("굴림", Font.PLAIN, 25));
-        L_findPassword_PhoneNumber.setBounds(71, 295, 140, 41);
-        findPasswordPage.add(L_findPassword_PhoneNumber);
-
         JButton Btt_tryFindPW = new JButton("비밀번호 찾기");
         Btt_tryFindPW.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                String result = Auction.getAuction().findPassword(In_findPassword_ID.getText(), In_findID_Name.getText(), In_findID_PhoneNumber.getText());
+                String id = In_findPassword_ID.getText();
+                String name = In_findPassword_Name.getText();
+                String phoneNumber = In_findPassword_PhoneNumber.getText();
 
-                if (!result.isEmpty())
+                String result = Auction.getAuction().findPassword(id, name, phoneNumber);
+
+                if (!result.isEmpty()){
                     JOptionPane.showMessageDialog(null, "회원님의 비밀번호는 " + result + " 입니다.");
-                else
+                }
+                else{
                     JOptionPane.showMessageDialog(null, "회원님의 정보를 찾을 수 없습니다");
+                }
 
+                In_findPassword_ID.setText("");
+                In_findPassword_Name.setText("");
+                In_findPassword_PhoneNumber.setText("");
+                
                 cardLayout.show(getContentPane(), "LoginPage");
             }
 

@@ -13,7 +13,7 @@ import java.util.List;
 public class UserFileSystem {
     public static final String USER_FILE = "users.json";
 
-    private static List<User> users;
+    private static List<User> userList;
 
     private static UserFileSystem userFileSystem;
 
@@ -33,7 +33,7 @@ public class UserFileSystem {
         try {
             fw = new FileWriter(USER_FILE);
 
-            String usersString = gson.toJson(users);
+            String usersString = gson.toJson(userList);
 
             fw.write(usersString);
 
@@ -45,7 +45,7 @@ public class UserFileSystem {
 
     public void loadInfosFromFile() {
         if (!Files.exists(Paths.get(USER_FILE))) {
-            users = new ArrayList<>();
+            userList = new ArrayList<>();
         } else {
             try {
                 GsonBuilder gsonBuilder = new GsonBuilder();
@@ -55,7 +55,7 @@ public class UserFileSystem {
                 Reader reader = new FileReader(USER_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                users = gson.fromJson(jsonElement, new TypeToken<List<User>>() {}.getType());
+                userList = gson.fromJson(jsonElement, new TypeToken<List<User>>() {}.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
@@ -63,11 +63,11 @@ public class UserFileSystem {
     }
 
     public List<User> getUserList() {
-        return users;
+        return userList;
     }
 
     public User getUserById(String id) {
-        for (User user : users) {
+        for (User user : userList) {
             if (user.getId().equals(id))
                 return user;
         }
@@ -75,14 +75,14 @@ public class UserFileSystem {
     }
 
     public List<User> getUsersByName(String name) {
-        List<User> users = new ArrayList<>();
+        List<User> resultUserList = new ArrayList<>();
 
-        for (User user : users) {
-            if (user.getId().equals(name)){
-                users.add(user);
+        for (User user : userList) {
+            if (user.getName().equals(name)){
+                resultUserList.add(user);
             }
         }
         
-        return users;
+        return resultUserList;
     }
 }

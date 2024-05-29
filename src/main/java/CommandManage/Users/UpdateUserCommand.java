@@ -23,7 +23,7 @@ public class UpdateUserCommand implements Command {
             if (users.get(i).getId().equals(user.getId())) {
                 users.set(i, user);
                 UserFileSystem.getUserFileSystem().saveInfosToFile();
-                JOptionPane.showMessageDialog(null,"유저 정보가 수정되었습니다?");
+                JOptionPane.showMessageDialog(null,"유저 정보가 수정되었습니다");
                 return;
             }
         }

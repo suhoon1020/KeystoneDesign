@@ -10,19 +10,19 @@ import auctionData.TradeItemFileSystem;
 import java.util.List;
 
 public class DeleteTradeItemCommand implements Command {
-    int itemID;
+    TradeItem tradeItem;
 
-    public DeleteTradeItemCommand(int itemID) {
-        this.itemID = itemID;
+    public DeleteTradeItemCommand(TradeItem tradeItem) {
+        this.tradeItem = tradeItem;
     }
-
     
     @Override
     public void execute() {
         List<TradeItem> tradeItems = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList();
+        int tradeId = tradeItem.getTradeId();
 
         for (int i = 0; i < tradeItems.size(); ++i) {
-            if (tradeItems.get(i).getTradeId() == itemID) {
+            if (tradeItems.get(i).getTradeId() == tradeId) {
                 tradeItems.remove(i);
                 TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
                 JOptionPane.showMessageDialog(null, "아이템이 삭제되었습니다");

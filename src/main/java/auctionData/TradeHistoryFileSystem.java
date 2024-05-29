@@ -2,7 +2,6 @@ package auctionData;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class TradeHistoryFileSystem {
-    private static final String TRADE_HISTORY_FILE = "tradeHistory.json";
+    private static final String TRADE_HISTORY_FILE = "tradeHistories.json";
     private static List<TradeHistory> tradeHistories;
     private static TradeHistoryFileSystem tradeHistoryFileSystem;
 

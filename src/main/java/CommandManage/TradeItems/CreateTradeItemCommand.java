@@ -17,6 +17,7 @@ public class CreateTradeItemCommand implements Command {
     public CreateTradeItemCommand(String userId, Item item, int count, int price) {
         this.userId = userId;
         this.item = item;
+        this.count = count;
         this.price = price;
     }
 

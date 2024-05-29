@@ -16,7 +16,7 @@ public class Equipment extends Item{
 
     @Override
     protected void setSpecificAttributes(ItemBuilder itemBuilder) {
-        this.defence=itemBuilder.option1;
+        this.defence = itemBuilder.option1;
     }
 
 

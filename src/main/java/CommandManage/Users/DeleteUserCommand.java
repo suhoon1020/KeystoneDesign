@@ -29,7 +29,7 @@ public class DeleteUserCommand implements Command {
                 ItemFileSystem.getItemFileSystem().removeObserver(user);
 
                 UserFileSystem.getUserFileSystem().saveInfosToFile();
-                JOptionPane.showMessageDialog(null, userId + "회원님의 정보가 삭제되었습니다");
+                JOptionPane.showMessageDialog(null, userId + " 회원님의 정보가 삭제되었습니다");
                 return;
             }
         }
