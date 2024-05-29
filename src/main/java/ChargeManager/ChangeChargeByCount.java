@@ -2,9 +2,9 @@ package ChargeManager;
 
 import auctionData.TradeItem;
 
-public class DiscountCharge extends ChargeDecorator {
+public class ChangeChargeByCount extends ChargeDecorator {
 
-    public DiscountCharge(Charge charge) {
+    public ChangeChargeByCount(Charge charge) {
         super(charge);
     }
 

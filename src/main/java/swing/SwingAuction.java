@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
 import auction.Auction;
+import auctionData.TradeHistory;
+import auctionData.TradeHistoryFileSystem;
 import auctionData.TradeItem;
 import auctionData.TradeItemFileSystem;
 import sort.TradeItemSort;
@@ -36,6 +38,8 @@ import javax.swing.event.ListSelectionListener;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -57,6 +61,8 @@ public class SwingAuction extends JFrame {
 
     private JFormattedTextField In_itemBuyCount;
 
+    String selectedItemName = null ;
+
 
     // 인벤토리
     private String[] inventoryItemHeader = {"TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT"};
@@ -77,6 +83,8 @@ public class SwingAuction extends JFrame {
 
     private JFormattedTextField In_itemSellCount;
     private JFormattedTextField In_itemSellPrice;
+
+
 
     // 개인정보
     private String[] userTradeItemHeader = {"TRADEID", "USER", "TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT", "PRICE"};
@@ -179,7 +187,7 @@ public class SwingAuction extends JFrame {
 
         C_filterItemGrades = new JComboBox<String>(tradeItemGrades);
         filterCombo.add(C_filterItemGrades);
-        
+
 
         C_filterItemType.addActionListener(new ActionListener() {
             @Override
@@ -200,48 +208,66 @@ public class SwingAuction extends JFrame {
         L_filterTitle.setFont(new Font("굴림", Font.PLAIN, 25));
         L_filterTitle.setBounds(34, 21, 189, 37);
         filter.add(L_filterTitle);
-        
+
         JButton Btt_Sort_Name = new JButton("이름(오름차순)");
-        Btt_Sort_Name.setBounds(12, 68, 234, 44);
+        Btt_Sort_Name.setBounds(12, 88, 234, 44);
         filter.add(Btt_Sort_Name);
-        
+
         JButton Btt_Reverse_Sort_Name = new JButton("이름(내림차순)");
-        Btt_Reverse_Sort_Name.setBounds(12, 140, 234, 44);
+        Btt_Reverse_Sort_Name.setBounds(12, 142, 234, 44);
         filter.add(Btt_Reverse_Sort_Name);
-        
+
         JButton Btt_Sort_Price = new JButton("가격(오름차순)");
-        Btt_Sort_Price.setBounds(12, 211, 234, 44);
+        Btt_Sort_Price.setBounds(12, 200, 234, 44);
         filter.add(Btt_Sort_Price);
-        
+
         JButton Btt_Reverse_Sort_Price = new JButton("가격(내림차순)");
-        Btt_Reverse_Sort_Price.setBounds(12, 278, 234, 44);
+        Btt_Reverse_Sort_Price.setBounds(12, 254, 234, 44);
         filter.add(Btt_Reverse_Sort_Price);
         
+        JButton btn_CheckPrice = new JButton("최근 거래가 확인");
+        btn_CheckPrice.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                TradeHistoryFileSystem.getTradeItemFileSystem().checkPrice(selectedItemName);
+        	}
+        });
+        btn_CheckPrice.setBounds(12, 308, 234, 44);
+        filter.add(btn_CheckPrice);
+
         Btt_Reverse_Sort_Price.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 itemSort = new TradeItemSortByPriceRev();
                 refreshFilterTradeItemTable();
             }
         });
-        
+
         Btt_Sort_Price.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 itemSort = new TradeItemSortByPrice();
                 refreshFilterTradeItemTable();
             }
         });
-        
+
         Btt_Reverse_Sort_Name.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 itemSort = new TradeItemSortByNameRev();
                 refreshFilterTradeItemTable();
             }
         });
-        
+
         Btt_Sort_Name.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 itemSort = new TradeItemSortByName();
                 refreshFilterTradeItemTable();
+            }
+        });
+
+        T_tradeItemList.addMouseListener(new MouseAdapter() {
+            //클릭한 아이템의 이름 반환 시켜주는 것
+            @Override
+            public void mouseClicked(MouseEvent e){
+                int row = T_tradeItemList.rowAtPoint(e.getPoint());
+                selectedItemName = (String) T_tradeItemList.getValueAt(row,3);
             }
         });
 
@@ -268,7 +294,7 @@ public class SwingAuction extends JFrame {
         In_itemBuyCount.setBounds(12, 518, 123, 63);
         auctionPage.add(In_itemBuyCount);
         In_itemBuyCount.setColumns(10);
-        
+
         JButton Btt_buyItem = new JButton("구매");
         Btt_buyItem.setFont(new Font("굴림", Font.PLAIN, 25));
         Btt_buyItem.addActionListener(new ActionListener() {
@@ -280,7 +306,7 @@ public class SwingAuction extends JFrame {
 
                     if(!Auction.getAuction().getName().equals(tradeUserName)){
                         int buyItemCount = Integer.valueOf(In_itemBuyCount.getText().replace(",", ""));
-    
+
                         if(Auction.getAuction().buyItem(tradeId, buyItemCount)){
                             // 구매 성공
                             JOptionPane.showMessageDialog(null, "구매 성공");
@@ -289,7 +315,7 @@ public class SwingAuction extends JFrame {
                             // 구매 실패
                             JOptionPane.showMessageDialog(null, "구매 실패");
                         }
-        
+
                         refreshFilterTradeItemTable();
                     }
                     else{
@@ -337,27 +363,27 @@ public class SwingAuction extends JFrame {
         itemOption.setBounds(0, 0, 298, 373);
         sellItemInfos.add(itemOption);
         itemOption.setLayout(null);
-        
+
         JPanel inventoryItemIn = new JPanel();
         inventoryItemIn.setBounds(121, 10, 165, 353);
         itemOption.add(inventoryItemIn);
         inventoryItemIn.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         In_userItemType = new JTextField();
         In_userItemType.setEditable(false);
         In_userItemType.setColumns(10);
         inventoryItemIn.add(In_userItemType);
-        
+
         In_userItemName = new JTextField();
         In_userItemName.setEditable(false);
         In_userItemName.setColumns(10);
         inventoryItemIn.add(In_userItemName);
-        
+
         In_userItemGrade = new JTextField();
         In_userItemGrade.setEditable(false);
         In_userItemGrade.setColumns(10);
         inventoryItemIn.add(In_userItemGrade);
-        
+
         In_userItemDesc = new JTextField();
         In_userItemDesc.setEditable(false);
         In_userItemDesc.setColumns(10);
@@ -367,37 +393,37 @@ public class SwingAuction extends JFrame {
         In_userItemOp1.setEditable(false);
         In_userItemOp1.setColumns(10);
         inventoryItemIn.add(In_userItemOp1);
-        
+
         In_userItemCount = new JTextField();
         In_userItemCount.setEditable(false);
         In_userItemCount.setColumns(10);
         inventoryItemIn.add(In_userItemCount);
-        
+
         JPanel tradeItemLab = new JPanel();
         tradeItemLab.setBounds(12, 10, 97, 353);
         itemOption.add(tradeItemLab);
         tradeItemLab.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         JLabel L_tradeItemType = new JLabel("타입 :");
         L_tradeItemType.setHorizontalAlignment(SwingConstants.CENTER);
         L_tradeItemType.setFont(new Font("굴림", Font.PLAIN, 15));
         tradeItemLab.add(L_tradeItemType);
-        
+
         JLabel L_tradeItemName = new JLabel("이름 :");
         L_tradeItemName.setHorizontalAlignment(SwingConstants.CENTER);
         L_tradeItemName.setFont(new Font("굴림", Font.PLAIN, 15));
         tradeItemLab.add(L_tradeItemName);
-        
+
         JLabel L_tradeItemGrade = new JLabel("등급 :");
         L_tradeItemGrade.setHorizontalAlignment(SwingConstants.CENTER);
         L_tradeItemGrade.setFont(new Font("굴림", Font.PLAIN, 15));
         tradeItemLab.add(L_tradeItemGrade);
-        
+
         JLabel L_tradeItemDesc = new JLabel("설명 :");
         L_tradeItemDesc.setHorizontalAlignment(SwingConstants.CENTER);
         L_tradeItemDesc.setFont(new Font("굴림", Font.PLAIN, 15));
         tradeItemLab.add(L_tradeItemDesc);
-        
+
         JLabel L_tradeItemOp1 = new JLabel("옵션 1 :");
         L_tradeItemOp1.setHorizontalAlignment(SwingConstants.CENTER);
         L_tradeItemOp1.setFont(new Font("굴림", Font.PLAIN, 15));
@@ -413,33 +439,33 @@ public class SwingAuction extends JFrame {
         itemSell.setBounds(0, 385, 298, 201);
         sellItemInfos.add(itemSell);
         itemSell.setLayout(null);
-        
+
         JPanel sellUtemLab = new JPanel();
         sellUtemLab.setBounds(12, 10, 99, 108);
         itemSell.add(sellUtemLab);
         sellUtemLab.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         JLabel L_itemSellPrice = new JLabel("아이템 가격 :");
         L_itemSellPrice.setHorizontalAlignment(SwingConstants.CENTER);
         sellUtemLab.add(L_itemSellPrice);
-        
+
         JLabel L_itemSellCount = new JLabel("아이템 수량 :");
         L_itemSellCount.setHorizontalAlignment(SwingConstants.CENTER);
         sellUtemLab.add(L_itemSellCount);
-        
+
         JPanel sellItemIn = new JPanel();
         sellItemIn.setBounds(123, 10, 163, 108);
         itemSell.add(sellItemIn);
         sellItemIn.setLayout(new GridLayout(0, 1, 0, 0));
-        
+
         In_itemSellPrice = new JFormattedTextField(F_NumberFormet);
         sellItemIn.add(In_itemSellPrice);
         In_itemSellPrice.setColumns(10);
-        
+
         In_itemSellCount = new JFormattedTextField(F_NumberFormet);
         sellItemIn.add(In_itemSellCount);
         In_itemSellCount.setColumns(10);
-        
+
         JButton Btt_itemSell = new JButton("판매");
         Btt_itemSell.setBounds(12, 142, 274, 51);
         itemSell.add(Btt_itemSell);
@@ -450,7 +476,7 @@ public class SwingAuction extends JFrame {
                     String sellItemName = T_inventoryList.getValueAt(selectedRow, 1).toString();
                     int sellItemCount = Integer.parseInt(In_itemSellCount.getText().replace(",", ""));
                     int sellItemPrice = Integer.parseInt(In_itemSellPrice.getText().replace(",", ""));
-    
+
                     if(Auction.getAuction().sellItem(sellItemName, sellItemCount, sellItemPrice)){
                         // 판매 등록 성공
                         JOptionPane.showMessageDialog(null, "판매 성공.");
@@ -459,7 +485,7 @@ public class SwingAuction extends JFrame {
                         // 판매 등록 실패
                         JOptionPane.showMessageDialog(null, "판매 실패.");
                     }
-    
+
                     refreshInventoryTable();
                 }
                 else{
@@ -503,7 +529,7 @@ public class SwingAuction extends JFrame {
         T_userTradeItemList.getTableHeader().setResizingAllowed(false);
         S_userTradeItemList = new JScrollPane();
         userTradeList.add(S_userTradeItemList);
-        
+
         JLabel L_selectTradeItemId = new JLabel("선택 아이템 거래 아이디 :");
         L_selectTradeItemId.setHorizontalAlignment(SwingConstants.CENTER);
         L_selectTradeItemId.setFont(new Font("굴림", Font.PLAIN, 20));
@@ -518,7 +544,7 @@ public class SwingAuction extends JFrame {
 
         JButton Btt_cancleSell = new JButton("판매취소");
         Btt_cancleSell.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 if(!In_selectTradeItemId.getText().isEmpty()){
                     if(Auction.getAuction().cancleSellItem(Integer.parseInt(In_selectTradeItemId.getText()))){
                         JOptionPane.showMessageDialog(null, "아이템 등록 취소 성공");
@@ -530,9 +556,9 @@ public class SwingAuction extends JFrame {
                 else{
                     JOptionPane.showMessageDialog(null, "아이템을 선택해주세요");
                 }
-                
+
                 refreshUserTradeItemTable();
-        	}
+            }
         });
         Btt_cancleSell.setFont(new Font("굴림", Font.PLAIN, 20));
         Btt_cancleSell.setBounds(902, 527, 248, 69);
@@ -549,9 +575,11 @@ public class SwingAuction extends JFrame {
             }
         });
 
+
+
         /*
-        *      MANU
-        */
+         *      MANU
+         */
 
         JPanel manu = new JPanel();
         manu.setBounds(285, 21, 889, 63);
@@ -597,17 +625,17 @@ public class SwingAuction extends JFrame {
         });
         Btt_logOut.setFont(new Font("굴림", Font.PLAIN, 25));
         manu.add(Btt_logOut);
-        
+
         JPanel userGold = new JPanel();
         userGold.setBounds(12, 10, 262, 74);
         contentPane.add(userGold);
         userGold.setLayout(new GridLayout(1, 0, 0, 0));
-        
+
         JLabel L_userGold = new JLabel("골드 :");
         L_userGold.setHorizontalAlignment(SwingConstants.CENTER);
         L_userGold.setFont(new Font("굴림", Font.PLAIN, 25));
         userGold.add(L_userGold);
-        
+
         In_userGold = new JTextField();
         In_userGold.setEditable(false);
         userGold.add(In_userGold);
@@ -621,7 +649,7 @@ public class SwingAuction extends JFrame {
 
         refreshTradeItemTable();
     }
-    
+
     public void refreshTradeItemTable() {
         tradeItemTableModel.setRowCount(0);
 
@@ -688,7 +716,7 @@ public class SwingAuction extends JFrame {
 
     public void refreshUserTradeItemTable() {
         userTradeItemTableModel.setRowCount(0);
-        
+
         for(TradeItem t : TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList()){
             if(!t.getUserId().equals(Auction.getAuction().getId()))
                 continue;
@@ -699,4 +727,6 @@ public class SwingAuction extends JFrame {
 
         S_userTradeItemList.setViewportView(T_userTradeItemList);
     }
+
+
 }

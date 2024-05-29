@@ -22,6 +22,9 @@ import auctionData.TradeHistoryFileSystem;
 import auctionData.TradeItem;
 import auctionData.TradeItemFileSystem;
 import commandManage.*;
+import commandManage.Users.CreateUserCommand;
+import commandManage.Users.DeleteUserCommand;
+import commandManage.Users.UpdateUserCommand;
 import commandManage.inventoryItems.CreateInvItemCommand;
 import commandManage.inventoryItems.DeleteInvItemCommand;
 import commandManage.inventoryItems.UpdateInvItemCommand;
@@ -31,9 +34,6 @@ import commandManage.items.UpdateItemCommand;
 import commandManage.tradeItems.CreateTradeItemCommand;
 import commandManage.tradeItems.DeleteTradeItemCommand;
 import commandManage.tradeItems.UpdateTradeItemCommand;
-import commandManage.users.CreateUserCommand;
-import commandManage.users.DeleteUserCommand;
-import commandManage.users.UpdateUserCommand;
 import itemInfos.Item;
 import itemInfos.ItemBuilder;
 import itemInfos.ItemFileSystem;
@@ -126,6 +126,8 @@ public class SwingAdmin extends JFrame {
     private JTextField In_itemInfoOp1;
 
     private static SwingAdmin swingAdmin = new SwingAdmin();
+    private JTextField textField;
+    private JTextField textField_TotlaCharge;
 
 
     public static SwingAdmin getSwingAdmin() {
@@ -417,6 +419,10 @@ public class SwingAdmin extends JFrame {
         T_tradeHistoryList.getTableHeader().setResizingAllowed(false);
         S_tradeHistoryList = new JScrollPane();
         tradeHistoryList.add(S_tradeHistoryList);
+        
+        textField = new JTextField();
+        S_tradeHistoryList.setViewportView(textField);
+        textField.setColumns(10);
 
         JPanel tradeHistroyContent = new JPanel();
         tradeHistroyContent.setBounds(846, 10, 202, 524);
@@ -451,6 +457,10 @@ public class SwingAdmin extends JFrame {
         L_tradeHistoryCharge.setFont(new Font("굴림", Font.PLAIN, 15));
         L_tradeHistoryCharge.setHorizontalAlignment(SwingConstants.CENTER);
         tradeHistoryLab.add(L_tradeHistoryCharge);
+        
+        JLabel lblTotalCharge = new JLabel("총 수수료 :");
+        lblTotalCharge.setHorizontalAlignment(SwingConstants.CENTER);
+        tradeHistoryLab.add(lblTotalCharge);
 
         JPanel tradeHistoryIn = new JPanel();
         tradeHistroyContent.add(tradeHistoryIn);
@@ -480,6 +490,11 @@ public class SwingAdmin extends JFrame {
         In_tradeHistoryCharge.setEditable(false);
         tradeHistoryIn.add(In_tradeHistoryCharge);
         In_tradeHistoryCharge.setColumns(10);
+        
+        textField_TotlaCharge = new JTextField();
+        textField_TotlaCharge.setEditable(false);
+        tradeHistoryIn.add(textField_TotlaCharge);
+        textField_TotlaCharge.setColumns(10);
 
         T_tradeHistoryList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
@@ -1395,5 +1410,4 @@ public class SwingAdmin extends JFrame {
 
         S_userItemInfoList.setViewportView(T_userItemInfoList);
     }
-
 }

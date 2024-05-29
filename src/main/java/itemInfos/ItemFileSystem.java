@@ -37,7 +37,6 @@ public class ItemFileSystem implements ItemSubject{
 
     private ItemFileSystem(){
         loadInfosFromFile();
-
         observers = new ArrayList<ItemObserver>();
         observers.add(TradeItemFileSystem.getTradeItemFileSystem());
         for(ItemObserver observer : UserFileSystem.getUserFileSystem().getUserList()){
