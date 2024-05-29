@@ -285,25 +285,30 @@ public class SwingAdmin extends JFrame {
         tradeItemButtons.add(Btt_createTradeItem);
         Btt_createTradeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (In_tradeItemName.getText().isEmpty())
+                int tradeId = Integer.parseInt(In_tradeItemId.getText());
+                String itemName = In_tradeItemName.getText();
+                String countString = In_tradeHistoryPrice.getText();
+                String priceString = In_tradeItemCount.getText();
+
+                if (itemName.isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
-                else {
-                    if (Pattern.matches("^[1-9]+$", In_tradeItemCount.getText())
-                            && Pattern.matches("^[1-9]+$", In_tradeHistoryPrice.getText())) {
+                else if(!Pattern.matches("^[1-9]\\d*$", countString)){
+                    JOptionPane.showMessageDialog(null, "옵션에 올바른 숫자를 입력해주세요");
+                }
+                else if(!Pattern.matches("^[1-9]\\d*$", priceString)){
+                    JOptionPane.showMessageDialog(null, "가격에 올바른 숫자를 입력해주세요");
+                }
+                else{
+                    TradeItem tradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(tradeId);
+                    Item item = tradeItem.getItem();
+                    int count = Integer.valueOf(countString);
+                    int price = Integer.valueOf(priceString);
 
-                        TradeItem tradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(Integer.parseInt(In_tradeItemId.getText()));
-                        Item item = tradeItem.getItem();
-                        int count = Integer.valueOf(In_tradeItemCount.getText().replace(",", ""));
-                        int price = Integer.valueOf(In_tradeItemPrice.getText().replace(",", ""));
+                    CreateTradeItemCommand createTItemCommand = new CreateTradeItemCommand("AUCTION", item, price, count);
+                    invoker.setCommand(createTItemCommand);
+                    invoker.run();
 
-                        CreateTradeItemCommand createTItemCommand = new CreateTradeItemCommand("AUCTION", item, price, count);
-                        invoker.setCommand(createTItemCommand);
-                        invoker.run();
-
-                        refreshTradeItemTable();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "가격과 옵션에 올바른 숫자를 입력해주세요");
-                    }
+                    refreshTradeItemTable();
                 }
             }
         });
@@ -313,26 +318,32 @@ public class SwingAdmin extends JFrame {
         tradeItemButtons.add(Btt_updateTradeItem);
         Btt_updateTradeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (In_tradeItemId.getText().isEmpty())
+                int tradeId = Integer.parseInt(In_tradeItemId.getText());
+                String userName = In_tradeItemUserName.getText();
+                String itemName = In_tradeItemName.getText();
+                String countString = In_tradeHistoryPrice.getText();
+                String priceString = In_tradeItemCount.getText();
+
+                if (itemName.isEmpty())
                     JOptionPane.showMessageDialog(null, "이름을 채워주세요");
-                else {
-                    if (Pattern.matches("^[1-9]+$", In_tradeItemCount.getText())
-                            && Pattern.matches("^[1-9]+$", In_tradeHistoryPrice.getText())) {
-                        TradeItem tradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(Integer.parseInt(In_tradeItemId.getText()));
-                        Item item = tradeItem.getItem();
-                        String userName = In_tradeItemUserName.getText();
-                        int count = Integer.valueOf(In_tradeItemCount.getText().replace(",", ""));
-                        int price = Integer.valueOf(In_tradeItemPrice.getText().replace(",", ""));
+                else if(!Pattern.matches("^[1-9]\\d*$", countString)){
+                    JOptionPane.showMessageDialog(null, "옵션에 올바른 숫자를 입력해주세요");
+                }
+                else if(!Pattern.matches("^[1-9]\\d*$", priceString)){
+                    JOptionPane.showMessageDialog(null, "가격에 올바른 숫자를 입력해주세요");
+                }
+                else{
+                    TradeItem tradeItem = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemByTradeId(tradeId);
+                    Item item = tradeItem.getItem();
+                    int count = Integer.valueOf(countString);
+                    int price = Integer.valueOf(priceString);
 
-                        TradeItem newitem = new TradeItem(userName, item, count, price);
-                        UpdateTradeItemCommand updateTItemCommand = new UpdateTradeItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
-                        invoker.setCommand(updateTItemCommand);
-                        invoker.run();
+                    TradeItem newitem = new TradeItem(userName, item, count, price);
+                    UpdateTradeItemCommand updateTItemCommand = new UpdateTradeItemCommand(Integer.parseInt(In_tradeItemId.getText()), newitem);
+                    invoker.setCommand(updateTItemCommand);
+                    invoker.run();
 
-                        refreshTradeItemTable();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "가격과 옵션에 올바른 숫자를 입력하세요");
-                    }
+                    refreshTradeItemTable();
                 }
             }
         });
@@ -350,7 +361,6 @@ public class SwingAdmin extends JFrame {
                     invoker.setCommand(deleteTItemCommand);
                     invoker.run();
                     refreshTradeItemTable();
-
                 }
             }
         });
@@ -575,12 +585,23 @@ public class SwingAdmin extends JFrame {
         JButton Btt_createItemInfo = new JButton("아이템 생성");
         Btt_createItemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!In_itemInfoName.getText().isEmpty() && !In_itemInfoDesc.getText().isEmpty() && Pattern.matches("^[0-9]+$", In_itemInfoOp1.getText())) {
-                    String type = C_itemInfoType.getSelectedItem().toString();
-                    String name = In_itemInfoName.getText();
-                    String grade = C_itemInfoGrade.getSelectedItem().toString();
-                    String desc = In_itemInfoDesc.getText();
-                    int option1 = Integer.valueOf(In_itemInfoOp1.getText().replace(",", ""));
+                String type = C_itemInfoType.getSelectedItem().toString();
+                String name = In_itemInfoName.getText();
+                String grade = C_itemInfoGrade.getSelectedItem().toString();
+                String desc = In_itemInfoDesc.getText();
+                String optionString1 = In_itemInfoOp1.getText();
+
+                if(In_itemInfoName.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "아이템 이름을 입력해주세요");
+                }
+                else if(In_itemInfoDesc.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "아이템 설명을 입력해주세요");
+                }
+                else if (!Pattern.matches("^[1-9]\\d*$", optionString1)){
+                    JOptionPane.showMessageDialog(null, "옵션에 올바른 숫자를 입력해주세요");
+                }
+                else{
+                    int option1 = Integer.parseInt(optionString1);
 
                     Item item = new ItemBuilder()
                             .type(type)
@@ -595,10 +616,7 @@ public class SwingAdmin extends JFrame {
                     invoker.run();
 
                     refreshItemInfoTable();
-                } else {
-                    JOptionPane.showMessageDialog(null, "올바른 값을 입력하세요");
                 }
-
             }
         });
         Btt_createItemInfo.setFont(new Font("굴림", Font.PLAIN, 15));
@@ -607,16 +625,24 @@ public class SwingAdmin extends JFrame {
         JButton Btt_updateItemInfo = new JButton("아이템 수정");
         Btt_updateItemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!In_itemInfoName.getText().isEmpty()
-                        && !In_itemInfoDesc.getText().isEmpty()
-                        && Pattern.matches("^[0-9]+$", In_itemInfoOp1.getText())) {
+                String type = C_itemInfoType.getSelectedItem().toString();
+                String name = In_itemInfoName.getText();
+                String grade = C_itemInfoGrade.getSelectedItem().toString();
+                String desc = In_itemInfoDesc.getText();
+                String optionString1 = In_itemInfoOp1.getText();
 
-                    String type = C_itemInfoType.getSelectedItem().toString();
-                    String name = In_itemInfoName.getText();
-                    String grade = C_itemInfoGrade.getSelectedItem().toString();
-                    String desc = In_itemInfoDesc.getText();
-                    int option1 = Integer.valueOf(In_itemInfoOp1.getText().replace(",", ""));
-
+                if(In_itemInfoName.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "아이템 이름을 입력해주세요");
+                }
+                else if(In_itemInfoDesc.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "아이템 설명을 입력해주세요");
+                }
+                else if (!Pattern.matches("^[1-9]\\d*$", optionString1)){
+                    JOptionPane.showMessageDialog(null, "옵션에 올바른 숫자를 입력해주세요");
+                }
+                else{
+                    int option1 = Integer.parseInt(optionString1);
+                    
                     Item item = new ItemBuilder()
                             .type(type)
                             .name(name)
@@ -630,8 +656,6 @@ public class SwingAdmin extends JFrame {
                     invoker.run();
 
                     refreshItemInfoTable();
-                } else {
-                    JOptionPane.showMessageDialog(null, "올바른 값을 입력하세요");
                 }
             }
         });
@@ -641,16 +665,16 @@ public class SwingAdmin extends JFrame {
         JButton Btt_deleteItemInfo = new JButton("아이템 삭제");
         Btt_deleteItemInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!In_itemInfoName.getText().isEmpty()) {
+                if (In_itemInfoName.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "이름을 채워주세요");
+                }
+                else{
                     DeleteItemCommand deleteItemCommand = new DeleteItemCommand(ItemFileSystem.getItemFileSystem().getItemByName(In_itemInfoName.getText()));
                     invoker.setCommand(deleteItemCommand);
                     invoker.run();
 
                     refreshItemInfoTable();
-                } else {
-                    JOptionPane.showMessageDialog(null, "이름을 입력하세요");
                 }
-
             }
         });
         Btt_deleteItemInfo.setFont(new Font("굴림", Font.PLAIN, 15));
@@ -762,33 +786,60 @@ public class SwingAdmin extends JFrame {
         JButton Btt_createUser = new JButton("유저 생성");
         Btt_createUser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                User user = new User.UserBuilder()
-                        .ID(In_userID.getText())
-                        .password(In_userPassword.getText())
-                        .name(In_userName.getText())
-                        .phoneNumber(In_userPhoneNumber.getText())
-                        .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
-                        .build();
+                String id = In_userID.getText();
+                String password = In_userPassword.getText();
+                String name = In_userName.getText();
+                String phoneNumber = In_userPhoneNumber.getText();
+                String goldString = In_userGold.getText();
 
-                CreateUserCommand command = new CreateUserCommand(user);
-                invoker.setCommand(command);
-                invoker.run();
-                refreshUserTable();
+                if (In_userID.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
+                }
+                else if (In_userPassword.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "비밀번호를 채워주세요");
+                }
+                else if (In_userName.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "이름을 채워주세요");
+                }
+                else if (In_userPhoneNumber.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "전화번호를 채워주세요");
+                }
+                else if(!Pattern.matches("^[1-9]\\d*$", goldString)){
+                    JOptionPane.showMessageDialog(null, "골드에 올바른 숫자를 입력해주세요");
+                }
+                else{
+                    int gold = Integer.valueOf(In_userGold.getText());
+                    
+                    User user = new User.UserBuilder()
+                            .id(id)
+                            .password(password)
+                            .name(name)
+                            .phoneNumber(phoneNumber)
+                            .gold(gold)
+                            .build();
 
+                    CreateUserCommand command = new CreateUserCommand(user);
+                    invoker.setCommand(command);
+                    invoker.run();
+
+                    refreshUserTable();
+                }
             }
         });
 
         JButton Btt_modityAdmin = new JButton("유저 권한부여");
         Btt_modityAdmin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!Auction.getAuction().getName().equals(In_userID.getText())) {
-                    User user = UserFileSystem.getUserFileSystem().getUserById(In_userID.getText());
+                String userId = In_userID.getText();
 
+                if (!Auction.getAuction().getName().equals(userId)) {
+                    User user = UserFileSystem.getUserFileSystem().getUserById(userId);
                     user.setAdmin(!user.isAdmin());
 
                     UpdateUserCommand command = new UpdateUserCommand(user);
                     invoker.setCommand(command);
                     invoker.run();
+
                     refreshUserTable();
                 } else {
                     JOptionPane.showMessageDialog(null, "자신의 권한은 수정할 수 없습니다.");
@@ -804,19 +855,44 @@ public class SwingAdmin extends JFrame {
         JButton Btt_updateUser = new JButton("유저 수정");
         Btt_updateUser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                User user = new User.UserBuilder()
-                        .ID(In_userID.getText())
-                        .password(In_userPassword.getText())
-                        .name(In_userName.getText())
-                        .phoneNumber(In_userPhoneNumber.getText())
-                        .gold(Integer.valueOf(In_userGold.getText().replace(",", "")))
-                        .build();
+                String id = In_userID.getText();
+                String password = In_userPassword.getText();
+                String name = In_userName.getText();
+                String phoneNumber = In_userPhoneNumber.getText();
+                String goldString = In_userGold.getText();
 
-                UpdateUserCommand command = new UpdateUserCommand(user);
-                invoker.setCommand(command);
-                invoker.run();
-                
-                refreshUserTable();
+                if (In_userID.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
+                }
+                else if (In_userPassword.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "비밀번호를 채워주세요");
+                }
+                else if (In_userName.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "이름을 채워주세요");
+                }
+                else if (In_userPhoneNumber.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "전화번호를 채워주세요");
+                }
+                else if(!Pattern.matches("^[1-9]\\d*$", goldString)){
+                    JOptionPane.showMessageDialog(null, "골드에 올바른 숫자를 입력해주세요");
+                }
+                else{
+                    int gold = Integer.valueOf(In_userGold.getText());
+                    
+                    User user = new User.UserBuilder()
+                            .id(id)
+                            .password(password)
+                            .name(name)
+                            .phoneNumber(phoneNumber)
+                            .gold(gold)
+                            .build();
+
+                    UpdateUserCommand command = new UpdateUserCommand(user);
+                    invoker.setCommand(command);
+                    invoker.run();
+
+                    refreshUserTable();
+                }
             }
         });
         Btt_updateUser.setFont(new Font("굴림", Font.PLAIN, 15));
@@ -825,12 +901,17 @@ public class SwingAdmin extends JFrame {
         JButton Btt_deleteUser = new JButton("유저 삭제");
         Btt_deleteUser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (In_userID.getText().isEmpty())
+                String userId = In_userID.getText();
+
+                if (userId.isEmpty())
                     JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
                 else {
-                    DeleteUserCommand command = new DeleteUserCommand(UserFileSystem.getUserFileSystem().getUserById(In_userID.getText()));
+                    User user = UserFileSystem.getUserFileSystem().getUserById(userId);
+
+                    DeleteUserCommand command = new DeleteUserCommand(user);
                     invoker.setCommand(command);
                     invoker.run();
+
                     refreshUserTable();
                 }
             }
@@ -983,15 +1064,25 @@ public class SwingAdmin extends JFrame {
         Btt_createUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
         Btt_createUserItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (Pattern.matches("^[1-9]+$", In_userItemCount.getText())
-                        && Pattern.matches("^[1-9]+$", In_userItemOp1.getText())) {
+                String type = In_userItemType.getText();
+                String name = In_userItemName.getText();
+                String grade = In_userItemGrade.getText();
+                String desc = In_userItemDesc.getText();
+                String optionString1 = In_userItemCount.getText();
+                String countString = In_userItemOp1.getText();
 
-                    String type = In_userItemType.getText();
-                    String name = In_userItemName.getText();
-                    String grade = In_userItemGrade.getText();
-                    String desc = In_userItemDesc.getText();
-                    int option1 = Integer.valueOf(In_userItemOp1.getText().replace(",", ""));
-                    int count = Integer.valueOf(In_userItemCount.getText().replace(",", ""));
+                if (type.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "항목을 선택해주세요.");
+                } 
+                else if (Pattern.matches("^[1-9]\\d*$", optionString1)){
+                    JOptionPane.showMessageDialog(null, "옵션에 올바른 숫자를 입력해주세요");
+                } 
+                else if (Pattern.matches("^[1-9]\\d*$", countString)){
+                    JOptionPane.showMessageDialog(null, "개수에 올바른 숫자를 입력해주세요");
+                }
+                else{
+                    int option1 = Integer.valueOf(In_userItemOp1.getText());
+                    int count = Integer.valueOf(In_userItemCount.getText());
 
                     Item item = new ItemBuilder()
                             .type(type)
@@ -1006,9 +1097,6 @@ public class SwingAdmin extends JFrame {
                     invoker.run();
 
                     refreshUserItemTable();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "올바른 정보를 입력해주세요");
                 }
             }
         });
@@ -1018,33 +1106,41 @@ public class SwingAdmin extends JFrame {
         Btt_updateUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
         Btt_updateUserItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (Pattern.matches("^[1-9]+$", In_userItemCount.getText())
-                        && Pattern.matches("^[1-9]+$", In_userItemOp1.getText())) {
+                String type = In_userItemType.getText();
+                String name = In_userItemName.getText();
+                String grade = In_userItemGrade.getText();
+                String desc = In_userItemDesc.getText();
+                String optionString1 = In_userItemCount.getText();
+                String countString = In_userItemOp1.getText();
 
-                            String type = In_userItemType.getText();
-                            String name = In_userItemName.getText();
-                            String grade = In_userItemGrade.getText();
-                            String desc = In_userItemDesc.getText();
-                            int option1 = Integer.valueOf(In_userItemOp1.getText().replace(",", ""));
-                            int count = Integer.valueOf(In_userItemCount.getText().replace(",", ""));
+                if (type.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "항목을 선택해주세요.");
+                } 
+                else if (Pattern.matches("^[1-9]\\d*$", optionString1)){
+                    JOptionPane.showMessageDialog(null, "옵션에 올바른 숫자를 입력해주세요");
+                } 
+                else if (Pattern.matches("^[1-9]\\d*$", countString)){
+                    JOptionPane.showMessageDialog(null, "개수에 올바른 숫자를 입력해주세요");
+                }
+                else{
+                    int option1 = Integer.valueOf(In_userItemOp1.getText());
+                    int count = Integer.valueOf(In_userItemCount.getText());
 
+                    Item item = new ItemBuilder()
+                            .type(type)
+                            .name(name)
+                            .grade(grade)
+                            .desc(desc)
+                            .option1(option1)
+                            .build();
 
-                            Item item = new ItemBuilder()
-                                    .type(type)
-                                    .name(name)
-                                    .grade(grade)
-                                    .desc(desc)
-                                    .option1(option1)
-                                    .build();
+                    InventoryItem inventoryItem = new InventoryItem(item, count);
 
-                            InventoryItem inventoryItem = new InventoryItem(item, count);
-                            UpdateInvItemCommand updateInvItemCommand = new UpdateInvItemCommand(currentUser, inventoryItem);
-                            invoker.setCommand(updateInvItemCommand);
-                            invoker.run();
+                    UpdateInvItemCommand updateInvItemCommand = new UpdateInvItemCommand(currentUser, inventoryItem);
+                    invoker.setCommand(updateInvItemCommand);
+                    invoker.run();
 
-                            refreshUserItemTable();
-                } else {
-                    JOptionPane.showMessageDialog(null, "올바른 정보가 아닙니다");
+                    refreshUserItemTable();
                 }
 
             }
@@ -1055,15 +1151,16 @@ public class SwingAdmin extends JFrame {
         Btt_deleteUserItem.setFont(new Font("굴림", Font.PLAIN, 15));
         Btt_deleteUserItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!In_userItemName.getText().isEmpty()) {
-                    DeleteInvItemCommand deleteInvItemCommand = new DeleteInvItemCommand(currentUser, In_userItemName.getText());
+                String itemName = In_userItemName.getText();
+
+                if (itemName.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "아이템 이름를 입력해주세요");
+                } else {
+                    DeleteInvItemCommand deleteInvItemCommand = new DeleteInvItemCommand(currentUser, itemName);
                     invoker.setCommand(deleteInvItemCommand);
                     invoker.run();
 
                     refreshUserItemTable();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "아이템 이름를 입력해주세요");
                 }
 
             }

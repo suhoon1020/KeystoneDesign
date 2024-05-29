@@ -23,6 +23,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
         String userPW = jsonObject.get("password").getAsString();
         String userName = jsonObject.get("name").getAsString();
         String userPhoneNum = jsonObject.get("phoneNumber").getAsString();
+        boolean isAdmin = jsonObject.getAsJsonObject().get("isAdmin").getAsBoolean();
         int userGold = jsonObject.get("gold").getAsInt();
 
         JsonArray jsonItemList = jsonObject.getAsJsonArray("itemList");
@@ -36,6 +37,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
             String name = item.getAsJsonObject().get("name").getAsString();
             String grade = item.getAsJsonObject().get("grade").getAsString();
             String desc = item.getAsJsonObject().get("desc").getAsString();
+
             int op1 = 0;
 
             switch (type) {
@@ -71,10 +73,11 @@ public class UserDeserializer implements JsonDeserializer<User> {
         }
 
         return new User.UserBuilder()
-                .ID(userID)
+                .id(userID)
                 .password(userPW)
                 .name(userName)
                 .phoneNumber(userPhoneNum)
+                .isAdmin(isAdmin)
                 .gold(userGold)
                 .itemList(useriItemList)
                 .build();

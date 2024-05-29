@@ -63,7 +63,7 @@ public class User implements ItemObserver{
         this.password = builder.password;
         this.name = builder.name;
         this.phoneNumber = builder.phoneNumber;
-        this.isAdmin = false;
+        this.isAdmin = builder.isAdmin;
         this.gold = builder.gold;
         
         if(builder.itemList == null)
@@ -176,9 +176,11 @@ public class User implements ItemObserver{
         private String name;
         private String phoneNumber;
         private int gold;
+        private boolean isAdmin;
+
         private List<InventoryItem> itemList;
 
-        public UserBuilder ID(String ID) {
+        public UserBuilder id(String ID) {
             this.ID = ID;
             return this;
         }
@@ -203,10 +205,16 @@ public class User implements ItemObserver{
             return this;
         }
 
+        public UserBuilder isAdmin(boolean isAdmin){
+            this.isAdmin = isAdmin;
+            return this;
+        }
+
         public UserBuilder itemList(List<InventoryItem> itemList){
             this.itemList = itemList;
             return this;
         }
+        
 
         public User build() {
             return new User(this);
