@@ -14,7 +14,7 @@ public class ChangeChargeByCount extends ChargeDecorator {
     }
 
     public double discount(int count) {
-        if(count>=5) {
+        if(count >= 5) {
             return 0.5;
         }
         return 0;

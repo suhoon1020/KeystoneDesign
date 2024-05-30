@@ -28,11 +28,9 @@ public class TradeHistory {
         return charge;
     }
 
-
     public String[] getListData() {
-        return new String[]{buyerId, sellerId, itemName, Integer.toString(price),Integer.toString(charge)};
+        return new String[]{buyerId, sellerId, itemName, Integer.toString(price), Integer.toString(charge)};
     }
-
 
     public TradeHistory(String buyerID, String sellerID, String itemName, int price, int charge) {
         this.buyerId = buyerID;

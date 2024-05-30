@@ -14,7 +14,7 @@ public class ChangeChargeByPrice extends ChargeDecorator{
     }
 
     public double discount(int tradePrice) {
-        if(tradePrice>=10000) {
+        if(tradePrice >= 10000) {
             return 0.5;
         }
         return 0;

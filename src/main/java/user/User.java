@@ -59,7 +59,7 @@ public class User implements ItemObserver{
 
     //Product
     private User(UserBuilder builder) {
-        this.id = builder.ID;
+        this.id = builder.id;
         this.password = builder.password;
         this.name = builder.name;
         this.phoneNumber = builder.phoneNumber;
@@ -171,7 +171,7 @@ public class User implements ItemObserver{
 
     //빌더 세팅
     public static class UserBuilder {
-        private String ID;
+        private String id;
         private String password;
         private String name;
         private String phoneNumber;
@@ -181,7 +181,7 @@ public class User implements ItemObserver{
         private List<InventoryItem> itemList;
 
         public UserBuilder id(String ID) {
-            this.ID = ID;
+            this.id = ID;
             return this;
         }
 

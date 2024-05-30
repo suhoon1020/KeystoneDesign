@@ -18,17 +18,15 @@ import java.util.List;
 
 public class TradeHistoryFileSystem {
     private static final String TRADE_HISTORY_FILE = "tradeHistories.json";
-    private static List<TradeHistory> tradeHistories;
+
+    private static List<TradeHistory> tradeHistoryList;
+    
     private static TradeHistoryFileSystem tradeHistoryFileSystem;
 
-    public static TradeHistoryFileSystem getTradeItemFileSystem() {
+    public static TradeHistoryFileSystem getTradeHistoryFileSystem() {
         if (tradeHistoryFileSystem == null)
             tradeHistoryFileSystem = new TradeHistoryFileSystem();
 
-        return tradeHistoryFileSystem;
-    }
-
-    public static TradeHistoryFileSystem getTradeHistoryFileSystem() {
         return tradeHistoryFileSystem;
     }
 
@@ -42,7 +40,7 @@ public class TradeHistoryFileSystem {
         try {
             FileWriter fw = new FileWriter(TRADE_HISTORY_FILE);
 
-            fw.write(gson.toJson(tradeHistories));
+            fw.write(gson.toJson(tradeHistoryList));
             fw.close();
         } catch (IOException err) {
             System.err.println(err);
@@ -51,15 +49,14 @@ public class TradeHistoryFileSystem {
 
     public void loadInfosFromFile() {
         if (!Files.exists(Paths.get(TRADE_HISTORY_FILE))) {
-            tradeHistories = new ArrayList<>();
+            tradeHistoryList = new ArrayList<TradeHistory>();
         } else {
             try {
                 Gson gson = new Gson();
                 Reader reader = new FileReader(TRADE_HISTORY_FILE);
                 JsonElement jsonElement = JsonParser.parseReader(reader);
 
-                tradeHistories = gson.fromJson(jsonElement, new TypeToken<List<TradeHistory>>() {
-                }.getType());
+                tradeHistoryList = gson.fromJson(jsonElement, new TypeToken<List<TradeHistory>>() {}.getType());
             } catch (IOException err) {
                 System.err.println(err);
             }
@@ -67,11 +64,21 @@ public class TradeHistoryFileSystem {
     }
 
     public void putTradeHistory(TradeHistory newHistory) {
-        tradeHistories.add(newHistory);
+        tradeHistoryList.add(newHistory);
     }
 
-    public List<TradeHistory> getTradeHistories() {
-        return tradeHistories;
+    public List<TradeHistory> getTradeHistoryList() {
+        return tradeHistoryList;
+    }
+
+    public int getTotalCharge(){
+        int totalCharge = 0;
+
+        for (TradeHistory tradeHistory : tradeHistoryList) {
+            totalCharge += tradeHistory.getCharge();
+        }
+
+        return totalCharge;
     }
 
     public void checkPrice(String itemName) {
@@ -81,7 +88,8 @@ public class TradeHistoryFileSystem {
         int sum = 0;
 
         List<Integer> price = new ArrayList<>();
-        for (TradeHistory tradeHistory : tradeHistories) {
+
+        for (TradeHistory tradeHistory : tradeHistoryList) {
             if (itemName.equals(tradeHistory.getItemName())) {
                 price.add(tradeHistory.getPrice());
                 sum += tradeHistory.getPrice();

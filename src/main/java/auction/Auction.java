@@ -24,17 +24,13 @@ public class Auction {
     private User user;
 
     private Auction() {
-        auctionState = new OpenState();
+        auctionState = new CloseState();
     }
 
     public static Auction getAuction() {
         if (auction == null)
             auction = new Auction();
         return auction;
-    }
-
-    public void changeState() {
-        auctionState = auctionState.changeState();
     }
 
     public String getId() {
@@ -56,10 +52,15 @@ public class Auction {
     public void setUser(User user) {
         this.user = user;
     }
+    
 
     // 거래소 실행
     public void run() {
         SwingLogin.getSwingLogin().setVisible(true);
+    }
+
+    public void changeState() {
+        auctionState = auctionState.changeState();
     }
 
     public boolean isOpen() {
@@ -179,7 +180,8 @@ public class Auction {
             // 거래 기록 남기기
             TradeHistory tradeHistory = new TradeHistory(user.getName(), auctionTradeItem.getUserId(), auctionTradeItem.getName(),
                     auctionTradeItem.getPrice(), fianlcharge);
-            TradeHistoryFileSystem.getTradeItemFileSystem().putTradeHistory(tradeHistory);
+            TradeHistoryFileSystem.getTradeHistoryFileSystem().putTradeHistory(tradeHistory);
+
             // 돈 차감
             user.setGold(user.getGold() - auctionTradeItem.getPrice() * buyCount);
 
@@ -205,7 +207,7 @@ public class Auction {
             // 저장
             UserFileSystem.getUserFileSystem().saveInfosToFile();
             TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
-            TradeHistoryFileSystem.getTradeItemFileSystem().saveInfosToFile();
+            TradeHistoryFileSystem.getTradeHistoryFileSystem().saveInfosToFile();
             return true;
         }
 

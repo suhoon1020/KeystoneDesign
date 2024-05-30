@@ -221,7 +221,7 @@ public class SwingAuction extends JFrame {
                 }
                 else{
                     String selectItemName = T_tradeItemList.getValueAt(selectedRow, 3).toString();
-                    TradeHistoryFileSystem.getTradeItemFileSystem().checkPrice(selectItemName);
+                    TradeHistoryFileSystem.getTradeHistoryFileSystem().checkPrice(selectItemName);
                 }
         	}
         });

@@ -43,7 +43,11 @@ import user.UserFileSystem;
 
 
 public class SwingAdmin extends JFrame {
-    Invoker invoker = new Invoker();
+    private User currentUser;
+    private Invoker invoker = new Invoker();
+    private static SwingAdmin swingAdmin = new SwingAdmin();
+
+    private JPanel contentPane;
 
     // 거래목록 테이블
     private String[] tradeItemHeader = {"TRADEID", "USERID", "NAME", "GRADE", "COUNT", "PRICE"};
@@ -51,23 +55,63 @@ public class SwingAdmin extends JFrame {
     private JScrollPane S_tradeItemList;
     private DefaultTableModel tradeItemTableModel;
 
-    // 거래목록 아이템 정보 리스트 테이블 
+    // 거래목록 아이템 정보 목록 테이블 
     private JTable T_tradeItemInfoList;
     private JScrollPane S_tradeItemInfoList;
     private DefaultTableModel tradeItemInfoTableModel;
 
+    // 거래목록 택스트필드
+    private JTextField In_tradeItemId;
+    private JTextField In_tradeItemUserName;
+    private JTextField In_tradeItemName;
+    private JTextField In_tradeItemGrade;
+    private JTextField In_tradeItemCount;
+    private JTextField In_tradeItemPrice;
 
-    // 거래 기록 테이블
+
+    // 거래기록 테이블
     private String[] tradeHistoryHeader = {"BUYER", "SELLER", "ITEMNAME", "PRICE", "CHARGE"};
     private JTable T_tradeHistoryList;
     private JScrollPane S_tradeHistoryList;
     private DefaultTableModel tradeHistoryTableModel;
+
+    // 거래기록 택스트필드
+    private JTextField In_tradeHistoryBuyer;
+    private JTextField In_tradeHistorySeller;
+    private JTextField In_tradeHistoryName;
+    private JTextField In_tradeHistoryPrice;
+    private JTextField In_tradeHistoryCharge;
+    private JTextField In_TotalCharge;
+
 
     // 아이템 정보 테이블
     private String[] itemInfoHeader = {"TYPE", "NAME", "GRADE", "DESC", "OPTION1"};
     private JTable T_itemInfoList;
     private JScrollPane S_itemInfoList;
     private DefaultTableModel itemInfoTableModel;
+
+    // 아이템 정보 택스트필드 + 콤보박스
+    private JComboBox<String> C_itemInfoType;
+    private JTextField In_itemInfoName;
+    private JComboBox<String> C_itemInfoGrade;
+    private JTextField In_itemInfoDesc;
+    private JTextField In_itemInfoOp1;
+    private String[] itemTypes = {"Equipment", "Material", "Potion", "Weapon"};
+    private String[] itemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
+
+
+    // 유저 테이블
+    private String[] userHeader = {"ID", "PW", "NAME", "PHONE", "GOLD", "ISADMIN"};
+    private JTable T_userList;
+    private JScrollPane S_userList;
+    private DefaultTableModel userTableModel;
+
+    // 유저 택스트필드 
+    private JTextField In_userID;
+    private JTextField In_userPassword;
+    private JTextField In_userName;
+    private JTextField In_userPhoneNumber;
+    private JTextField In_userGold;
 
     // 유저 인벤토리 테이블
     private String[] userItemHeader = {"TYPE", "NAME", "GRADE", "DESC", "OPTION1", "COUNT"};
@@ -80,39 +124,7 @@ public class SwingAdmin extends JFrame {
     private JScrollPane S_userItemInfoList;
     private DefaultTableModel userItemInfoTableModel;
 
-
-    // 유저 리스트 테이블
-    private String[] userHeader = {"ID", "PW", "NAME", "PHONE", "GOLD", "ISADMIN"};
-    private JTable T_userList;
-    private JScrollPane S_userList;
-    private DefaultTableModel userTableModel;
-
-    private String[] itemTypes = {"Equipment", "Material", "Potion", "Weapon"};
-    private String[] itemGrades = {"Common", "Uncommon", "Eqic", "Legendary"};
-
-    private User currentUser;
-    private JPanel contentPane;
-
-    private JTextField In_tradeItemId;
-    private JTextField In_tradeItemUserName;
-    private JTextField In_tradeItemName;
-    private JTextField In_tradeItemGrade;
-    private JTextField In_tradeItemCount;
-    private JTextField In_tradeItemPrice;
-
-    private JTextField In_tradeHistoryBuyer;
-    private JTextField In_tradeHistorySeller;
-    private JTextField In_tradeHistoryName;
-    private JTextField In_tradeHistoryPrice;
-    private JTextField In_tradeHistoryCharge;
-
-    private JTextField In_userID;
-    private JTextField In_userPassword;
-    private JTextField In_userName;
-    private JTextField In_userPhoneNumber;
-    private JTextField In_userGold;
-
-
+    // 유저 인벤토리 택스트 필드
     private JTextField In_inventoryUser;
     private JTextField In_userItemType;
     private JTextField In_userItemName;
@@ -120,15 +132,6 @@ public class SwingAdmin extends JFrame {
     private JTextField In_userItemDesc;
     private JTextField In_userItemOp1;
     private JTextField In_userItemCount;
-
-    private JTextField In_itemInfoName;
-    private JTextField In_itemInfoDesc;
-    private JTextField In_itemInfoOp1;
-
-    private static SwingAdmin swingAdmin = new SwingAdmin();
-    private JTextField textField;
-    private JTextField textField_TotlaCharge;
-
 
     public static SwingAdmin getSwingAdmin() {
         return swingAdmin;
@@ -426,10 +429,6 @@ public class SwingAdmin extends JFrame {
         S_tradeHistoryList = new JScrollPane();
         tradeHistoryList.add(S_tradeHistoryList);
         
-        textField = new JTextField();
-        S_tradeHistoryList.setViewportView(textField);
-        textField.setColumns(10);
-
         JPanel tradeHistroyContent = new JPanel();
         tradeHistroyContent.setBounds(846, 10, 202, 524);
         tradeHistoryPage.add(tradeHistroyContent);
@@ -497,10 +496,10 @@ public class SwingAdmin extends JFrame {
         tradeHistoryIn.add(In_tradeHistoryCharge);
         In_tradeHistoryCharge.setColumns(10);
         
-        textField_TotlaCharge = new JTextField();
-        textField_TotlaCharge.setEditable(false);
-        tradeHistoryIn.add(textField_TotlaCharge);
-        textField_TotlaCharge.setColumns(10);
+        In_TotalCharge = new JTextField();
+        In_TotalCharge.setEditable(false);
+        tradeHistoryIn.add(In_TotalCharge);
+        In_TotalCharge.setColumns(10);
 
         T_tradeHistoryList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
@@ -537,7 +536,6 @@ public class SwingAdmin extends JFrame {
         T_itemInfoList.getTableHeader().setResizingAllowed(false);
         S_itemInfoList = new JScrollPane();
         itemInfoList.add(S_itemInfoList);
-        refreshItemInfoTable();
 
         JPanel itemInfoManageContent = new JPanel();
         itemInfoManageContent.setLayout(null);
@@ -580,14 +578,14 @@ public class SwingAdmin extends JFrame {
         itemInfoManageContent.add(itemInfoIn);
         itemInfoIn.setLayout(new GridLayout(0, 1, 0, 0));
 
-        JComboBox<String> C_itemInfoType = new JComboBox<String>(itemTypes);
+        C_itemInfoType = new JComboBox<String>(itemTypes);
         itemInfoIn.add(C_itemInfoType);
 
         In_itemInfoName = new JTextField();
         In_itemInfoName.setColumns(10);
         itemInfoIn.add(In_itemInfoName);
 
-        JComboBox<String> C_itemInfoGrade = new JComboBox<String>(itemGrades);
+        C_itemInfoGrade = new JComboBox<String>(itemGrades);
         itemInfoIn.add(C_itemInfoGrade);
 
         In_itemInfoDesc = new JTextField();
@@ -1223,7 +1221,7 @@ public class SwingAdmin extends JFrame {
 
         JPanel subManu = new JPanel();
         CardLayout subCardLayout = new CardLayout(0, 0);
-        subManu.setBounds(653, 33, 421, 55);
+        subManu.setBounds(765, 33, 309, 55);
         subManu.setLayout(subCardLayout);
         contentPane.add(subManu);
 
@@ -1235,6 +1233,9 @@ public class SwingAdmin extends JFrame {
         Btt_auctionItemList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainCardLayout.show(contents, "AuctionManagePage");
+
+                refreshTradeItemTable();
+                refreshTradeItemInfoTable();
             }
         });
         auctionSubMnau.add(Btt_auctionItemList);
@@ -1243,6 +1244,8 @@ public class SwingAdmin extends JFrame {
         Btt_autionManage.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainCardLayout.show(contents, "TradeHistoryPage");
+
+                refreshTradeHistoryTable();
             }
         });
         auctionSubMnau.add(Btt_autionManage);
@@ -1270,9 +1273,10 @@ public class SwingAdmin extends JFrame {
 
                 if (currentUser != null) {
                     In_inventoryUser.setText(In_userID.getText());
+                    mainCardLayout.show(contents, "UserInventoryPage");
+
                     refreshUserItemTable();
                     refreshUserItemInfoTable();
-                    mainCardLayout.show(contents, "UserInventoryPage");
 
                 } else
                     JOptionPane.showMessageDialog(null, "유저 정보가 없습니다.");
@@ -1288,7 +1292,7 @@ public class SwingAdmin extends JFrame {
          */
 
         JPanel manu = new JPanel();
-        manu.setBounds(12, 10, 610, 78);
+        manu.setBounds(12, 10, 707, 78);
         contentPane.add(manu);
         manu.setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -1298,6 +1302,7 @@ public class SwingAdmin extends JFrame {
                 mainCardLayout.show(contents, "AuctionManagePage");
                 subCardLayout.show(subManu, "AuctionSubManu");
                 refreshTradeItemTable();
+                refreshTradeItemInfoTable();
             }
         });
         Btt_goAution.setFont(new Font("굴림", Font.PLAIN, 20));
@@ -1324,6 +1329,29 @@ public class SwingAdmin extends JFrame {
         });
         Btt_goUser.setFont(new Font("굴림", Font.PLAIN, 20));
         manu.add(Btt_goUser);
+
+        JButton Btt_ChangeAuctionState = new JButton("경매장 상태");
+        Btt_ChangeAuctionState.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Auction.getAuction().changeState();
+
+                if(Auction.getAuction().isOpen()){
+                    Btt_ChangeAuctionState.setText("경매장 열림");
+                }
+                else{
+                    Btt_ChangeAuctionState.setText("경매장 닫힘");
+                }
+            }
+        });
+        Btt_ChangeAuctionState.setFont(new Font("굴림", Font.PLAIN, 20));
+        manu.add(Btt_ChangeAuctionState);
+
+        if(Auction.getAuction().isOpen()){
+            Btt_ChangeAuctionState.setText("경매장 열림");
+        }
+        else{
+            Btt_ChangeAuctionState.setText("경매장 닫힘");
+        }
 
         JButton Btt_logOut = new JButton("종료");
         Btt_logOut.addActionListener(new ActionListener() {
@@ -1359,14 +1387,20 @@ public class SwingAdmin extends JFrame {
     }
 
     public void refreshTradeHistoryTable() {
+        int totalCharge = 0;
+
         tradeHistoryTableModel.setRowCount(0);
 
-        for (TradeHistory history : TradeHistoryFileSystem.getTradeHistoryFileSystem().getTradeHistories()) {
-            Object[] rowData = history.getListData();
-            tradeItemTableModel.addRow(rowData);
-        }
+        for (TradeHistory history : TradeHistoryFileSystem.getTradeHistoryFileSystem().getTradeHistoryList()) {
+            totalCharge += history.getCharge();
 
-        S_tradeItemList.setViewportView(T_tradeItemList);
+            Object[] rowData = history.getListData();
+            tradeHistoryTableModel.addRow(rowData);
+        }
+        
+        In_TotalCharge.setText(Integer.toString(totalCharge));
+
+        S_tradeHistoryList.setViewportView(T_tradeHistoryList);
     }
 
     public void refreshItemInfoTable() {

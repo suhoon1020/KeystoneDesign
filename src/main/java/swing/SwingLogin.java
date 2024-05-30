@@ -106,6 +106,8 @@ public class SwingLogin extends JFrame {
 
                     dispose();
                 } else {
+                    In_password.setText("");
+
                     JOptionPane.showMessageDialog(null, "회원정보가 없습니다.");
                 }
 
