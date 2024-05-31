@@ -9,6 +9,9 @@ import java.util.List;
 
 import javax.swing.*;
 
+import auctionData.TradeItem;
+import auctionData.TradeItemFileSystem;
+
 public class DeleteUserCommand implements Command {
     User user;
 
@@ -24,10 +27,22 @@ public class DeleteUserCommand implements Command {
 
         for (int i = 0; i < users.size(); ++i) {
             if (users.get(i).getId().equals(userId)) {
-                users.remove(i);
-                
+                List<TradeItem> tradeItems = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList();
+
+                // 유저 거래 아이템 삭제
+                for (int j = 0; j < tradeItems.size(); ++i) {
+                    if (tradeItems.get(i).getUserId().equals(userId)) {
+                        tradeItems.remove(j);
+                    }
+                }
+
+                // 유저 옵저버 삭제
                 ItemFileSystem.getItemFileSystem().removeObserver(user);
 
+                // 유저 삭제
+                users.remove(i);
+
+                TradeItemFileSystem.getTradeItemFileSystem().saveInfosToFile();
                 UserFileSystem.getUserFileSystem().saveInfosToFile();
                 JOptionPane.showMessageDialog(null, userId + " 회원님의 정보가 삭제되었습니다");
                 return;

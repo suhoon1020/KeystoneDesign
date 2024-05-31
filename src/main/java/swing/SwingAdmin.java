@@ -803,7 +803,6 @@ public class SwingAdmin extends JFrame {
         userButtons.setBounds(0, 322, 268, 204);
         userManageContent.add(userButtons);
         userButtons.setLayout(new GridLayout(0, 1, 0, 0));
-
         
         JButton Btt_modityAdmin = new JButton("유저 권한부여");
         Btt_modityAdmin.addActionListener(new ActionListener() {
@@ -928,6 +927,9 @@ public class SwingAdmin extends JFrame {
 
                 if (userId.isEmpty())
                     JOptionPane.showMessageDialog(null, "아이디를 채워주세요");
+                else if (Auction.getAuction().getId().equals(userId)) {
+                    JOptionPane.showMessageDialog(null, "자신의 정보는 삭제할 수 없습니다.");
+                }
                 else {
                     User user = UserFileSystem.getUserFileSystem().getUserById(userId);
 
