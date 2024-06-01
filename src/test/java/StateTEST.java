@@ -1,9 +1,13 @@
 import auction.Auction;
+import auction.CloseState;
+import auction.OpenState;
 
 public class StateTEST {
     public static void main(String[] args) {
         boolean isAuctionOpen;
         boolean isLoginSuccess;
+
+        Auction.getAuction().setState(new OpenState());
 
         // 현재 경매장 상태
         isAuctionOpen = Auction.getAuction().isOpen();
@@ -18,7 +22,7 @@ public class StateTEST {
         System.out.println("관리자 로그인 성공 : " + Boolean.toString(isLoginSuccess));
 
         // 경매장 상태 바꾸기
-        Auction.getAuction().changeState();
+        Auction.getAuction().setState(new CloseState());
 
         // 현재 경매장 상태
         isAuctionOpen = Auction.getAuction().isOpen();

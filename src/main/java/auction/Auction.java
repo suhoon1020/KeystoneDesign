@@ -52,19 +52,25 @@ public class Auction {
     public void setUser(User user) {
         this.user = user;
     }
-    
 
     // 거래소 실행
     public void run() {
         SwingLogin.getSwingLogin().setVisible(true);
     }
 
-    public void changeState() {
-        auctionState = auctionState.changeState();
+    public void setState(AuctionState newState){
+        auctionState = newState;
+    }
+    
+    public AuctionState getState(){
+        return auctionState;
     }
 
     public boolean isOpen() {
-        return auctionState.isOpen();
+        if(auctionState.getStateString().equals("Open"))
+            return true;
+        else
+            return false;
     }
 
     public boolean login(String ID, String password) {
@@ -175,11 +181,11 @@ public class Auction {
             charge = new ChangeChargeByCount(charge);
             charge = new ChangeChargeByPrice(charge);
 
-            int fianlcharge = charge.checkCharge(auctionTradeItem);
+            int finalcharge = charge.checkCharge(auctionTradeItem);
 
             // 거래 기록 남기기
             TradeHistory tradeHistory = new TradeHistory(user.getName(), auctionTradeItem.getUserId(), auctionTradeItem.getName(),
-                    auctionTradeItem.getPrice(), fianlcharge);
+                    auctionTradeItem.getPrice(), finalcharge);
             TradeHistoryFileSystem.getTradeHistoryFileSystem().putTradeHistory(tradeHistory);
 
             // 돈 차감
@@ -189,7 +195,7 @@ public class Auction {
             User seller = UserFileSystem.getUserFileSystem().getUserById(auctionTradeItem.getUserId());
             //수수료 만큼은 금액 차감!!
             if (seller != null)
-                seller.setGold(seller.getGold() + auctionTradeItem.getPrice() * buyCount - fianlcharge);
+                seller.setGold(seller.getGold() + auctionTradeItem.getPrice() * buyCount - finalcharge);
 
             // 거래 아이템에서 인벤토리 아이템으로 옮기기
 

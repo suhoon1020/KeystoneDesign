@@ -17,6 +17,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import auction.Auction;
+import auction.CloseState;
+import auction.OpenState;
 import auctionData.TradeHistory;
 import auctionData.TradeHistoryFileSystem;
 import auctionData.TradeItem;
@@ -1307,7 +1309,7 @@ public class SwingAdmin extends JFrame {
                 refreshTradeItemInfoTable();
             }
         });
-        Btt_goAution.setFont(new Font("굴림", Font.PLAIN, 20));
+        Btt_goAution.setFont(new Font("굴림", Font.PLAIN, 15));
         manu.add(Btt_goAution);
 
         JButton Btt_goItemInfo = new JButton("아이템 관리");
@@ -1318,7 +1320,7 @@ public class SwingAdmin extends JFrame {
                 refreshItemInfoTable();
             }
         });
-        Btt_goItemInfo.setFont(new Font("굴림", Font.PLAIN, 20));
+        Btt_goItemInfo.setFont(new Font("굴림", Font.PLAIN, 15));
         manu.add(Btt_goItemInfo);
 
         JButton Btt_goUser = new JButton("유저 관리");
@@ -1329,31 +1331,27 @@ public class SwingAdmin extends JFrame {
                 refreshUserTable();
             }
         });
-        Btt_goUser.setFont(new Font("굴림", Font.PLAIN, 20));
+        Btt_goUser.setFont(new Font("굴림", Font.PLAIN, 15));
         manu.add(Btt_goUser);
 
-        JButton Btt_ChangeAuctionState = new JButton("경매장 상태");
-        Btt_ChangeAuctionState.addActionListener(new ActionListener() {
+        JButton Btt_AuctionOpen = new JButton("경매장 열기");
+        Btt_AuctionOpen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Auction.getAuction().changeState();
-
-                if(Auction.getAuction().isOpen()){
-                    Btt_ChangeAuctionState.setText("경매장 열림");
-                }
-                else{
-                    Btt_ChangeAuctionState.setText("경매장 닫힘");
-                }
+                Auction.getAuction().getState().setOpen();
             }
         });
-        Btt_ChangeAuctionState.setFont(new Font("굴림", Font.PLAIN, 20));
-        manu.add(Btt_ChangeAuctionState);
+        Btt_AuctionOpen.setFont(new Font("굴림", Font.PLAIN, 15));
+        manu.add(Btt_AuctionOpen);
 
-        if(Auction.getAuction().isOpen()){
-            Btt_ChangeAuctionState.setText("경매장 열림");
-        }
-        else{
-            Btt_ChangeAuctionState.setText("경매장 닫힘");
-        }
+        JButton Btt_AuctionClose = new JButton("경매장 닫기");
+        Btt_AuctionClose.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Auction.getAuction().getState().setClose();
+            }
+        });
+        Btt_AuctionClose.setFont(new Font("굴림", Font.PLAIN, 15));
+        manu.add(Btt_AuctionClose);
+
 
         JButton Btt_logOut = new JButton("종료");
         Btt_logOut.addActionListener(new ActionListener() {
@@ -1362,7 +1360,7 @@ public class SwingAdmin extends JFrame {
                 dispose();
             }
         });
-        Btt_logOut.setFont(new Font("굴림", Font.PLAIN, 20));
+        Btt_logOut.setFont(new Font("굴림", Font.PLAIN, 15));
         manu.add(Btt_logOut);
     }
 

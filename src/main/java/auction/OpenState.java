@@ -1,5 +1,7 @@
 package auction;
 
+import javax.swing.JOptionPane;
+
 import swing.SwingAdmin;
 import swing.SwingAuction;
 import user.User;
@@ -30,13 +32,19 @@ public class OpenState implements AuctionState {
     }
 
     @Override
-    public AuctionState changeState() {
-        return new CloseState();
+    public void setOpen() {
+        JOptionPane.showMessageDialog(null, "경매장이 이미 열렸습니다.");
     }
 
     @Override
-    public boolean isOpen() {
-        return true;
+    public void setClose() {
+        Auction.getAuction().setState(new CloseState());
+        JOptionPane.showMessageDialog(null, "경매장이 닫혔습니다.");
+    }
+
+    @Override
+    public String getStateString() {
+        return "Open";
     }
 }
 

@@ -1,11 +1,12 @@
 package auction;
 
+import javax.swing.JOptionPane;
+
 import swing.SwingAdmin;
 import user.User;
 import user.UserFileSystem;
 
 public class CloseState implements AuctionState {
-
     @Override
     public boolean login(String id, String password) {
         User loginUser = UserFileSystem.getUserFileSystem().getUserById(id);
@@ -28,13 +29,20 @@ public class CloseState implements AuctionState {
         return false;
     }
 
+
     @Override
-    public AuctionState changeState() {
-        return new OpenState();
+    public void setOpen() {
+        Auction.getAuction().setState(new OpenState());
+        JOptionPane.showMessageDialog(null, "경매장이 열렸습니다.");
     }
 
     @Override
-    public boolean isOpen() {
-        return false;
+    public void setClose() {
+        JOptionPane.showMessageDialog(null, "이미 닫힌 상태입니다.");
+    }
+
+    @Override
+    public String getStateString() {
+        return "Close";
     }
 }
