@@ -77,5 +77,4 @@ public class ObserverTEST {
         invoker.setCommand(deleteItemCommand);
         invoker.run();
     }
-    
 }
