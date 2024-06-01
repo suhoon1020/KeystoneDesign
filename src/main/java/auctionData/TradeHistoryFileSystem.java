@@ -71,16 +71,6 @@ public class TradeHistoryFileSystem {
         return tradeHistoryList;
     }
 
-    public int getTotalCharge(){
-        int totalCharge = 0;
-
-        for (TradeHistory tradeHistory : tradeHistoryList) {
-            totalCharge += tradeHistory.getCharge();
-        }
-
-        return totalCharge;
-    }
-
     public void checkPrice(String itemName) {
         int max;
         int min;
@@ -100,9 +90,9 @@ public class TradeHistoryFileSystem {
             min = Collections.min(price);
             avg = sum / price.size();
 
-            JOptionPane.showMessageDialog(null,itemName +" 아이템의 \n최대 값은 : " + max + "\n최소값은 : " + min + "\n평균 값은 : " + avg + " 입니다");
+            JOptionPane.showMessageDialog(null, itemName +" 아이템의 \n최대 값은 : " + max + "\n최소값은 : " + min + "\n평균 값은 : " + avg + " 입니다");
         } else {
-            JOptionPane.showMessageDialog(null,"해당 아이템의 최근 거래 내역이 없습니다");
+            JOptionPane.showMessageDialog(null, "해당 아이템의 최근 거래 내역이 없습니다");
         }
     }
 

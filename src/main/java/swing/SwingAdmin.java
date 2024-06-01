@@ -709,7 +709,7 @@ public class SwingAdmin extends JFrame {
 
                     C_itemInfoType.setSelectedItem(T_itemInfoList.getValueAt(selectedRow, 0).toString());
                     In_itemInfoName.setText(T_itemInfoList.getValueAt(selectedRow, 1).toString());
-                    C_itemInfoType.setSelectedItem(T_itemInfoList.getValueAt(selectedRow, 2).toString());
+                    C_itemInfoGrade.setSelectedItem(T_itemInfoList.getValueAt(selectedRow, 2).toString());
                     In_itemInfoDesc.setText(T_itemInfoList.getValueAt(selectedRow, 3).toString());
                     In_itemInfoOp1.setText(T_itemInfoList.getValueAt(selectedRow, 4).toString());
                 }
