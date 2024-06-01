@@ -24,7 +24,7 @@ public class Auction {
     private User user;
 
     private Auction() {
-        auctionState = new CloseState();
+        auctionState = new OpenState();
     }
 
     public static Auction getAuction() {
