@@ -19,5 +19,4 @@ public class ChangeChargeByPrice extends ChargeDecorator{
         }
         return 0;
     }
-
 }

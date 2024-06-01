@@ -143,7 +143,7 @@ public class User implements ItemObserver{
 
     // 아이템 업데이트
     @Override
-    public void updateItem(Item newItem, String option) {
+    public void mobifiedOriginItem(Item newItem, String option) {
         String itemName = newItem.getName();
         
         switch (option) {

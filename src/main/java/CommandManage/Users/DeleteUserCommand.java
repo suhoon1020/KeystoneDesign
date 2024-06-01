@@ -30,7 +30,7 @@ public class DeleteUserCommand implements Command {
                 List<TradeItem> tradeItems = TradeItemFileSystem.getTradeItemFileSystem().getTradeItemList();
 
                 // 유저 거래 아이템 삭제
-                for (int j = 0; j < tradeItems.size(); ++i) {
+                for (int j = 0; j < tradeItems.size(); ++j) {
                     if (tradeItems.get(i).getUserId().equals(userId)) {
                         tradeItems.remove(j);
                     }

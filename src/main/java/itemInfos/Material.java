@@ -27,6 +27,4 @@ public class Material extends Item{
             .option1(0)
             .build();
     }
-
-
 }

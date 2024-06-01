@@ -82,7 +82,7 @@ public class TradeItemFileSystem implements ItemObserver{
     }
 
     @Override
-    public void updateItem(Item newItem, String option) {
+    public void mobifiedOriginItem(Item newItem, String option) {
         String itemName = newItem.getName();
         
         switch (option) {

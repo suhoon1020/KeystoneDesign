@@ -28,6 +28,4 @@ public class Weapon extends Item {
             .option1(damage)
             .build();
     }
-
-
 }

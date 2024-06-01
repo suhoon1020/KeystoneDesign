@@ -102,7 +102,7 @@ public class ItemFileSystem implements ItemSubject{
     @Override
     public void notifyObservers(Item item, String option) {
         for (ItemObserver o : observers){
-            o.updateItem(item, option);
+            o.mobifiedOriginItem(item, option);
         }
     }
 }
