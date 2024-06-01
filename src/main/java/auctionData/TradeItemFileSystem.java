@@ -23,12 +23,12 @@ public class TradeItemFileSystem implements ItemObserver{
 
     private static List<TradeItem> tradeItems;
 
-    private static TradeItemFileSystem tradeHistoryFileSystem;
+    private static TradeItemFileSystem tradeItemFileSystem;
 
     public static TradeItemFileSystem getTradeItemFileSystem() {
-        if(tradeHistoryFileSystem == null)
-            tradeHistoryFileSystem = new TradeItemFileSystem();
-        return tradeHistoryFileSystem;
+        if(tradeItemFileSystem == null)
+            tradeItemFileSystem = new TradeItemFileSystem();
+        return tradeItemFileSystem;
     }
 
     private TradeItemFileSystem(){

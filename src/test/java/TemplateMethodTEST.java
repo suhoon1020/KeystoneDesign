@@ -48,6 +48,5 @@ public class TemplateMethodTEST {
         for(Field field : fields){
             System.out.println("포션 속성 : " + field.getName()+ " = " + test3.getOption1());
         }
-
     }
 }

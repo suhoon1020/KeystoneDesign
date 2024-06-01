@@ -45,7 +45,5 @@ public class StrategyTEST {
         for(TradeItem tradeItem : sortedTradeItems){
             System.out.println("이름 : " + tradeItem.getName() + "\t\t개수 : " + tradeItem.getCount() + "\t\t가격 : " + tradeItem.getPrice());
         }
-
     }
-    
 }
